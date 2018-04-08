@@ -8,6 +8,7 @@ import android.widget.Button
 import android.widget.GridView
 import android.widget.TextView
 import com.example.jirou.memorizer.adapters.ListAdapterHandAction
+import com.example.jirou.memorizer.models.AV_FOLD_100
 import com.example.jirou.memorizer.models.HandActionCorrect
 import com.example.jirou.memorizer.utils.numToStr
 
@@ -44,10 +45,10 @@ class ResultActivity : AppCompatActivity() {
     }
 
     private fun createCorrectHandActionList(answeredHandActionList :  ArrayList<HandAction>, correctHandActionList :  ArrayList<HandAction> ) {
-        for (i in 1..13) {
-            for (j in 1..13) {
-                //配列にタイトルと画像を格納
-                correctHandActionList.add(HandActionCorrect(numToStr(i) + numToStr(j), -1))
+        for (i in 14 downTo 2) {
+            for (j in 14 downTo 2) {
+                //配列にハンド名、アクションを格納
+                correctHandActionList.add(HandActionCorrect(numToStr(i) + numToStr(j), AV_FOLD_100))
             }
         }
 

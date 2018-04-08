@@ -70,7 +70,7 @@ class ListAdapterHandAction(private val mContext: Context, private val gridView:
         return v
     }
 
-    fun setCellViewSize(width: Int, height: Int) {
+    private fun setCellViewSize(width: Int, height: Int) {
         cellWidth = width
         cellHeight = height
     }

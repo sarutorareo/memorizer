@@ -23,10 +23,10 @@ class InputStartingHandActivity : AppCompatActivity() {
         setContentView(R.layout.activity_input_starting_hand)
 
         //グリットビューのセル？の作成
-        for (i in 1..13) {
-            for (j in 1..13) {
+        for (i in 14 downTo 2) {
+            for (j in 14 downTo 2) {
                 //配列にタイトルと画像を格納
-                mHandActionList.add(HandAction(numToStr(i)+numToStr(j), -1))
+                mHandActionList.add(HandAction(numToStr(i)+numToStr(j), AV_FOLD_100))
             }
         }
 
