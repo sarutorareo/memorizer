@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Memorizer</string>
+    <string name="action_settings">Settings</string>
+    <string name="btn_start">Start</string>
+    <string name="btn_end">End</string>
+    <string name="btn_answer">Answer</string>
+    <string name="btn_retry">Retry</string>
+    <string name="btn_next">Next</string>
+</resources>
