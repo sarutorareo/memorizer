@@ -22,11 +22,18 @@ class MainActivity : AppCompatActivity() {
                     .setAction("Action", null).show()
         }
 
-        val sendButton : Button = findViewById(R.id.btnStart)
-        sendButton.setOnClickListener( {
+        val startButton : Button = findViewById(R.id.btnStart)
+        startButton.setOnClickListener( {
                 val intent = Intent(application, InputStartingHandActivity::class.java)
                 startActivity(intent)
             }
+        )
+
+        val editButton : Button = findViewById(R.id.btnEditQuiz)
+        editButton.setOnClickListener( {
+            val intent = Intent(application, MngEditQuizActivity::class.java)
+            startActivity(intent)
+        }
         )
     }
 

@@ -6,4 +6,8 @@
     <string name="btn_answer">Answer</string>
     <string name="btn_retry">Retry</string>
     <string name="btn_next">Next</string>
+    <string name="btn_edit_quiz">Edit Quiz</string>
+    <string name="btn_add_quiz">Add Quiz</string>
+    <string name="btn_delete_all_quiz">Delete All Quiz</string>
+    <string name="btn_save_qz_hand_action">Save"</string>
 </resources>

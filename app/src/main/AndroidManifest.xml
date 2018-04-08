@@ -21,7 +21,9 @@
         </activity>
         <activity android:name=".InputStartingHandActivity" />
         <activity android:name=".ResultActivity" />
-        <activity android:name=".SessionResultActivity"></activity>
+        <activity android:name=".SessionResultActivity" />
+        <activity android:name=".MngEditQuizActivity" />
+        <activity android:name=".MngAddQzHandActionActivity"></activity>
     </application>
 
 </manifest>
