@@ -2,6 +2,7 @@ package com.example.jirou.memorizer.adapters
 
 import android.content.Context
 import android.util.Log
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.view.ViewTreeObserver
@@ -91,4 +92,47 @@ class ListAdapterHandAction(private val mContext: Context, private val gridView:
         val row : Int = yToRow(y)
         return row * rowSize + col
     }
+
+    // Implement On Touch listener
+    fun getOnTouchListener(fnGetActionValue : () -> Int) :  (View, MotionEvent) -> Boolean =  { v, event ->
+        val currAction : String
+        ////////////////////////////////////////////////////////////
+        // イベントの状態を調べる
+        val action = event.action and MotionEvent.ACTION_MASK
+        currAction = when (action) {
+            MotionEvent.ACTION_DOWN -> "DOWN"
+            MotionEvent.ACTION_MOVE -> "MOVE"
+            MotionEvent.ACTION_UP -> "UP"
+            MotionEvent.ACTION_CANCEL -> "CANCEL"
+            else -> "null"
+        }
+
+        val position = (gridView.adapter as ListAdapterHandAction).axisToPosition(gridView.numColumns, event.x, event.y)
+        Log.e("onTouch", String.format("action is %s (x=%f, y=%f)", currAction, event.x, event.y) )
+        Log.e("onTouch", String.format("(col=%d, row=%d, position=%d) gridView.width = %d, gridView.height = %d, gridView.numColumns = %d",
+                (gridView.adapter as ListAdapterHandAction).xToCol(event.x),
+                (gridView.adapter as ListAdapterHandAction).yToRow(event.y),
+                position, gridView.width, gridView.height, gridView.numColumns)
+        )
+
+        Log.e("onTouch", String.format("oGridList.size = %d", mHandActionList.size))
+        if (((action == MotionEvent.ACTION_DOWN) || (action == MotionEvent.ACTION_MOVE))
+                && (position >= 0) && (position < mHandActionList.size)) {
+            //配列から、アイテムを取得
+            val handAction = mHandActionList[position]
+            Log.e("onTouch", "oGrid is not null")
+            handAction.setActionVal(fnGetActionValue())
+            // getViewで対象のViewを更新
+            val targetView : View? = gridView.getChildAt(position)
+            if (targetView != null) {
+                Log.e("onTouch", "targetView is not null")
+                gridView.adapter.getView(position, targetView, gridView)
+            } else {
+                Log.e("onTouch", "targetView is null")
+            }
+        }
+
+        false
+    }
+
 }

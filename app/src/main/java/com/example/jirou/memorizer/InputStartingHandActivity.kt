@@ -22,7 +22,9 @@ class InputStartingHandActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_input_starting_hand)
 
+        //
         //グリットビューのセル？の作成
+        //
         for (i in 14 downTo 2) {
             for (j in 14 downTo 2) {
                 //配列にタイトルと画像を格納
@@ -30,56 +32,23 @@ class InputStartingHandActivity : AppCompatActivity() {
             }
         }
 
-        val gridView : GridView = findViewById(R.id.grdInputStartHand)
+        //
         //グリットビューに各セルの情報を設定
+        //
+        val gridView : GridView = findViewById(R.id.grdInputStartHand)
         gridView.adapter = ListAdapterHandAction(applicationContext, gridView, mHandActionList)
 
-        // Implement On Touch listener
-        gridView.setOnTouchListener { v, event ->
-            val currAction : String
-            ////////////////////////////////////////////////////////////
-            // イベントの状態を調べる
-            val action = event.action and MotionEvent.ACTION_MASK
-            currAction = when (action) {
-                MotionEvent.ACTION_DOWN -> "DOWN"
-                MotionEvent.ACTION_MOVE -> "MOVE"
-                MotionEvent.ACTION_UP -> "UP"
-                MotionEvent.ACTION_CANCEL -> "CANCEL"
-                else -> "null"
-            }
+        //
+        //OnTouchイベントに対する設定
+        //
+        gridView.setOnTouchListener((gridView.adapter as ListAdapterHandAction).getOnTouchListener(this::getActionValue))
 
-            val position = (gridView.adapter as ListAdapterHandAction).axisToPosition(gridView.numColumns, event.x, event.y)
-            Log.e("onTouch", String.format("action is %s (x=%f, y=%f)", currAction, event.x, event.y) )
-            Log.e("onTouch", String.format("(col=%d, row=%d, position=%d) gridView.width = %d, gridView.height = %d, gridView.numColumns = %d",
-                    (gridView.adapter as ListAdapterHandAction).xToCol(event.x),
-                    (gridView.adapter as ListAdapterHandAction).yToRow(event.y),
-                    position, gridView.width, gridView.height, gridView.numColumns)
-            )
-
-            Log.e("onTouch", String.format("oGridList.size = %d", mHandActionList.size))
-            if (((action == MotionEvent.ACTION_DOWN) || (action == MotionEvent.ACTION_MOVE))
-                    && (position >= 0) && (position < mHandActionList.size)) {
-                //配列から、アイテムを取得
-                val handAction = mHandActionList[position]
-                Log.e("onTouch", "oGrid is not null")
-                handAction.setActionVal(getActionValue())
-                // getViewで対象のViewを更新
-                val targetView : View? = gridView.getChildAt(position)
-                if (targetView != null) {
-                    Log.e("onTouch", "targetView is not null")
-                    gridView.adapter.getView(position, targetView, gridView)
-                } else {
-                    Log.e("onTouch", "targetView is null")
-                }
-            }
-
-            false
-        }
-
+        //
+        // Answerボタンクリックイベントに対する設定
+        //
         val btnAnswer : Button = findViewById(R.id.btnAnswer)
         btnAnswer.setOnClickListener( {
             val intent = Intent(application, ResultActivity::class.java)
-//            intent.putParcelableArrayListExtra(HAND_ACTION_ARRAY, mHandActionList)
             intent.putExtra(HAND_ACTION_ARRAY_SIZE, mHandActionList.size)
             Log.e("setOnClickListener", String.format("put mHandActionList.size = %d",  mHandActionList.size))
 

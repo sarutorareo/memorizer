@@ -13,7 +13,7 @@ class MngEditQuizActivity : AppCompatActivity() {
 
         val addQzHandActionButton : Button = findViewById(R.id.btnAddQzHandAction)
         addQzHandActionButton.setOnClickListener( {
-            val intent = Intent(application, MngAddQzHandActionActivity::class.java)
+            val intent = Intent(application, MngEditQzHandActionActivity::class.java)
             startActivity(intent)
         }
         )
