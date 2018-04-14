@@ -11,7 +11,7 @@ class MngEditQuizActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_mng_edit_quiz)
 
-        val addQzHandActionButton : Button = findViewById(R.id.btnAddQzHandAction)
+        val addQzHandActionButton : Button = findViewById(R.id.btnEditQzHandAction)
         addQzHandActionButton.setOnClickListener( {
             val intent = Intent(application, MngEditQzHandActionActivity::class.java)
             startActivity(intent)

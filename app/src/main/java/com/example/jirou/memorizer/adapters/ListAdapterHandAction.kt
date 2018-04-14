@@ -10,11 +10,12 @@ import android.widget.BaseAdapter
 import android.widget.GridView
 import com.example.jirou.memorizer.models.HandAction
 import com.example.jirou.memorizer.models.HandActionCorrect
+import com.example.jirou.memorizer.models.HandActionList
 import com.example.jirou.memorizer.views.HandActionCanvasView
 
 
 class ListAdapterHandAction(private val mContext: Context, private val gridView: GridView,
-                            private val mHandActionList : ArrayList<HandAction>) : BaseAdapter() {
+                            private val mHandActionList : HandActionList) : BaseAdapter() {
     private var cellWidth : Int = 0
     private var cellHeight : Int = 0
 
@@ -37,8 +38,9 @@ class ListAdapterHandAction(private val mContext: Context, private val gridView:
     }
 
     override fun getItem(position: Int): Any {
+        assert(position >= 0 && position < mHandActionList.size)
         //配列の中身
-        return mHandActionList[position]
+        return mHandActionList.get(position) as Any
     }
 
     override fun getItemId(position: Int): Long {
@@ -119,7 +121,7 @@ class ListAdapterHandAction(private val mContext: Context, private val gridView:
         if (((action == MotionEvent.ACTION_DOWN) || (action == MotionEvent.ACTION_MOVE))
                 && (position >= 0) && (position < mHandActionList.size)) {
             //配列から、アイテムを取得
-            val handAction = mHandActionList[position]
+            val handAction = mHandActionList.get(position)
             Log.e("onTouch", "oGrid is not null")
             handAction.setActionVal(fnGetActionValue())
             // getViewで対象のViewを更新

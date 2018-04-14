@@ -11,15 +11,29 @@ import org.junit.Assert.*
  */
 class TestHandAction {
     @Test
-    fun addition_isCorrect() {
-        assertEquals(4, 2 + 2)
-    }
-    @Test
     fun constructor() {
         val ha = HandAction("title_str", 99)
 
         assertEquals("title_str", ha.getHand())
         assertEquals(99, ha.getActionVal())
+    }
+
+    @Test
+    fun copyTo() {
+        val ha = HandAction("title_str", 99)
+        val other = HandAction("title_str", 33)
+
+        other.copyFrom(ha)
+        assertEquals(99, ha.getActionVal())
+        assertEquals(99, other.getActionVal())
+    }
+
+    @Test(expected = AssertionError::class)
+    fun copyTo_differentKey() {
+        val ha = HandAction("title_str", 99)
+        val other = HandAction("title_strx", 99)
+
+        other.copyFrom(ha)
     }
 
 }

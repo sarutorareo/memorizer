@@ -33,6 +33,12 @@ open class HandAction(private val hand: String, private var actionVal : Int) : P
         return 0
     }
 
+    fun copyFrom(other : HandAction)
+    {
+        assert(this.hand == other.hand)
+        this.actionVal = other.actionVal
+    }
+
     companion object {
         @JvmField
         val CREATOR: Parcelable.Creator<HandAction> = object : Parcelable.Creator<HandAction> {

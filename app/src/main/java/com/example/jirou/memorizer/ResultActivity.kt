@@ -8,13 +8,13 @@ import android.widget.Button
 import android.widget.GridView
 import android.widget.TextView
 import com.example.jirou.memorizer.adapters.ListAdapterHandAction
-import com.example.jirou.memorizer.models.AV_FOLD_100
 import com.example.jirou.memorizer.models.HandActionCorrect
-import com.example.jirou.memorizer.utils.numToStr
+import com.example.jirou.memorizer.models.HandActionList
+import com.example.jirou.memorizer.models.HandActionCorrectList
 
 class ResultActivity : AppCompatActivity() {
-    private var mAnsweredHandActionList : ArrayList<HandAction> =  ArrayList()
-    private var mCorrectHandActionList : ArrayList<HandAction> =  ArrayList()
+    private var mAnsweredHandActionList : HandActionList =  HandActionList()
+    private var mCorrectHandActionList : HandActionCorrectList =  HandActionCorrectList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,42 +44,34 @@ class ResultActivity : AppCompatActivity() {
 
     }
 
-    private fun createCorrectHandActionList(answeredHandActionList :  ArrayList<HandAction>, correctHandActionList :  ArrayList<HandAction> ) {
-        for (i in 14 downTo 2) {
-            for (j in 14 downTo 2) {
-                //配列にハンド名、アクションを格納
-                correctHandActionList.add(HandActionCorrect(numToStr(i) + numToStr(j), AV_FOLD_100))
-            }
-        }
-
-        correctHandActionList[0].setActionVal(100)
-        correctHandActionList[1].setActionVal(50)
+    private fun createCorrectHandActionList(answeredHandActionList :  HandActionList, correctHandActionList : HandActionCorrectList ) {
+        correctHandActionList.get(0).setActionVal(100)
+        correctHandActionList.get(1).setActionVal(50)
 
         assert(answeredHandActionList.size == correctHandActionList.size)
         for (i in 0 until correctHandActionList.size) {
-            (correctHandActionList[i] as HandActionCorrect).compare(answeredHandActionList[i])
+            (correctHandActionList.get(i) as HandActionCorrect).compare(answeredHandActionList.get(i) as HandAction)
         }
     }
 
-    private fun getResult(correctHandActionList : ArrayList<HandAction>) : Boolean
+    private fun getResult(correctHandActionList : HandActionCorrectList) : Boolean
     {
-        correctHandActionList.forEach {
-            if ((it as HandActionCorrect).getCompared() != 0) {
+        for (i in 0 until correctHandActionList.size) {
+            if ((correctHandActionList.get(i) as HandActionCorrect).getCompared() != 0) {
                 return false
             }
         }
         return true
     }
 
-    private fun getAnsweredHandActionList(answeredHandActionList :  ArrayList<HandAction>) {
-        answeredHandActionList.clear()
+    private fun getAnsweredHandActionList(answeredHandActionList :  HandActionList) {
 
         // 配列は今のところダメ　個別にHandActionを渡すのはできた
         val haArraySize: Int = intent.getIntExtra(HAND_ACTION_ARRAY_SIZE, 0)
         val tv: TextView = findViewById(R.id.multiAutoCompleteTextView)
         for (i in 0 until haArraySize) {
             val ha: HandAction = intent.getParcelableExtra(String.format(HAND_ACTION_ARRAY_FMT, i))
-            answeredHandActionList.add(ha)
+            answeredHandActionList.get(i).copyFrom(ha)
 
             var logStr: String = String.format("handAction  (%s, %d)", ha.getHand(), ha.getActionVal())
             Log.e("ResultActivity.onCreate", String.format("ResultActivity.onCreate %s", logStr))

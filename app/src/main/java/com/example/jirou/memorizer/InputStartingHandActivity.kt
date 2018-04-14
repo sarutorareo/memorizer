@@ -15,22 +15,12 @@ import com.example.jirou.memorizer.adapters.ListAdapterHandAction
 const val HAND_ACTION_ARRAY_FMT : String = "HandActionArray_%d"
 const val HAND_ACTION_ARRAY_SIZE : String = "HandActionArraySize"
 class InputStartingHandActivity : AppCompatActivity() {
-    private val mHandActionList = ArrayList<HandAction>()
+    private val mHandActionList = HandActionList()
 
     @SuppressLint("ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_input_starting_hand)
-
-        //
-        //グリットビューのセル？の作成
-        //
-        for (i in 14 downTo 2) {
-            for (j in 14 downTo 2) {
-                //配列にタイトルと画像を格納
-                mHandActionList.add(HandAction(numToStr(i)+numToStr(j), AV_FOLD_100))
-            }
-        }
 
         //
         //グリットビューに各セルの情報を設定
@@ -53,7 +43,7 @@ class InputStartingHandActivity : AppCompatActivity() {
             Log.e("setOnClickListener", String.format("put mHandActionList.size = %d",  mHandActionList.size))
 
             for (i in 0 until mHandActionList.size) {
-                intent.putExtra(String.format(HAND_ACTION_ARRAY_FMT, i), mHandActionList[i])
+                intent.putExtra(String.format(HAND_ACTION_ARRAY_FMT, i), mHandActionList.get(i))
             }
             startActivity(intent)
         } )
@@ -62,12 +52,12 @@ class InputStartingHandActivity : AppCompatActivity() {
     private fun getActionValue() : Int
     {
         val rdg : RadioGroup = findViewById(R.id.rdgAction)
-        val checked : Int = rdg.checkedRadioButtonId
-        Log.e("getActionValue", String.format("checked is %d", checked))
-        val button : RadioButton = findViewById(checked) ?: return -1
+        val checkedId : Int = rdg.checkedRadioButtonId
+        Log.e("getActionValue", String.format("checked is %d", checkedId))
+        val button : RadioButton = findViewById(checkedId) ?: return -1
 
         val tag : String = button.tag.toString()
-        Log.e("getActionValue", String.format("tag is %s", tag.toString() ))
+        Log.e("getActionValue", String.format("tag is %s", tag))
 
         return if (tag == "null") {
             -1
