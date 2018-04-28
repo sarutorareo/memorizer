@@ -4,6 +4,7 @@ import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
+import com.example.jirou.memorizer.db.MemorizeDBOpenHelper
 
 class MngEditQuizActivity : AppCompatActivity() {
 
@@ -15,6 +16,18 @@ class MngEditQuizActivity : AppCompatActivity() {
         addQzHandActionButton.setOnClickListener( {
             val intent = Intent(application, MngEditQzHandActionActivity::class.java)
             startActivity(intent)
+        }
+        )
+
+        val initDBSchemaButton : Button = findViewById(R.id.btnInitDBSchema)
+        initDBSchemaButton.setOnClickListener( {
+            MemorizeDBOpenHelper.initDBSchema(applicationContext)
+        }
+        )
+
+        val dropDBSchemaButton : Button = findViewById(R.id.btnDropDBSchema)
+        dropDBSchemaButton.setOnClickListener( {
+            MemorizeDBOpenHelper.dropDBSchema(applicationContext)
         }
         )
     }

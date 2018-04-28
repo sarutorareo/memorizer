@@ -20,6 +20,14 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+    // (RobolectricTestRunnerを利用するため）AndroidStudio3を使用している場合はこのテストオプションが必要
+    // 詳細は http://robolectric.org/getting-started/
+    testOptions {
+        unitTests {
+            includeAndroidResources = true
+        }
+    }
 }
 
 dependencies {
@@ -29,9 +37,12 @@ dependencies {
     implementation 'com.android.support.constraint:constraint-layout:1.1.0'
     implementation 'com.android.support:design:26.1.0'
     testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'com.android.support.test:runner:1.0.1'
-    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
+    androidTestImplementation 'com.android.support.test:runner:1.0.2'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
 
     implementation 'org.jetbrains.anko:anko:0.10.1'
     implementation 'org.jetbrains.anko:anko-sqlite:0.10.1'
+
+    // 2018年1月27日時点の最新版
+    testImplementation "org.robolectric:robolectric:3.6.1"
 }

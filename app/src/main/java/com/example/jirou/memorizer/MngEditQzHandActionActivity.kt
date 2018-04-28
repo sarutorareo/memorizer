@@ -3,16 +3,16 @@ package com.example.jirou.memorizer
 import android.annotation.SuppressLint
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.GridView
 import android.widget.RadioButton
 import android.widget.RadioGroup
 import com.example.jirou.memorizer.adapters.ListAdapterHandAction
-import com.example.jirou.memorizer.models.AV_FOLD_100
-import com.example.jirou.memorizer.models.HandAction
-import com.example.jirou.memorizer.models.HandActionCorrect
+import com.example.jirou.memorizer.db.MemorizeDBOpenHelper
 import com.example.jirou.memorizer.models.HandActionList
-import com.example.jirou.memorizer.utils.numToStr
+import org.jetbrains.anko.db.insert
+import org.jetbrains.anko.db.insertOrThrow
 
 class MngEditQzHandActionActivity : AppCompatActivity() {
     private var mHandActionList : HandActionList =  HandActionList()
@@ -30,7 +30,7 @@ class MngEditQzHandActionActivity : AppCompatActivity() {
         //
         //グリットビューに各セルの情報を設定
         //
-        val gridView : GridView = findViewById(R.id.grdEditCorrect)
+        val gridView : GridView = findViewById<GridView>(R.id.grdEditCorrect) as GridView
         gridView.adapter = ListAdapterHandAction(applicationContext, gridView, mHandActionList)
 
         //
@@ -51,11 +51,31 @@ class MngEditQzHandActionActivity : AppCompatActivity() {
 
     private fun mSaveHandAction(handActionList : HandActionList)
     {
+        Log.e("mSaveHandAction", "start")
+
+        try {
+            val helper = MemorizeDBOpenHelper.getInstance(applicationContext)
+            helper.use {
+                Log.e("mSaveHandAction", "before Insert")
+                insertOrThrow(
+                        MemorizeDBOpenHelper.TABLE_NAME_TEST,
+                        *MemorizeDBOpenHelper.addCreateUpdateDate(arrayOf("bmi" to "bmi_val", "date" to "1900/1/1"))
+                )
+                insertOrThrow(
+                        MemorizeDBOpenHelper.TABLE_NAME_QUIZ,
+                        *MemorizeDBOpenHelper.addCreateUpdateDate(arrayOf("type" to "test_type"))
+                )
+                Log.e("mSaveHandAction", "after Insert")
+            }
+        } catch (e: Exception) {
+            Log.e("mSaveHandAction", String.format("exception = [%s]", e.toString()))
+        }
+
         // IDを採番
         val id : Int = 0 //HandActionList.getNewID()
 
         // 保存
-        ;
+
     }
 
     private fun mCreateHandActionList(handActionList :  HandActionList ) {
