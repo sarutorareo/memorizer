@@ -1,6 +1,6 @@
 package com.example.jirou.memorizer.models
 
-class HandActionCorrect(paramHand: String, paramActionVal : Int) : HandAction(paramHand, paramActionVal) {
+class HandActionCompared(paramHand: String, paramActionVal : Int) : HandAction(paramHand, paramActionVal) {
     private var compared : Int? = null
 
     fun getCompared() : Int?

@@ -9,10 +9,10 @@ import org.junit.Assert.*
  *
  * See [testing documentation](http://d.android.com/tools/testing).
  */
-class TestHandActionCorrectList {
+class TestHandActionComparedList {
     @Test
     fun constructor() {
-        val hal = HandActionCorrectList()
+        val hal = HandActionComparedList()
 
         assertEquals(169, hal.size)
 
@@ -23,8 +23,8 @@ class TestHandActionCorrectList {
 
     @Test
     fun getCorrect() {
-        val hal = HandActionCorrectList()
-        var ha : HandActionCorrect = hal.getCorrect(0)
+        val hal = HandActionComparedList()
+        var ha : HandActionCompared = hal.getCorrect(0)
         assertEquals(AV_FOLD_100, ha.getActionVal())
         assertEquals("AA", ha.getHand())
         assertEquals(null, ha.getCompared())

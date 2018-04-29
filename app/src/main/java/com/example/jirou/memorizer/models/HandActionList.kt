@@ -1,6 +1,10 @@
 package com.example.jirou.memorizer.models
 
+import android.database.sqlite.SQLiteDatabase
+import com.example.jirou.memorizer.db.MemorizeDBOpenHelper
 import com.example.jirou.memorizer.utils.numToStr
+import org.jetbrains.anko.db.insertOrThrow
+import org.jetbrains.anko.db.transaction
 
 open class HandActionList  {
     protected val mHandActionList : ArrayList<HandAction> =  ArrayList()
@@ -25,4 +29,17 @@ open class HandActionList  {
         assert((idx < mHandActionList.size) &&  (idx >= 0))
         return mHandActionList[idx]
     }
+/*
+    fun save(db: SQLiteDatabase)
+    {
+        db.transaction {
+            mHandActionList.forEach() {
+                db.insertOrThrow(
+                        MemorizeDBOpenHelper.TABLE_NAME_QUIZ,
+                        *MemorizeDBOpenHelper.addCreateUpdateDate(arrayOf("type" to "test_type"))
+                )
+            }
+        }
+    }
+    */
 }

@@ -8,13 +8,13 @@ import android.widget.Button
 import android.widget.GridView
 import android.widget.TextView
 import com.example.jirou.memorizer.adapters.ListAdapterHandAction
-import com.example.jirou.memorizer.models.HandActionCorrect
+import com.example.jirou.memorizer.models.HandActionCompared
 import com.example.jirou.memorizer.models.HandActionList
-import com.example.jirou.memorizer.models.HandActionCorrectList
+import com.example.jirou.memorizer.models.HandActionComparedList
 
 class ResultActivity : AppCompatActivity() {
     private var mAnsweredHandActionList : HandActionList =  HandActionList()
-    private var mCorrectHandActionList : HandActionCorrectList =  HandActionCorrectList()
+    private var mCorrectHandActionList : HandActionComparedList =  HandActionComparedList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,20 +44,20 @@ class ResultActivity : AppCompatActivity() {
 
     }
 
-    private fun createCorrectHandActionList(answeredHandActionList :  HandActionList, correctHandActionList : HandActionCorrectList ) {
+    private fun createCorrectHandActionList(answeredHandActionList :  HandActionList, correctHandActionList : HandActionComparedList ) {
         correctHandActionList.get(0).setActionVal(100)
         correctHandActionList.get(1).setActionVal(50)
 
         assert(answeredHandActionList.size == correctHandActionList.size)
         for (i in 0 until correctHandActionList.size) {
-            (correctHandActionList.get(i) as HandActionCorrect).compare(answeredHandActionList.get(i) as HandAction)
+            (correctHandActionList.get(i) as HandActionCompared).compare(answeredHandActionList.get(i) as HandAction)
         }
     }
 
-    private fun getResult(correctHandActionList : HandActionCorrectList) : Boolean
+    private fun getResult(correctHandActionList : HandActionComparedList) : Boolean
     {
         for (i in 0 until correctHandActionList.size) {
-            if ((correctHandActionList.get(i) as HandActionCorrect).getCompared() != 0) {
+            if ((correctHandActionList.get(i) as HandActionCompared).getCompared() != 0) {
                 return false
             }
         }

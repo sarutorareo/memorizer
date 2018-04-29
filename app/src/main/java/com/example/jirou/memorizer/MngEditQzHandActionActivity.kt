@@ -11,10 +11,11 @@ import android.widget.RadioGroup
 import com.example.jirou.memorizer.adapters.ListAdapterHandAction
 import com.example.jirou.memorizer.db.MemorizeDBOpenHelper
 import com.example.jirou.memorizer.models.HandActionList
-import org.jetbrains.anko.db.insert
+import com.example.jirou.memorizer.models.Quiz
 import org.jetbrains.anko.db.insertOrThrow
 
 class MngEditQzHandActionActivity : AppCompatActivity() {
+    private var mQuiz : Quiz = Quiz()
     private var mHandActionList : HandActionList =  HandActionList()
 
     @SuppressLint("ClickableViewAccessibility")
@@ -44,38 +45,25 @@ class MngEditQzHandActionActivity : AppCompatActivity() {
         val saveButton : Button = findViewById(R.id.btnSaveQzHandAction)
         saveButton.setOnClickListener( {
             // HandActionのマトリクスを保存する
-            mSaveHandAction(mHandActionList)
+            mSaveHandAction(mQuiz)
         }
         )
     }
 
-    private fun mSaveHandAction(handActionList : HandActionList)
+    private fun mSaveHandAction(quiz : Quiz)
     {
         Log.e("mSaveHandAction", "start")
 
         try {
             val helper = MemorizeDBOpenHelper.getInstance(applicationContext)
             helper.use {
-                Log.e("mSaveHandAction", "before Insert")
-                insertOrThrow(
-                        MemorizeDBOpenHelper.TABLE_NAME_TEST,
-                        *MemorizeDBOpenHelper.addCreateUpdateDate(arrayOf("bmi" to "bmi_val", "date" to "1900/1/1"))
-                )
-                insertOrThrow(
-                        MemorizeDBOpenHelper.TABLE_NAME_QUIZ,
-                        *MemorizeDBOpenHelper.addCreateUpdateDate(arrayOf("type" to "test_type"))
-                )
-                Log.e("mSaveHandAction", "after Insert")
+//                handActionList.save(this)
             }
         } catch (e: Exception) {
             Log.e("mSaveHandAction", String.format("exception = [%s]", e.toString()))
+            throw e
         }
-
-        // IDを採番
-        val id : Int = 0 //HandActionList.getNewID()
-
-        // 保存
-
+        Log.e("mSaveHandAction", "end")
     }
 
     private fun mCreateHandActionList(handActionList :  HandActionList ) {

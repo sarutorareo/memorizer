@@ -9,7 +9,7 @@ import android.view.ViewTreeObserver
 import android.widget.BaseAdapter
 import android.widget.GridView
 import com.example.jirou.memorizer.models.HandAction
-import com.example.jirou.memorizer.models.HandActionCorrect
+import com.example.jirou.memorizer.models.HandActionCompared
 import com.example.jirou.memorizer.models.HandActionList
 import com.example.jirou.memorizer.views.HandActionCanvasView
 
@@ -61,8 +61,8 @@ class ListAdapterHandAction(private val mContext: Context, private val gridView:
         //取得したテキストビューにactionを設定
         v.text = handAction.getHand()
         v.setActionVal(handAction.getActionVal())
-        if (handAction is HandActionCorrect) {
-            v.setCompared((handAction as HandActionCorrect).getCompared())
+        if (handAction is HandActionCompared) {
+            v.setCompared((handAction as HandActionCompared).getCompared())
         }
 
         Log.e("getView", String.format("v: v.width = %d, v.height = %d, v.left = %d, v.right = %d, v.top = %d, v.bottom = %d ",
