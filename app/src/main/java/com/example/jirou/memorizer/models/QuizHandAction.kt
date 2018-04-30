@@ -6,4 +6,13 @@ open class QuizHandAction(id : Int) : Quiz(id)  {
         mCorrect = CorrectHandAction(id)
     }
 
+    override fun mCreateQuestion(id : Int) : Question
+    {
+        return QuestionHandAction(id)
+    }
+
+    override fun mCreateCorrect(id : Int) : Correct
+    {
+        return CorrectHandAction(id)
+    }
 }

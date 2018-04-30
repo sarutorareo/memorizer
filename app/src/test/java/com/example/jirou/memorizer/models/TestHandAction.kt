@@ -11,21 +11,21 @@ import org.junit.Assert.*
  */
 class TestHandAction {
     @Test
-    fun constructor() {
+    fun test_constructor() {
         val ha = HandAction("title_str", 99)
 
-        assertEquals("title_str", ha.getHand())
-        assertEquals(99, ha.getActionVal())
+        assertEquals("title_str", ha.hand)
+        assertEquals(99, ha.actionVal)
     }
 
     @Test
-    fun copyTo() {
+    fun test_copyFrom() {
         val ha = HandAction("title_str", 99)
         val other = HandAction("title_str", 33)
 
         other.copyFrom(ha)
-        assertEquals(99, ha.getActionVal())
-        assertEquals(99, other.getActionVal())
+        assertEquals(99, ha.actionVal)
+        assertEquals(99, other.actionVal)
     }
 
     @Test(expected = AssertionError::class)

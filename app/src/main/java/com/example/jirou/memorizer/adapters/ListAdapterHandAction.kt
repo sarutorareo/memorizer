@@ -59,8 +59,8 @@ class ListAdapterHandAction(private val mContext: Context, private val gridView:
         //配列から、アイテムを取得
         val handAction = getItem(position) as HandAction
         //取得したテキストビューにactionを設定
-        v.text = handAction.getHand()
-        v.setActionVal(handAction.getActionVal())
+        v.text = handAction.hand
+        v.setActionVal(handAction.actionVal)
         if (handAction is HandActionCompared) {
             v.setCompared((handAction as HandActionCompared).getCompared())
         }

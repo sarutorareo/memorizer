@@ -10,23 +10,21 @@ const val AV_CALL_100 = 0
 // actionVal
 //   null : fold
 //   0 ～ 100 : callの比率 (100 - action = Raiseの比率)
-open class HandAction(private val hand: String, private var actionVal : Int) : Parcelable {
+open class HandAction(private val mHand: String, private var mActionVal : Int) : Parcelable {
 
-    fun getHand(): String {
-        return hand
-    }
+    val hand : String
+        get() = mHand
 
     fun setActionVal(value : Int) {
-        actionVal = value
+        mActionVal = value
     }
 
-    fun getActionVal(): Int {
-        return actionVal
-    }
+    val actionVal: Int
+        get() = mActionVal
 
     override fun writeToParcel(dest: Parcel?, flags: Int) {
-        dest?.writeString(hand)
-        dest?.writeInt(actionVal)
+        dest?.writeString(mHand)
+        dest?.writeInt(mActionVal)
     }
 
     override fun describeContents(): Int {
@@ -35,8 +33,8 @@ open class HandAction(private val hand: String, private var actionVal : Int) : P
 
     fun copyFrom(other : HandAction)
     {
-        assert(this.hand == other.hand)
-        this.actionVal = other.actionVal
+        assert(this.mHand == other.mHand)
+        this.mActionVal = other.mActionVal
     }
 
     companion object {

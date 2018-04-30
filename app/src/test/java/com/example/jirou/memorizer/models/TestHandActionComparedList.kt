@@ -17,16 +17,16 @@ class TestHandActionComparedList {
         assertEquals(169, hal.size)
 
         var ha = hal.get(0)
-        assertEquals(AV_FOLD_100, ha.getActionVal())
-        assertEquals("AA", ha.getHand())
+        assertEquals(AV_FOLD_100, ha.actionVal)
+        assertEquals("AA", ha.hand)
     }
 
     @Test
     fun getCorrect() {
         val hal = HandActionComparedList()
         var ha : HandActionCompared = hal.getCorrect(0)
-        assertEquals(AV_FOLD_100, ha.getActionVal())
-        assertEquals("AA", ha.getHand())
+        assertEquals(AV_FOLD_100, ha.actionVal)
+        assertEquals("AA", ha.hand)
         assertEquals(null, ha.getCompared())
     }
 

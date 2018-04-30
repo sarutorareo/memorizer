@@ -1,6 +1,6 @@
 package com.example.jirou.memorizer.models
 
-open class QuestionHandAction(mQuizId: Int) : Question(mQuizId)  {
+open class QuestionHandAction(quizId: Int) : Question(quizId)  {
 
     private val mSituation : EnumHandActionSituation = EnumHandActionSituation.OPEN
     private val mHeroPos : EnumHandActionPosition = EnumHandActionPosition.BTN

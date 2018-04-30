@@ -1,17 +1,19 @@
 package com.example.jirou.memorizer.models
 
-open class Quiz()  {
+import android.annotation.SuppressLint
+
+abstract class Quiz()  {
     private var mId : Int = 0
-    protected var mQuestion : Question = Question(mId)
-    protected var mCorrect : Correct = Correct(mId)
+    protected var mQuestion : Question = mCreateQuestion(mId)
+    protected var mCorrect : Correct = mCreateCorrect(mId)
 
     init {
     }
 
     constructor(id : Int) : this() {
         mId = id
-        mQuestion = Question(id)
-        mCorrect = Correct(id)
+        mQuestion = mCreateQuestion(id)
+        mCorrect = mCreateCorrect(id)
     }
 
     val id : Int
@@ -29,4 +31,6 @@ open class Quiz()  {
             return mCorrect
         }
 
+    protected abstract fun mCreateQuestion(id : Int) : Question
+    protected abstract fun mCreateCorrect(id : Int) : Correct
 }

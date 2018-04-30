@@ -14,8 +14,8 @@ class TestHandActionCompared {
     fun constructor() {
         val ha = HandActionCompared("title_str", 99)
 
-        assertEquals("title_str", ha.getHand())
-        assertEquals(99, ha.getActionVal())
+        assertEquals("title_str", ha.hand)
+        assertEquals(99, ha.actionVal)
         assertEquals(null, ha.getCompared())
     }
 

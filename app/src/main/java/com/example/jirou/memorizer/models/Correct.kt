@@ -1,9 +1,10 @@
 package com.example.jirou.memorizer.models
 
+import android.content.Context
 import android.view.inputmethod.CorrectionInfo
 import com.example.jirou.memorizer.utils.numToStr
 
-open class Correct(private val mQuizId: Int)  {
+abstract class Correct(private val mQuizId: Int)  {
     init {
     }
 
@@ -11,4 +12,7 @@ open class Correct(private val mQuizId: Int)  {
         get() {
             return mQuizId
         }
+
+    abstract fun save(context : Context, dbName: String)
+    abstract fun load(context : Context, dbName: String)
 }

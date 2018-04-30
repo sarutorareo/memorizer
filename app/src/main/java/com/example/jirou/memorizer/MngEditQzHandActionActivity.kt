@@ -9,13 +9,15 @@ import android.widget.GridView
 import android.widget.RadioButton
 import android.widget.RadioGroup
 import com.example.jirou.memorizer.adapters.ListAdapterHandAction
+import com.example.jirou.memorizer.db.DB_NAME_MEMORIZER
 import com.example.jirou.memorizer.db.MemorizeDBOpenHelper
 import com.example.jirou.memorizer.models.HandActionList
 import com.example.jirou.memorizer.models.Quiz
+import com.example.jirou.memorizer.models.QuizHandAction
 import org.jetbrains.anko.db.insertOrThrow
 
 class MngEditQzHandActionActivity : AppCompatActivity() {
-    private var mQuiz : Quiz = Quiz()
+    private var mQuiz : QuizHandAction = QuizHandAction(0)
     private var mHandActionList : HandActionList =  HandActionList()
 
     @SuppressLint("ClickableViewAccessibility")
@@ -55,7 +57,7 @@ class MngEditQzHandActionActivity : AppCompatActivity() {
         Log.e("mSaveHandAction", "start")
 
         try {
-            val helper = MemorizeDBOpenHelper.getInstance(applicationContext)
+            val helper = MemorizeDBOpenHelper.getInstance(applicationContext, DB_NAME_MEMORIZER)
             helper.use {
 //                handActionList.save(this)
             }

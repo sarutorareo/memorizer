@@ -18,28 +18,28 @@ class TestHandActionList {
         assertEquals(169, hal.size)
 
         var ha = hal.get(0)
-        assertEquals("AA", ha.getHand())
-        assertEquals(AV_FOLD_100, ha.getActionVal())
+        assertEquals("AA", ha.hand)
+        assertEquals(AV_FOLD_100, ha.actionVal)
 
         ha = hal.get(1)
-        assertEquals("AK", ha.getHand())
-        assertEquals(AV_FOLD_100, ha.getActionVal())
+        assertEquals("AK", ha.hand)
+        assertEquals(AV_FOLD_100, ha.actionVal)
 
         ha = hal.get(168)
-        assertEquals("22", ha.getHand())
-        assertEquals(AV_FOLD_100, ha.getActionVal())
+        assertEquals("22", ha.hand)
+        assertEquals(AV_FOLD_100, ha.actionVal)
     }
 
     @Test
     fun get() {
         val hal = HandActionList()
         var ha = hal.get(0)
-        assertEquals("AA", ha.getHand())
-        assertEquals(AV_FOLD_100, ha.getActionVal())
+        assertEquals("AA", ha.hand)
+        assertEquals(AV_FOLD_100, ha.actionVal)
 
         ha = hal.get(168)
-        assertEquals("22", ha.getHand())
-        assertEquals(AV_FOLD_100, ha.getActionVal())
+        assertEquals("22", ha.hand)
+        assertEquals(AV_FOLD_100, ha.actionVal)
     }
 
     @Test(expected = AssertionError::class)
@@ -52,5 +52,32 @@ class TestHandActionList {
     fun get_outOfBounds_lower() {
         val hal = HandActionList()
         var ha = hal.get(-1)
+    }
+
+    @Test
+    fun test_copyFrom() {
+        val haList = HandActionList()
+        var ha = haList.getFromHand("72")
+        assertEquals("72", ha.hand)
+        assertEquals(AV_FOLD_100, ha.actionVal)
+
+        val newHand = HandAction("72", 99)
+        haList.copyFrom(newHand)
+
+        assertEquals("72", ha.hand)
+        assertEquals(99, ha.actionVal)
+    }
+
+    @Test
+    fun test_getFromHand() {
+        val haList = HandActionList()
+        var ha = haList.getFromHand("AK")
+        assertEquals("AK", ha.hand)
+    }
+
+    @Test(expected = Exception::class)
+    fun test_getFromHand_not_exist() {
+        val haList = HandActionList()
+        var ha = haList.getFromHand("AX")
     }
 }

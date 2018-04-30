@@ -1,9 +1,9 @@
 package com.example.jirou.memorizer.db
 
-import android.content.Context
+import com.example.jirou.memorizer.test_utils.TEST_DB_NAME
+import com.example.jirou.memorizer.test_utils.TestHelper
 import org.jetbrains.anko.collections.forEachWithIndex
 import org.jetbrains.anko.db.*
-import org.jetbrains.anko.wrapContent
 import org.junit.Test
 
 import org.junit.Assert.*
@@ -11,7 +11,6 @@ import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.RuntimeEnvironment
 import java.util.*
-
 
 /**
  * Example local unit test, which will execute on the development machine (host).
@@ -26,9 +25,9 @@ class TestMemorizerDBOpenHelper {
 
     @Test
     fun test_getInstance() {
-        val context = RuntimeEnvironment.application
-        val helper = MemorizeDBOpenHelper.getInstance(context = context)
-        assertEquals("testMemorizer.db", helper.databaseName)
+        val context = TestHelper.getContext()
+        val helper = MemorizeDBOpenHelper.getInstance(context = context, dbName = TEST_DB_NAME)
+        assertEquals(TEST_DB_NAME, helper.databaseName)
     }
 
     class Test1(val id: Int, val msg: String)
@@ -36,8 +35,8 @@ class TestMemorizerDBOpenHelper {
 
     @Test
     fun test_select() {
-        val context = RuntimeEnvironment.application
-        val helper = MemorizeDBOpenHelper.getInstance(context = context)
+        val context = TestHelper.getContext()
+        val helper = MemorizeDBOpenHelper.getInstance(context = context, dbName = TEST_DB_NAME)
         helper.use {
             createTable(TABLE_NAME_TEST_1, ifNotExists = true,
                     columns = *arrayOf("id" to INTEGER + PRIMARY_KEY, "msg" to TEXT))
@@ -68,8 +67,8 @@ class TestMemorizerDBOpenHelper {
 
     @Test
     fun test_transaction_rollback() {
-        val context = RuntimeEnvironment.application
-        val helper = MemorizeDBOpenHelper.getInstance(context = context)
+        val context = TestHelper.getContext()
+        val helper = MemorizeDBOpenHelper.getInstance(context = context, dbName = TEST_DB_NAME)
         helper.use {
             createTable(TABLE_NAME_TEST_1, ifNotExists = true,
                     columns = *arrayOf("id" to INTEGER + PRIMARY_KEY, "msg" to TEXT))
@@ -110,8 +109,8 @@ class TestMemorizerDBOpenHelper {
 
     @Test
     fun test_transaction_not_rollback() {
-        val context = RuntimeEnvironment.application
-        val helper = MemorizeDBOpenHelper.getInstance(context = context)
+        val context = TestHelper.getContext()
+        val helper = MemorizeDBOpenHelper.getInstance(context = context, dbName = TEST_DB_NAME)
         helper.use {
             createTable(TABLE_NAME_TEST_1, ifNotExists = true,
                     columns = *arrayOf("id" to INTEGER + PRIMARY_KEY, "msg" to TEXT))
@@ -152,8 +151,8 @@ class TestMemorizerDBOpenHelper {
 
     @Test
     fun test_transaction_nest() {
-        val context = RuntimeEnvironment.application
-        val helper = MemorizeDBOpenHelper.getInstance(context = context)
+        val context = TestHelper.getContext()
+        val helper = MemorizeDBOpenHelper.getInstance(context = context, dbName = TEST_DB_NAME)
         helper.use {
             createTable(TABLE_NAME_TEST_1, ifNotExists = true,
                     columns = *arrayOf("id" to INTEGER + PRIMARY_KEY, "msg" to TEXT))
@@ -200,8 +199,8 @@ class TestMemorizerDBOpenHelper {
 
     @Test
     fun test_transaction_nest2() {
-        val context = RuntimeEnvironment.application
-        val helper = MemorizeDBOpenHelper.getInstance(context = context)
+        val context = TestHelper.getContext()
+        val helper = MemorizeDBOpenHelper.getInstance(context = context, dbName = TEST_DB_NAME)
         helper.use {
             createTable(TABLE_NAME_TEST_1, ifNotExists = true,
                     columns = *arrayOf("id" to INTEGER + PRIMARY_KEY, "msg" to TEXT))

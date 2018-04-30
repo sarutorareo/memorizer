@@ -10,6 +10,6 @@ class HandActionCompared(paramHand: String, paramActionVal : Int) : HandAction(p
 
     fun compare(ha : HandAction)
     {
-        compared = this.getActionVal() -  ha.getActionVal()
+        compared = this.actionVal -  ha.actionVal
     }
 }

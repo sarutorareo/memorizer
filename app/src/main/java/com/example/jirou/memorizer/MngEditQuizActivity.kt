@@ -4,7 +4,8 @@ import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
-import com.example.jirou.memorizer.db.MemorizeDBOpenHelper
+import com.example.jirou.memorizer.db.DB_NAME_MEMORIZER
+import com.example.jirou.memorizer.db.MemorizeDBSQLDroidHelper
 
 class MngEditQuizActivity : AppCompatActivity() {
 
@@ -21,13 +22,13 @@ class MngEditQuizActivity : AppCompatActivity() {
 
         val initDBSchemaButton : Button = findViewById(R.id.btnInitDBSchema)
         initDBSchemaButton.setOnClickListener( {
-            MemorizeDBOpenHelper.initDBSchema(applicationContext)
+            MemorizeDBSQLDroidHelper.initDBSchema(applicationContext, DB_NAME_MEMORIZER)
         }
         )
 
         val dropDBSchemaButton : Button = findViewById(R.id.btnDropDBSchema)
         dropDBSchemaButton.setOnClickListener( {
-            MemorizeDBOpenHelper.dropDBSchema(applicationContext)
+            MemorizeDBSQLDroidHelper.dropDBSchema(applicationContext, DB_NAME_MEMORIZER)
         }
         )
     }

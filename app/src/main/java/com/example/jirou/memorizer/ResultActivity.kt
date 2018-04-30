@@ -73,7 +73,7 @@ class ResultActivity : AppCompatActivity() {
             val ha: HandAction = intent.getParcelableExtra(String.format(HAND_ACTION_ARRAY_FMT, i))
             answeredHandActionList.get(i).copyFrom(ha)
 
-            var logStr: String = String.format("handAction  (%s, %d)", ha.getHand(), ha.getActionVal())
+            var logStr: String = String.format("handAction  (%s, %d)", ha.hand, ha.actionVal)
             Log.e("ResultActivity.onCreate", String.format("ResultActivity.onCreate %s", logStr))
             tv.text = String.format("%s %s", tv.text.toString(), logStr)
         }

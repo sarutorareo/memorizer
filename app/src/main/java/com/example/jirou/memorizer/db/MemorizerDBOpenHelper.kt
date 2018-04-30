@@ -7,7 +7,9 @@ import org.jetbrains.anko.db.*
 import java.util.*
 import com.example.jirou.memorizer.utils.dateToString
 
-class MemorizeDBOpenHelper(context:Context):ManagedSQLiteOpenHelper(context,"testMemorizer.db",null,1)
+const val DB_NAME_MEMORIZER : String = "testMemorizer.db"
+
+class MemorizeDBOpenHelper(context:Context, dbName: String):ManagedSQLiteOpenHelper(context, dbName,null,1)
 {
     companion object {
         const val TABLE_NAME_TEST = "test"
@@ -17,7 +19,7 @@ class MemorizeDBOpenHelper(context:Context):ManagedSQLiteOpenHelper(context,"tes
 
         private var instance: MemorizeDBOpenHelper? = null
 
-        fun getInstance(context: Context): MemorizeDBOpenHelper {
+        fun getInstance(context: Context, dbName: String): MemorizeDBOpenHelper {
             /*
             instance = instance ?: MemorizeDBOpenHelper(context.applicationContext)
             return instance!!
@@ -25,7 +27,7 @@ class MemorizeDBOpenHelper(context:Context):ManagedSQLiteOpenHelper(context,"tes
             instance  =
                     if (instance == null) {
                         Log.e("getInstance", "instance is null")
-                        MemorizeDBOpenHelper(context.applicationContext)
+                        MemorizeDBOpenHelper(context.applicationContext, dbName)
                     } else {
                         Log.e("getInstance", "instance is not null")
                         instance as MemorizeDBOpenHelper
@@ -35,6 +37,7 @@ class MemorizeDBOpenHelper(context:Context):ManagedSQLiteOpenHelper(context,"tes
             return instance!!
         }
 
+        /*
         fun initDBSchema(context: Context) {
             Log.e("DBHelper.initDBSchema", "start")
             val db = getInstance(context).readableDatabase
@@ -48,21 +51,24 @@ class MemorizeDBOpenHelper(context:Context):ManagedSQLiteOpenHelper(context,"tes
                 /*
                 createTable(TABLE_NAME_QST_HAND_ACTION, ifNotExists = true,
                         columns = *arrayOf( "quiz_id" to INTEGER  + PRIMARY_KEY + UNIQUE, "situation" to TEXT, "heroPosition" to TEXT, "oponentPosition" to TEXT))
-                createTable(TABLE_NAME_QST_HAND_ACTION_ITEM, ifNotExists = true,
-                        columns = *arrayOf( "quiz_id" to INTEGER  + PRIMARY_KEY + UNIQUE, "hand" to TEXT  + PRIMARY_KEY + UNIQUE, "actionVal" to INTEGER))
                  */
+                createTable(TABLE_NAME_QST_HAND_ACTION_ITEM, ifNotExists = true,
+                        columns = *arrayOf( "quiz_id" to INTEGER  + PRIMARY_KEY, "hand" to TEXT  + PRIMARY_KEY, "actionVal" to INTEGER))
             }
         }
-
-        fun dropDBSchema(context: Context) {
+*/
+        /*
+        fun dropDBSchema(context: Context, dbName : String) {
             Log.e("DBHelper.dropDBSchema", "start")
-            val db = getInstance(context).readableDatabase
+            val db = getInstance(context, dbName).readableDatabase
             Log.e("DBHelper.dropDBSchema", String.format("db = %s", db.toString()))
             db?.run {
                 dropTable(TABLE_NAME_TEST, ifExists = true)
                 dropTable(TABLE_NAME_QUIZ, ifExists = true)
+                dropTable(TABLE_NAME_QST_HAND_ACTION_ITEM, ifExists = true)
             }
         }
+        */
 
         fun addCreateUpdateDate(ar: Array<Pair<String, String>>) : Array<Pair<String, String>> {
             val current = dateToString(Date(System.currentTimeMillis()))
@@ -76,5 +82,10 @@ class MemorizeDBOpenHelper(context:Context):ManagedSQLiteOpenHelper(context,"tes
     }
 
     override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
+    }
+
+    override fun onConfigure(db: SQLiteDatabase?) {
+        super.onConfigure(db)
+        db?.setForeignKeyConstraintsEnabled(true)
     }
 }

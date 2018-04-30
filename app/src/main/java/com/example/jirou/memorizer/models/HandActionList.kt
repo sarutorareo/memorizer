@@ -29,17 +29,22 @@ open class HandActionList  {
         assert((idx < mHandActionList.size) &&  (idx >= 0))
         return mHandActionList[idx]
     }
-/*
-    fun save(db: SQLiteDatabase)
+    fun getFromHand(hand : String) : HandAction
     {
-        db.transaction {
-            mHandActionList.forEach() {
-                db.insertOrThrow(
-                        MemorizeDBOpenHelper.TABLE_NAME_QUIZ,
-                        *MemorizeDBOpenHelper.addCreateUpdateDate(arrayOf("type" to "test_type"))
-                )
-            }
+        mHandActionList.forEach() {
+            if (it.hand == hand)
+                return it
         }
+        throw Exception ("hand (%s) is not exist")
     }
-    */
+
+    val list : ArrayList<HandAction>
+        get() = mHandActionList
+
+    fun copyFrom(srcHa : HandAction)
+    {
+        val hand = getFromHand(srcHa.hand)
+        hand.copyFrom(srcHa)
+    }
+
 }
