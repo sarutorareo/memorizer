@@ -3,9 +3,10 @@ package com.example.jirou.memorizer.db
 import android.content.Context
 import android.database.DatabaseUtils
 import android.util.Log
-import com.example.jirou.memorizer.db.MemorizeDBOpenHelper.Companion.TABLE_NAME_QUIZ
-import com.example.jirou.memorizer.db.MemorizeDBOpenHelper.Companion.TABLE_NAME_QST_HAND_ACTION_ITEM
 import com.example.jirou.memorizer.db.MemorizeDBOpenHelper.Companion.TABLE_NAME_TEST
+import com.example.jirou.memorizer.db.MemorizeDBOpenHelper.Companion.TABLE_NAME_QUIZ
+import com.example.jirou.memorizer.db.MemorizeDBOpenHelper.Companion.TABLE_NAME_QST_HAND_ACTION
+import com.example.jirou.memorizer.db.MemorizeDBOpenHelper.Companion.TABLE_NAME_QST_HAND_ACTION_ITEM
 import java.sql.Connection
 import java.sql.DriverManager
 import java.sql.Statement
@@ -38,6 +39,16 @@ class MemorizeDBSQLDroidHelper  {
                         " type TEXT NOT NULL," +
                         " update_date TEXT NOT NULL," +
                         " PRIMARY KEY(id))")
+                Log.e("DBHelper.initDBSchema", "table quiz created")
+                statement?.executeUpdate( "CREATE TABLE IF NOT EXISTS $TABLE_NAME_QST_HAND_ACTION " +
+                        "(quiz_id INTEGER NOT NULL, " +
+                        " situation TEXT NOT NULL," +
+                        " hero_position TEXT NOT NULL," +
+                        " opponent_position TEXT NOT NULL," +
+                        " update_date TEXT NOT NULL," +
+                        " PRIMARY KEY(quiz_id), " +
+                        " FOREIGN KEY(`quiz_id`) REFERENCES `quiz`(`id`) ON DELETE CASCADE" +
+                        ")")
                 Log.e("DBHelper.initDBSchema", "table quiz created")
                 statement?.executeUpdate( "CREATE TABLE IF NOT EXISTS $TABLE_NAME_QST_HAND_ACTION_ITEM " +
                         "(quiz_id INTEGER NOT NULL, " +
@@ -73,6 +84,7 @@ class MemorizeDBSQLDroidHelper  {
 
                 statement?.execute ("PRAGMA foreign_keys=ON;")
                 statement?.executeUpdate("DROP TABLE IF EXISTS $TABLE_NAME_QST_HAND_ACTION_ITEM ")
+                statement?.executeUpdate("DROP TABLE IF EXISTS $TABLE_NAME_QST_HAND_ACTION ")
                 statement?.executeUpdate("DROP TABLE IF EXISTS $TABLE_NAME_QUIZ ")
                 statement?.executeUpdate("DROP TABLE IF EXISTS $TABLE_NAME_TEST ")
             } catch (e : Exception) {

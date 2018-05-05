@@ -10,10 +10,4 @@ import org.junit.Assert.*
  * See [testing documentation](http://d.android.com/tools/testing).
  */
 class TestQuestion {
-    @Test
-    fun constructor_id() {
-        val q = Question(9)
-
-        assertEquals(9, q.quizId)
-    }
 }

@@ -9,31 +9,31 @@ import org.junit.Assert.*
  *
  * See [testing documentation](http://d.android.com/tools/testing).
  */
-class TestEnumHandActionPosition {
+class TestEnumHAPosition {
     @Test
     fun constructor() {
-        assertEquals("BB",  EnumHandActionPosition.BB.toString())
-        assertEquals("BB",  EnumHandActionPosition.BB.name)
-        assertEquals(5,  EnumHandActionPosition.BB.ordinal)
+        assertEquals("BB",  EnumHAPosition.BB.toString())
+        assertEquals("BB",  EnumHAPosition.BB.name)
+        assertEquals(5,  EnumHAPosition.BB.ordinal)
 
-        assertEquals("UTG",  EnumHandActionPosition.UTG.name)
-        assertEquals(0,  EnumHandActionPosition.UTG.ordinal)
+        assertEquals("UTG",  EnumHAPosition.UTG.name)
+        assertEquals(0,  EnumHAPosition.UTG.ordinal)
     }
 
     @Test
     fun test_toHandActionPosition() {
-        assertEquals(EnumHandActionPosition.BTN, EnumHandActionPosition.toHandActionPosition("BTN"))
-        assertEquals(EnumHandActionPosition.SB, EnumHandActionPosition.toHandActionPosition("SB"))
-        assertEquals(EnumHandActionPosition.BB, EnumHandActionPosition.toHandActionPosition("BB"))
-        assertEquals(EnumHandActionPosition.UTG, EnumHandActionPosition.toHandActionPosition("UTG"))
-        assertEquals(EnumHandActionPosition.HJ, EnumHandActionPosition.toHandActionPosition("HJ"))
-        assertEquals(EnumHandActionPosition.CO, EnumHandActionPosition.toHandActionPosition("CO"))
-        assertEquals(EnumHandActionPosition.NULL, EnumHandActionPosition.toHandActionPosition("NULL"))
+        assertEquals(EnumHAPosition.BTN, EnumHAPosition.toHandActionPosition("BTN"))
+        assertEquals(EnumHAPosition.SB, EnumHAPosition.toHandActionPosition("SB"))
+        assertEquals(EnumHAPosition.BB, EnumHAPosition.toHandActionPosition("BB"))
+        assertEquals(EnumHAPosition.UTG, EnumHAPosition.toHandActionPosition("UTG"))
+        assertEquals(EnumHAPosition.HJ, EnumHAPosition.toHandActionPosition("HJ"))
+        assertEquals(EnumHAPosition.CO, EnumHAPosition.toHandActionPosition("CO"))
+        assertEquals(EnumHAPosition.NULL, EnumHAPosition.toHandActionPosition("NULL"))
     }
 
     @Test(expected = Exception::class)
     fun test_toHandActionSituation__except() {
-        assertEquals(EnumHandActionPosition.BTN, EnumHandActionPosition.toHandActionPosition("BTNx"))
+        assertEquals(EnumHAPosition.BTN, EnumHAPosition.toHandActionPosition("BTNx"))
     }
 
 }

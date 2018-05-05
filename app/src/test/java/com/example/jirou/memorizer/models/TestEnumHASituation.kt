@@ -9,22 +9,22 @@ import org.junit.Assert.*
  *
  * See [testing documentation](http://d.android.com/tools/testing).
  */
-class TestEnumHandActionSituation {
+class TestEnumHASituation {
     @Test
     fun test_constructor() {
-        assertEquals("OPEN",  EnumHandActionSituation.OPEN.toString())
+        assertEquals("OPEN",  EnumHASituation.OPEN.toString())
     }
 
     @Test
     fun test_toHandActionSituation() {
-        assertEquals(EnumHandActionSituation.OPEN, EnumHandActionSituation.toHandActionSituation("OPEN"))
-        assertEquals(EnumHandActionSituation.FACING_A_RAISE, EnumHandActionSituation.toHandActionSituation("FACING_A_RAISE"))
-        assertEquals(EnumHandActionSituation.FACING_A_3BET, EnumHandActionSituation.toHandActionSituation("FACING_A_3BET"))
-        assertEquals(EnumHandActionSituation.FACING_A_4BET, EnumHandActionSituation.toHandActionSituation("FACING_A_4BET"))
+        assertEquals(EnumHASituation.OPEN, EnumHASituation.toHandActionSituation("OPEN"))
+        assertEquals(EnumHASituation.FACING_A_RAISE, EnumHASituation.toHandActionSituation("FACING_A_RAISE"))
+        assertEquals(EnumHASituation.FACING_A_3BET, EnumHASituation.toHandActionSituation("FACING_A_3BET"))
+        assertEquals(EnumHASituation.FACING_A_4BET, EnumHASituation.toHandActionSituation("FACING_A_4BET"))
     }
 
     @Test(expected = Exception::class)
     fun test_toHandActionSituation__except() {
-        assertEquals(EnumHandActionSituation.FACING_A_4BET, EnumHandActionSituation.toHandActionSituation("FACING_A_4BETx"))
+        assertEquals(EnumHASituation.FACING_A_4BET, EnumHASituation.toHandActionSituation("FACING_A_4BETx"))
     }
 }

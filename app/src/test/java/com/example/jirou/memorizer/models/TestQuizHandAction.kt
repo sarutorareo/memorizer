@@ -49,9 +49,9 @@ class TestQuizHandAction {
         assertEquals(9, q.question.quizId)
         assertEquals(true, q.question is QuestionHandAction)
         val question: QuestionHandAction = q.question as QuestionHandAction
-        assertEquals(EnumHandActionSituation.OPEN, question.situation)
-        assertEquals(EnumHandActionPosition.BTN, question.heroPos)
-        assertEquals(EnumHandActionPosition.NULL, question.opponentPos)
+        assertEquals(EnumHASituation.OPEN, question.situation)
+        assertEquals(EnumHAPosition.BTN, question.heroPosition)
+        assertEquals(EnumHAPosition.NULL, question.opponentPosition)
 
         assertEquals(9, q.correct.quizId)
         assertEquals(true, q.correct is CorrectHandAction)
@@ -180,5 +180,4 @@ class TestQuizHandAction {
             assertEquals(val2, ha1!!.actionVal)
         }
     }
-
 }

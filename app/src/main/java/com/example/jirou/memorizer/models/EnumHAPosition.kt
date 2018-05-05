@@ -1,6 +1,6 @@
 package com.example.jirou.memorizer.models
 
-enum class EnumHandActionPosition() {
+enum class EnumHAPosition() {
     UTG,
     HJ,
     CO,
@@ -10,7 +10,7 @@ enum class EnumHandActionPosition() {
     NULL;
 
     companion object {
-        fun toHandActionPosition(str : String) : EnumHandActionPosition{
+        fun toHandActionPosition(str : String) : EnumHAPosition{
             return when (str) {
                 "UTG" -> { UTG }
                 "HJ" -> { HJ }

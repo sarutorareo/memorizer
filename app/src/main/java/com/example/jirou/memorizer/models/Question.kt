@@ -1,6 +1,8 @@
 package com.example.jirou.memorizer.models
 
-open class Question(private val mQuizId: Int)  {
+import android.content.Context
+
+abstract class Question(private val mQuizId: Int)  {
     init {
     }
 
@@ -8,4 +10,7 @@ open class Question(private val mQuizId: Int)  {
         get() {
             return mQuizId
         }
+
+    abstract fun save(context : Context, dbName: String)
+    abstract fun load(context : Context, dbName: String)
 }
