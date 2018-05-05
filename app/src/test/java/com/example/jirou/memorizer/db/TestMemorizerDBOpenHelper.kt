@@ -252,7 +252,7 @@ class TestMemorizerDBOpenHelper {
         assertEquals(2, array.size)
         val newArray = MemorizeDBOpenHelper.addCreateUpdateDate(array)
 
-        assertEquals( array.size + 2, newArray.size)
+        assertEquals( array.size + 1, newArray.size)
         val currentDate = Date()
         newArray.forEachWithIndex { i, pair ->
             when {
@@ -261,12 +261,6 @@ class TestMemorizerDBOpenHelper {
                     assertEquals(array[i].second, pair.second)
                 }
                 (i == array.size) -> {
-                    assertEquals("create_date", pair.first)
-                    val resultDate = Date(pair.second)
-                    val diffLong: Long = currentDate.time - resultDate.time
-                    assertEquals(true, diffLong / 1000 <= 1)
-                }
-                (i == array.size + 1) -> {
                     assertEquals("update_date", pair.first)
                     val resultDate = Date(pair.second)
                     val diffLong: Long = currentDate.time - resultDate.time

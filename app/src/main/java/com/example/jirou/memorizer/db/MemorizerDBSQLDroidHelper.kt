@@ -30,14 +30,12 @@ class MemorizeDBSQLDroidHelper  {
                 statement?.executeUpdate("CREATE TABLE IF NOT EXISTS $TABLE_NAME_TEST" +
                         " (date TEXT," +
                         " bmi TEXT," +
-                        " create_date TEXT NOT NULL," +
                         " update_date TEXT NOT NULL," +
                         " PRIMARY KEY(date, bmi))")
                 Log.e("DBHelper.initDBSchema", "table test created")
                 statement?.executeUpdate( "CREATE TABLE IF NOT EXISTS $TABLE_NAME_QUIZ " +
                         "(id INTEGER NOT NULL, " +
                         " type TEXT NOT NULL," +
-                        " create_date TEXT NOT NULL," +
                         " update_date TEXT NOT NULL," +
                         " PRIMARY KEY(id))")
                 Log.e("DBHelper.initDBSchema", "table quiz created")
@@ -45,7 +43,6 @@ class MemorizeDBSQLDroidHelper  {
                         "(quiz_id INTEGER NOT NULL, " +
                         "hand TEXT NOT NULL, " +
                         "action_val INTEGER, " +
-                        "create_date TEXT NOT NULL, " +
                         "update_date TEXT NOT NULL, " +
                         "PRIMARY KEY(quiz_id, hand)," +
                         "FOREIGN KEY(`quiz_id`) REFERENCES `quiz`(`id`) ON DELETE CASCADE" +

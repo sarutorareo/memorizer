@@ -1,6 +1,5 @@
 package com.example.jirou.memorizer.models
 
-const val DEFAULT_QUIZ_ID = 0
 open class QuizHandAction(id : Int) : Quiz(id)  {
     init {
         mQuestion = QuestionHandAction(id)

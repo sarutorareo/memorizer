@@ -39,7 +39,7 @@ class MemorizeDBOpenHelper(context:Context, dbName: String):ManagedSQLiteOpenHel
 
         fun addCreateUpdateDate(ar: Array<Pair<String, String>>) : Array<Pair<String, String>> {
             val current = dateToString(Date(System.currentTimeMillis()))
-            val dateArray = arrayOf("create_date" to current, "update_date" to current)
+            val dateArray = arrayOf("update_date" to current)
 
             return arrayOf(*ar, *dateArray)
         }

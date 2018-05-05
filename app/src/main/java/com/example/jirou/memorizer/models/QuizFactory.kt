@@ -30,7 +30,7 @@ class QuizFactory  {
         }
         val id = resultPair!!.first
         val type = resultPair!!.second
-        var quiz : Quiz? = null
+        val quiz : Quiz
         when (type) {
             EnumQuizType.HAND_ACTION.toString() ->
             {
@@ -42,19 +42,18 @@ class QuizFactory  {
             }
         }
 
-//        quiz.question.load()
-        quiz!!.correct.load(context, dbName)
+        quiz.correct.load(context, dbName)
 
-        return quiz!!
+        return quiz
     }
 
     fun loadOrCreate(context : Context, dbName: String, quiz_id : Int, type : EnumQuizType) : Quiz
     {
-        try {
-            return load(context, dbName, quiz_id)
+        return try {
+            load(context, dbName, quiz_id)
         }
         catch (e: SQLiteException) {
-            return createDefaultInstance(quiz_id, type)
+            createDefaultInstance(quiz_id, type)
         }
         catch (e: Exception) {
             throw e

@@ -3,7 +3,8 @@ package com.example.jirou.memorizer.models
 import android.content.Context
 import android.util.Log
 import com.example.jirou.memorizer.db.MemorizeDBOpenHelper
-import org.jetbrains.anko.db.insertOrThrow
+
+import org.jetbrains.anko.db.replaceOrThrow
 import org.jetbrains.anko.db.rowParser
 import org.jetbrains.anko.db.select
 import org.jetbrains.anko.db.transaction
@@ -24,7 +25,7 @@ open class CorrectHandAction(quizId: Int) : Correct(quizId)  {
             transaction {
                 handActionList.list.forEach {
                     Log.d("CorrectHandAction.save", String.format("save quiz_id[%d], hand[%s], action_val[%d]", quizId, it.hand, it.actionVal ))
-                    insertOrThrow(
+                    replaceOrThrow (
                             MemorizeDBOpenHelper.TABLE_NAME_QST_HAND_ACTION_ITEM,
                             *MemorizeDBOpenHelper.addCreateUpdateDate(arrayOf("quiz_id" to quizId.toString(),
                                     "hand" to it.hand,

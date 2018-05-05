@@ -1,26 +1,16 @@
 package com.example.jirou.memorizer.models
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.util.Log
 import com.example.jirou.memorizer.db.MemorizeDBOpenHelper
-import org.jetbrains.anko.db.insertOrThrow
-import org.jetbrains.anko.db.rowParser
-import org.jetbrains.anko.db.select
-import org.jetbrains.anko.db.transaction
+import org.jetbrains.anko.db.*
 
-abstract class Quiz()  {
+abstract class Quiz(id : Int)   {
     private var mId : Int = 0
     protected var mQuestion : Question = mCreateQuestion(mId)
     protected var mCorrect : Correct = mCreateCorrect(mId)
 
     init {
-    }
-
-    companion object {
-    }
-
-    constructor(id : Int) : this() {
         mId = id
         mQuestion = mCreateQuestion(id)
         mCorrect = mCreateCorrect(id)
@@ -52,7 +42,8 @@ abstract class Quiz()  {
         helper.use {
             transaction {
                 Log.d("Quiz.save", String.format("save id[%d], type[%s]", id, mGetTypeStr() ))
-                insertOrThrow(
+
+                replaceOrThrow(
                         MemorizeDBOpenHelper.TABLE_NAME_QUIZ,
                         *MemorizeDBOpenHelper.addCreateUpdateDate(arrayOf("id" to id.toString(),
                                 "type" to mGetTypeStr())
@@ -63,9 +54,4 @@ abstract class Quiz()  {
             }
         }
     }
-
-    protected var mIsNewRecord = true
-    val isNewRecord : Boolean
-        get() = mIsNewRecord
-
 }
