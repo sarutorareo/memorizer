@@ -23,6 +23,7 @@ open class CorrectHandAction(quizId: Int) : Correct(quizId)  {
         helper.use {
             transaction {
                 handActionList.list.forEach {
+                    Log.d("CorrectHandAction.save", String.format("save quiz_id[%d], hand[%s], action_val[%d]", quizId, it.hand, it.actionVal ))
                     insertOrThrow(
                             MemorizeDBOpenHelper.TABLE_NAME_QST_HAND_ACTION_ITEM,
                             *MemorizeDBOpenHelper.addCreateUpdateDate(arrayOf("quiz_id" to quizId.toString(),

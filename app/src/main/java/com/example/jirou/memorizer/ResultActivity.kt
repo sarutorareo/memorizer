@@ -37,8 +37,8 @@ class ResultActivity : AppCompatActivity() {
         gridView = findViewById(R.id.grdAnswered)
         gridView.adapter = ListAdapterHandAction(applicationContext, gridView, mAnsweredHandActionList)
 
-        val btnAnswer : Button = findViewById(R.id.btnRetry)
-        btnAnswer.setOnClickListener( {
+        val btnRetry : Button = findViewById(R.id.btnRetry)
+        btnRetry.setOnClickListener( {
             finish()
         } )
 
@@ -65,7 +65,6 @@ class ResultActivity : AppCompatActivity() {
     }
 
     private fun getAnsweredHandActionList(answeredHandActionList :  HandActionList) {
-
         // 配列は今のところダメ　個別にHandActionを渡すのはできた
         val haArraySize: Int = intent.getIntExtra(HAND_ACTION_ARRAY_SIZE, 0)
         val tv: TextView = findViewById(R.id.multiAutoCompleteTextView)
