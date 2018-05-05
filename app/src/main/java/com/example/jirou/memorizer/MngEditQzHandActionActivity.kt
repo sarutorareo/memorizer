@@ -29,6 +29,9 @@ class MngEditQzHandActionActivity : AppCompatActivity() {
         mQuiz = QuizFactory().loadOrCreate(applicationContext, DB_NAME_MEMORIZER, id, EnumQuizType.HAND_ACTION) as QuizHandAction
 
         findViewById<TextView>(R.id.txtQuizID).text = String.format("quiz_id = %d", mQuiz.id)
+
+        findViewById<TextView>(R.id.txtSituations).text = mQuiz.question.toString()
+
         //
         //グリットビューのセル？の作成
         //

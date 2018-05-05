@@ -8,7 +8,6 @@ import com.example.jirou.memorizer.test_utils.TEST_DB_NAME
 import com.example.jirou.memorizer.test_utils.TestHelper
 import org.jetbrains.anko.db.insertOrThrow
 import org.junit.After
-import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -43,16 +42,29 @@ class TestQuizFactory {
         // setup
         //
         val quizId = 99
+        val situation1 = EnumHASituation.FACING_A_3BET
+        val heroPos1 = EnumHAPosition.HJ
+        val opponentPos1 = EnumHAPosition.UTG
+
         val hand1 = "AK"
         val val1 = 3
+
         val helper = MemorizeDBOpenHelper.getInstance(mContext, TEST_DB_NAME)
         helper.use {
             insertOrThrow(MemorizeDBOpenHelper.TABLE_NAME_QUIZ,
-                    *MemorizeDBOpenHelper.addCreateUpdateDate(
+                    *MemorizeDBOpenHelper.addUpdateDate(
                             arrayOf("id" to quizId.toString(), "type" to EnumQuizType.HAND_ACTION.toString())))
 
+            insertOrThrow(MemorizeDBOpenHelper.TABLE_NAME_QST_HAND_ACTION,
+                    *MemorizeDBOpenHelper.addUpdateDate(
+                            arrayOf("quiz_id" to quizId.toString(),
+                                    "situation" to situation1.toString(),
+                                    "hero_position" to heroPos1.toString(),
+                                    "opponent_position" to opponentPos1.toString()
+                            )))
+
             insertOrThrow(MemorizeDBOpenHelper.TABLE_NAME_QST_HAND_ACTION_ITEM,
-                    *MemorizeDBOpenHelper.addCreateUpdateDate(
+                    *MemorizeDBOpenHelper.addUpdateDate(
                             arrayOf("quiz_id" to quizId.toString(), "hand" to hand1, "action_val" to val1.toString())))
         }
 
@@ -65,17 +77,19 @@ class TestQuizFactory {
         // verify
         //
         assertEquals(true, q is QuizHandAction)
+        val qstHa = (q.question as QuestionHandAction)
+        assertEquals(EnumHASituation.FACING_A_3BET, qstHa.situation)
         val handActionList = (q.correct as CorrectHandAction).handActionList
         assertEquals(val1, handActionList.getFromHand(hand1).actionVal)
     }
 
     @Test(expected = Exception::class)
-    fun test_load_exception() {
+    fun test_load__exception() {
         val quizId = 99
         val helper = MemorizeDBOpenHelper.getInstance(mContext, TEST_DB_NAME)
         helper.use {
             insertOrThrow(MemorizeDBOpenHelper.TABLE_NAME_QUIZ,
-                    *MemorizeDBOpenHelper.addCreateUpdateDate(
+                    *MemorizeDBOpenHelper.addUpdateDate(
                             arrayOf("id" to quizId.toString(), "type" to "test_type")))
         }
 
@@ -85,7 +99,7 @@ class TestQuizFactory {
     }
 
     @Test
-    fun test_loadOrCreate_load() {
+    fun test_loadOrCreate__load() {
         //
         // setup
         //
@@ -106,7 +120,7 @@ class TestQuizFactory {
     }
 
     @Test
-    fun test_loadOrCreate_create() {
+    fun test_loadOrCreate__create() {
         //
         // setup
         //

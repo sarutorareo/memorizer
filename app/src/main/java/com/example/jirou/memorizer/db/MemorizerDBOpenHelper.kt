@@ -37,7 +37,7 @@ class MemorizeDBOpenHelper(context:Context, dbName: String):ManagedSQLiteOpenHel
             return instance!!
         }
 
-        fun addCreateUpdateDate(ar: Array<Pair<String, String>>) : Array<Pair<String, String>> {
+        fun addUpdateDate(ar: Array<Pair<String, String>>) : Array<Pair<String, String>> {
             val current = dateToString(Date(System.currentTimeMillis()))
             val dateArray = arrayOf("update_date" to current)
 

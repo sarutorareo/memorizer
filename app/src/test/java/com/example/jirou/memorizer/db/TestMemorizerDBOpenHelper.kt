@@ -9,7 +9,6 @@ import org.junit.Test
 import org.junit.Assert.*
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
-import org.robolectric.RuntimeEnvironment
 import java.util.*
 
 /**
@@ -250,7 +249,7 @@ class TestMemorizerDBOpenHelper {
     fun test_addCreateUpdateDate() {
         val array = arrayOf("item1" to "aaa", "item2" to "bbb")
         assertEquals(2, array.size)
-        val newArray = MemorizeDBOpenHelper.addCreateUpdateDate(array)
+        val newArray = MemorizeDBOpenHelper.addUpdateDate(array)
 
         assertEquals( array.size + 1, newArray.size)
         val currentDate = Date()

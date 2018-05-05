@@ -42,6 +42,7 @@ class QuizFactory  {
             }
         }
 
+        quiz.question.load(context, dbName)
         quiz.correct.load(context, dbName)
 
         return quiz

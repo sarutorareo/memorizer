@@ -27,7 +27,7 @@ open class CorrectHandAction(quizId: Int) : Correct(quizId)  {
                     Log.d("CorrectHandAction.save", String.format("save quiz_id[%d], hand[%s], action_val[%d]", quizId, it.hand, it.actionVal ))
                     replaceOrThrow (
                             MemorizeDBOpenHelper.TABLE_NAME_QST_HAND_ACTION_ITEM,
-                            *MemorizeDBOpenHelper.addCreateUpdateDate(arrayOf("quiz_id" to quizId.toString(),
+                            *MemorizeDBOpenHelper.addUpdateDate(arrayOf("quiz_id" to quizId.toString(),
                                     "hand" to it.hand,
                                     "action_val" to it.actionVal.toString()))
                     )

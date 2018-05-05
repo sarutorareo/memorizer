@@ -34,7 +34,7 @@ class TestQuestionHandAction {
         MemorizeDBSQLDroidHelper.initDBSchema(mContext, TEST_DB_NAME)
         val helper = MemorizeDBOpenHelper.getInstance(mContext, TEST_DB_NAME)
         helper.use {
-            insertOrThrow(MemorizeDBOpenHelper.TABLE_NAME_QUIZ, *MemorizeDBOpenHelper.addCreateUpdateDate(arrayOf("id" to DEFAULT_QUIZ_ID.toString(), "type" to "test_type")))
+            insertOrThrow(MemorizeDBOpenHelper.TABLE_NAME_QUIZ, *MemorizeDBOpenHelper.addUpdateDate(arrayOf("id" to DEFAULT_QUIZ_ID.toString(), "type" to "test_type")))
         }
     }
 
@@ -76,7 +76,8 @@ class TestQuestionHandAction {
             val quizList = select(MemorizeDBOpenHelper.TABLE_NAME_QST_HAND_ACTION,
                     "quiz_id", "situation", "hero_position", "opponent_position")
                     .parseList(
-                            rowParser { quizId: Int, situation: String, heroPos: String, opponentPos: String ->
+                            rowParser {
+                                quizId: Int, situation: String, heroPos: String, opponentPos: String ->
                                 QuestionHandAction(quizId,
                                         EnumHASituation.toHandActionSituation(situation),
                                         EnumHAPosition.toHandActionPosition(heroPos),

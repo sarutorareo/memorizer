@@ -9,8 +9,9 @@
     <string name="btn_edit_quiz">Edit Quiz</string>
     <string name="btn_edit_qz_hand_action">Edit Quiz Hand Action</string>
     <string name="btn_delete_all_quiz">Delete All Quiz</string>
-    <string name="btn_save_qz_hand_action">Save"</string>
-    <string name="btn_load_qz_hand_action">Load"</string>
-    <string name="btn_init_db_schema">Init DB schema"</string>
-    <string name="btn_drop_db_schema">Drop DB schema"</string>
+    <string name="btn_save_qz_hand_action">Save</string>
+    <string name="btn_load_qz_hand_action">Load</string>
+    <string name="btn_init_db_schema">Init DB schema</string>
+    <string name="btn_drop_db_schema">Drop DB schema</string>
+    <string name="btn_change_situations">Change situations</string>
 </resources>

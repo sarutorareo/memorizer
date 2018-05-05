@@ -46,7 +46,7 @@ open class QuestionHandAction(quizId: Int, situation: EnumHASituation,
                 Log.d("QuestionHandAction.save", String.format("save [%s]", this.toString()))
                 replaceOrThrow(
                         MemorizeDBOpenHelper.TABLE_NAME_QST_HAND_ACTION,
-                        *MemorizeDBOpenHelper.addCreateUpdateDate(arrayOf(
+                        *MemorizeDBOpenHelper.addUpdateDate(arrayOf(
                                 "quiz_id" to quizId.toString(),
                                 "situation" to situation.toString(),
                                 "hero_position" to heroPosition.toString(),

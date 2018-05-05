@@ -45,11 +45,12 @@ abstract class Quiz(id : Int)   {
 
                 replaceOrThrow(
                         MemorizeDBOpenHelper.TABLE_NAME_QUIZ,
-                        *MemorizeDBOpenHelper.addCreateUpdateDate(arrayOf("id" to id.toString(),
+                        *MemorizeDBOpenHelper.addUpdateDate(arrayOf("id" to id.toString(),
                                 "type" to mGetTypeStr())
                         )
                 )
 
+                question.save(context, dbName)
                 correct.save(context, dbName)
             }
         }

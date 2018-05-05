@@ -32,7 +32,7 @@ class TestCorrectHandAction {
         MemorizeDBSQLDroidHelper.initDBSchema(mContext, TEST_DB_NAME)
         val helper = MemorizeDBOpenHelper.getInstance(mContext, TEST_DB_NAME)
         helper.use {
-            insertOrThrow(MemorizeDBOpenHelper.TABLE_NAME_QUIZ, *MemorizeDBOpenHelper.addCreateUpdateDate(arrayOf("id" to DEFAULT_QUIZ_ID.toString(), "type" to "test_type")))
+            insertOrThrow(MemorizeDBOpenHelper.TABLE_NAME_QUIZ, *MemorizeDBOpenHelper.addUpdateDate(arrayOf("id" to DEFAULT_QUIZ_ID.toString(), "type" to "test_type")))
         }
     }
 
