@@ -1,6 +1,8 @@
 package com.example.jirou.memorizer.models
 
 import android.content.Context
+import android.os.Parcel
+import android.os.Parcelable
 import android.util.Log
 import com.example.jirou.memorizer.db.MemorizeDBOpenHelper
 import org.jetbrains.anko.db.replaceOrThrow
@@ -10,11 +12,27 @@ import org.jetbrains.anko.db.transaction
 
 open class QuestionHandAction(quizId: Int, situation: EnumHASituation,
                               heroPos: EnumHAPosition,
-                              opponentPos: EnumHAPosition) : Question(quizId) {
+                              opponentPos: EnumHAPosition) : Question(quizId), Parcelable {
 
     private var mSituation: EnumHASituation = situation
     private var mHeroPos: EnumHAPosition = heroPos
     private var mOpponentPos: EnumHAPosition = opponentPos
+
+    companion object {
+        @JvmField
+        val CREATOR: Parcelable.Creator<QuestionHandAction> = object : Parcelable.Creator<QuestionHandAction> {
+            override fun createFromParcel(`in`: Parcel): QuestionHandAction {
+                return QuestionHandAction(`in`.readInt(),
+                        EnumHASituation.fromString(`in`.readString()),
+                        EnumHAPosition.fromString(`in`.readString()),
+                        EnumHAPosition.fromString(`in`.readString()))
+            }
+
+            override fun newArray(size: Int): Array<QuestionHandAction?> {
+                return arrayOfNulls(size)
+            }
+        }
+    }
 
     init {
     }
@@ -71,9 +89,9 @@ open class QuestionHandAction(quizId: Int, situation: EnumHASituation,
                             rowParser {
                                 situation: String, heroPos: String, opponentPos: String ->
                                 QuestionHandAction(quizId,
-                                        EnumHASituation.toHandActionSituation(situation),
-                                        EnumHAPosition.toHandActionPosition(heroPos),
-                                        EnumHAPosition.toHandActionPosition(opponentPos)
+                                        EnumHASituation.fromString(situation),
+                                        EnumHAPosition.fromString(heroPos),
+                                        EnumHAPosition.fromString(opponentPos)
                                 )
                             }
                     )
@@ -86,4 +104,16 @@ open class QuestionHandAction(quizId: Int, situation: EnumHASituation,
         heroPosition = src.heroPosition
         opponentPosition = src.opponentPosition
     }
+
+    override fun writeToParcel(dest: Parcel?, flags: Int) {
+        dest?.writeInt(quizId)
+        dest?.writeString(situation.toString())
+        dest?.writeString(heroPosition.toString())
+        dest?.writeString(opponentPosition.toString())
+    }
+
+    override fun describeContents(): Int {
+        return 0
+    }
+
 }

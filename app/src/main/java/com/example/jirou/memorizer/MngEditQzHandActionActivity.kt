@@ -12,7 +12,9 @@ import com.example.jirou.memorizer.db.DB_NAME_MEMORIZER
 import com.example.jirou.memorizer.models.*
 
 const val REQUEST_CODE_EDIT_HAND_ACTION = 1000
+const val REQUEST_CODE_EDIT_HAND_ACTION_SITUATION = 1001
 const val INTENT_KEY_QUIZ_ID = "quiz_id"
+const val INTENT_KEY_QUESTION_HAND_ACTION = "question_hand_action"
 
 class MngEditQzHandActionActivity : AppCompatActivity() {
     private var mQuiz : QuizHandAction = QuizHandAction(-1)
@@ -28,9 +30,10 @@ class MngEditQzHandActionActivity : AppCompatActivity() {
         val id: Int = intent.getIntExtra(INTENT_KEY_QUIZ_ID, -1)
         mQuiz = QuizFactory().loadOrCreate(applicationContext, DB_NAME_MEMORIZER, id, EnumQuizType.HAND_ACTION) as QuizHandAction
 
-        findViewById<TextView>(R.id.txtQuizID).text = String.format("quiz_id = %d", mQuiz.id)
-
-        findViewById<TextView>(R.id.txtSituations).text = mQuiz.question.toString()
+        //
+        // シチュエーションの設定
+        //
+        mInitSituations(mQuiz.question as QuestionHandAction)
 
         //
         //グリットビューのセル？の作成
@@ -60,19 +63,33 @@ class MngEditQzHandActionActivity : AppCompatActivity() {
 
         val loadButton : Button = findViewById(R.id.btnLoadQzHandAction)
         loadButton.setOnClickListener( {
-            // 渡す値を設定
+            // 戻り値を設定
             val intent = Intent()
             intent.putExtra(INTENT_KEY_QUIZ_ID, mQuiz.id)
 
-            // 情報を渡して MainActivity の onActivityResult を呼び出す
+            // 戻り値を渡して 呼び出し元 の onActivityResult を呼び出す
             setResult(Activity.RESULT_OK, intent)
 
             // アクティビティを閉じる
             finish()
         }
         )
+
+        val changeSituationButton : Button = findViewById(R.id.btnChangeSituations)
+        changeSituationButton.setOnClickListener( {
+            // 渡す値を設定
+            val intent = Intent(application, MngEditQzHandActionSituationActivity::class.java)
+            intent.putExtra(INTENT_KEY_QUESTION_HAND_ACTION, mQuiz.question as QuestionHandAction)
+            startActivityForResult(intent, REQUEST_CODE_EDIT_HAND_ACTION_SITUATION)
+        }
+        )
+
     }
 
+    private fun mInitSituations(qst : QuestionHandAction)
+    {
+        findViewById<TextView>(R.id.txtSituations).text = qst.toString()
+    }
     private fun mSaveHandAction(quiz : Quiz)
     {
         Log.e("mSaveHandAction", "start")
@@ -127,4 +144,15 @@ class MngEditQzHandActionActivity : AppCompatActivity() {
         }
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (requestCode == REQUEST_CODE_EDIT_HAND_ACTION_SITUATION && resultCode == Activity.RESULT_OK) {
+            // リクエストコードが一致してかつアクティビティが正常に終了していた場合、QuestionHandActionを受け取る
+            val received = data!!
+            val qstHa = received.getParcelableExtra<QuestionHandAction>(INTENT_KEY_QUESTION_HAND_ACTION)
+
+            (mQuiz.question as QuestionHandAction).copyFrom(qstHa)
+
+            mInitSituations(mQuiz.question as QuestionHandAction)
+        }
+    }
 }

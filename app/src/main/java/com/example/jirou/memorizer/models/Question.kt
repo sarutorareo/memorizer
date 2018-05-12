@@ -2,7 +2,7 @@ package com.example.jirou.memorizer.models
 
 import android.content.Context
 
-abstract class Question(private val mQuizId: Int)  {
+abstract class Question(private val mQuizId: Int) {
     init {
     }
 

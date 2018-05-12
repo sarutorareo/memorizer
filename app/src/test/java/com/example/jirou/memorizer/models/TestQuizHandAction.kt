@@ -102,9 +102,9 @@ class TestQuizHandAction {
                             rowParser {
                                 situation: String, heroPos: String, opponentPos: String ->
                                 QuestionHandAction(id,
-                                        EnumHASituation.toHandActionSituation(situation),
-                                        EnumHAPosition.toHandActionPosition(heroPos),
-                                        EnumHAPosition.toHandActionPosition(opponentPos)
+                                        EnumHASituation.fromString(situation),
+                                        EnumHAPosition.fromString(heroPos),
+                                        EnumHAPosition.fromString(opponentPos)
                                 )
                             }
                     )
@@ -135,7 +135,7 @@ class TestQuizHandAction {
     }
 
     @Test
-    fun test_save__repace() {
+    fun test_save__replace() {
         //
         // Setup
         //
@@ -189,9 +189,9 @@ class TestQuizHandAction {
                             rowParser {
                                 situation: String, heroPos: String, opponentPos: String, updateDate: String ->
                                 Pair(QuestionHandAction(id,
-                                        EnumHASituation.toHandActionSituation(situation),
-                                        EnumHAPosition.toHandActionPosition(heroPos),
-                                        EnumHAPosition.toHandActionPosition(opponentPos)),
+                                        EnumHASituation.fromString(situation),
+                                        EnumHAPosition.fromString(heroPos),
+                                        EnumHAPosition.fromString(opponentPos)),
                                         updateDate)
                             }
                     )

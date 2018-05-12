@@ -79,9 +79,9 @@ class TestQuestionHandAction {
                             rowParser {
                                 quizId: Int, situation: String, heroPos: String, opponentPos: String ->
                                 QuestionHandAction(quizId,
-                                        EnumHASituation.toHandActionSituation(situation),
-                                        EnumHAPosition.toHandActionPosition(heroPos),
-                                        EnumHAPosition.toHandActionPosition(opponentPos)
+                                        EnumHASituation.fromString(situation),
+                                        EnumHAPosition.fromString(heroPos),
+                                        EnumHAPosition.fromString(opponentPos)
                                 )
                             }
                     )
@@ -122,9 +122,9 @@ class TestQuestionHandAction {
                             rowParser {
                                 quizId: Int, situation: String, heroPos: String, opponentPos: String ->
                                 QuestionHandAction(quizId,
-                                        EnumHASituation.toHandActionSituation(situation),
-                                        EnumHAPosition.toHandActionPosition(heroPos),
-                                        EnumHAPosition.toHandActionPosition(opponentPos)
+                                        EnumHASituation.fromString(situation),
+                                        EnumHAPosition.fromString(heroPos),
+                                        EnumHAPosition.fromString(opponentPos)
                                 )
                             }
                     )

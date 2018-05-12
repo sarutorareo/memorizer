@@ -1,28 +1,25 @@
 package com.example.jirou.memorizer.models
 
-enum class EnumHAPosition() {
-    UTG,
-    HJ,
-    CO,
-    BTN,
-    SB,
-    BB,
-    NULL;
+enum class EnumHAPosition(val rawValue: Int) {
+    UTG(0),
+    HJ(1),
+    CO(2),
+    BTN(3),
+    SB(4),
+    BB(5),
+    NULL(-1);
 
     companion object {
-        fun toHandActionPosition(str : String) : EnumHAPosition{
-            return when (str) {
-                "UTG" -> { UTG }
-                "HJ" -> { HJ }
-                "CO" -> { CO }
-                "BTN" -> { BTN }
-                "SB" -> { SB }
-                "BB" -> { BB }
-                "NULL" -> { NULL }
-                else -> {
-                    throw Exception()
-                }
-            }
+        fun fromString(str : String) : EnumHAPosition{
+            val result = EnumHAPosition.values().filter { it.toString() == str }
+            assert(result.size == 1)
+            return result.first()
+        }
+
+        fun fromInt(int :Int) : EnumHAPosition{
+            val result = EnumHAPosition.values().filter { it.rawValue == int }
+            assert(result.size == 1)
+            return result.first()
         }
     }
 }

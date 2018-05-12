@@ -14,4 +14,22 @@
     <string name="btn_init_db_schema">Init DB schema</string>
     <string name="btn_drop_db_schema">Drop DB schema</string>
     <string name="btn_change_situations">Change situations</string>
+    <string name="btn_OK">OK</string>
+    <string name="btn_CANCEL">Cancel</string>
+
+    <string-array name="lst_situation">
+        <item>Open</item>
+        <item>Facing a raise</item>
+        <item>Facing a 3bet</item>
+        <item>Facing a 4bet</item>
+    </string-array>
+    <string-array name="lst_position">
+        <item>UTG</item>
+        <item>HJ</item>
+        <item>CO</item>
+        <item>BTN</item>
+        <item>SB</item>
+        <item>BB</item>
+        <item>NULL</item>
+    </string-array>
 </resources>
