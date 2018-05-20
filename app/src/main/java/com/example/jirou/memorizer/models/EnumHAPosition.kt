@@ -7,7 +7,7 @@ enum class EnumHAPosition(val rawValue: Int) {
     BTN(3),
     SB(4),
     BB(5),
-    NULL(-1);
+    NULL(6);
 
     companion object {
         fun fromString(str : String) : EnumHAPosition{

@@ -74,7 +74,6 @@ class MngEditQzHandActionSituationActivity : AppCompatActivity() {
         val sqnSitu =  findViewById<Spinner>(R.id.spnSituation)
         val sqnHeroPos =  findViewById<Spinner>(R.id.spnHeroPosition)
         val sqnOppoPos =  findViewById<Spinner>(R.id.spnOpponentPosition)
-
         sqnSitu.setSelection(qstHa.situation.rawValue)
         sqnHeroPos.setSelection(qstHa.heroPosition.rawValue)
         sqnOppoPos.setSelection(qstHa.opponentPosition.rawValue)
