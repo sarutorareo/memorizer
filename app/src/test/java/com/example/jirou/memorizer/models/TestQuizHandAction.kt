@@ -45,6 +45,8 @@ class TestQuizHandAction {
         val q = QuizHandAction(9)
 
         assertEquals(9, q.id)
+        assertEquals(EnumQuizType.HAND_ACTION, q.type)
+        assertEquals("", q.updateDate)
 
         assertEquals(9, q.question.quizId)
         assertEquals(true, q.question is QuestionHandAction)
@@ -178,7 +180,7 @@ class TestQuizHandAction {
             assertEquals(id, quizList[0].first)
             assertEquals(EnumQuizType.HAND_ACTION.toString(), quizList[0].second)
             val resultUpdateDate = Date(quizList[0].third)
-            val currentDate = Date()
+            val currentDate = Date(System.currentTimeMillis())
             val diffToUpdateLong: Long = currentDate.time - resultUpdateDate.time
             assertEquals(true, diffToUpdateLong / 1000 < 1)
 
@@ -225,5 +227,59 @@ class TestQuizHandAction {
             assertEquals(true,  ha1 != null)
             assertEquals(val2, ha1!!.actionVal)
         }
+    }
+
+    @Test
+    fun test_title_open() {
+        //
+        // Setup
+        //
+        val id = 999
+        val q = QuizHandAction(id)
+        val qst = q.question as QuestionHandAction
+        qst.situation = EnumHASituation.OPEN
+        qst.heroPosition = EnumHAPosition.BTN
+        qst.opponentPosition = EnumHAPosition.NULL
+
+        //
+        // Execute & Verify
+        //
+        assertEquals("OPEN-BTN-NULL", q.title)
+    }
+
+    @Test
+    fun test_title__open() {
+        //
+        // Setup
+        //
+        val id = 999
+        val q = QuizHandAction(id)
+        val qst = q.question as QuestionHandAction
+        qst.situation = EnumHASituation.OPEN
+        qst.heroPosition = EnumHAPosition.BTN
+        qst.opponentPosition = EnumHAPosition.NULL
+
+        //
+        // Execute & Verify
+        //
+        assertEquals("OPEN-BTN-NULL", q.title)
+    }
+
+    @Test
+    fun test_title__facing_a_4bet() {
+        //
+        // Setup
+        //
+        val id = 999
+        val q = QuizHandAction(id)
+        val qst = q.question as QuestionHandAction
+        qst.situation = EnumHASituation.FACING_A_4BET
+        qst.heroPosition = EnumHAPosition.BB
+        qst.opponentPosition = EnumHAPosition.SB
+
+        //
+        // Execute & Verify
+        //
+        assertEquals("FACING_A_4BET-BB-SB", q.title)
     }
 }

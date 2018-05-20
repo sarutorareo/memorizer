@@ -16,6 +16,10 @@
     <string name="btn_change_situations">Change situations</string>
     <string name="btn_OK">OK</string>
     <string name="btn_CANCEL">Cancel</string>
+    <string name="id">id</string>
+    <string name="type">type</string>
+    <string name="title">title</string>
+    <string name="update_date">update_date</string>
 
     <string-array name="lst_situation">
         <item>Open</item>

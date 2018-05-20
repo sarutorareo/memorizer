@@ -9,6 +9,7 @@ abstract class Quiz(id : Int)   {
     private var mId : Int = 0
     protected var mQuestion : Question = mCreateQuestion(mId)
     protected var mCorrect : Correct = mCreateCorrect(mId)
+    private var mUpdateDate : String = ""
 
     init {
         mId = id
@@ -55,4 +56,14 @@ abstract class Quiz(id : Int)   {
             }
         }
     }
+
+    abstract val type : EnumQuizType
+    abstract val title : String
+
+    var updateDate : String
+        get() = mUpdateDate
+        set(v : String) {
+            mUpdateDate = v
+        }
+
 }

@@ -116,4 +116,6 @@ open class QuestionHandAction(quizId: Int, situation: EnumHASituation,
         return 0
     }
 
+    val title : String
+        get() = String.format("%s-%s-%s", situation.toString(), heroPosition.toString(), opponentPosition.toString())
 }

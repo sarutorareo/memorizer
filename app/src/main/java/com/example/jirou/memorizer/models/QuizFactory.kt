@@ -16,36 +16,36 @@ class QuizFactory  {
     fun load(context : Context, dbName: String, quiz_id : Int) : Quiz
     {
         val helper = MemorizeDBOpenHelper.getInstance(context, dbName)
-        var resultPair : Pair<Int, String>? = null
+        var result : Triple<Int, String, String>? = null
         helper.use {
-            resultPair = select(MemorizeDBOpenHelper.TABLE_NAME_QUIZ,
-                    "id", "type")
+            result = select(MemorizeDBOpenHelper.TABLE_NAME_QUIZ,
+                    "id", "type", "update_date")
                     .whereArgs("id = {id}", "id" to quiz_id.toString())
                     .parseSingle(
-                            rowParser { id: Int, type: String->
-                                Pair(id, type)
+                            rowParser { id: Int, type: String, update_date: String ->
+                                Triple(id, type, update_date)
                             }
                     )
 
         }
-        val id = resultPair!!.first
-        val type = resultPair!!.second
+        val id = result!!.first
+        val type = result!!.second
         val quiz : Quiz
-        when (type) {
-            EnumQuizType.HAND_ACTION.toString() ->
-            {
-                quiz = QuizHandAction(id)
-            }
-            else ->
-            {
-                throw Exception(String.format("type %s is Invalid", type))
-            }
-        }
+        quiz = createQuizFromType(EnumQuizType.fromString(type), id)
+        quiz.updateDate =  result!!.third
 
         quiz.question.load(context, dbName)
         quiz.correct.load(context, dbName)
 
         return quiz
+    }
+
+    fun createQuizFromType(type: EnumQuizType, id: Int): Quiz {
+        return when (type) {
+            EnumQuizType.HAND_ACTION -> {
+                QuizHandAction(id)
+            }
+        }
     }
 
     fun loadOrCreate(context : Context, dbName: String, quiz_id : Int, type : EnumQuizType) : Quiz
@@ -64,5 +64,23 @@ class QuizFactory  {
     fun createDefaultInstance(quiz_id : Int, type : EnumQuizType) : Quiz
     {
         return QuizHandAction(quiz_id)
+    }
+
+    fun loadAllList(context : Context, dbName : String): List<Quiz>
+    {
+        val helper = MemorizeDBOpenHelper.getInstance(context, dbName)
+        var resultList: List<Quiz>? = null
+        helper.use {
+            resultList = select(MemorizeDBOpenHelper.TABLE_NAME_QUIZ,
+                    "id", "type", "update_date")
+                    .parseList(
+                            rowParser { id: Int, type: String, update_date: String->
+                                val q = createQuizFromType(EnumQuizType.fromString(type), id)
+                                q.updateDate = update_date
+                                q
+                            }
+                    )
+        }
+        return resultList!!
     }
 }

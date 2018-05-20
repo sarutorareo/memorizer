@@ -2,9 +2,9 @@ package com.example.jirou.memorizer.models
 
 enum class EnumHASituation(val rawValue: Int) {
     OPEN(0),
-    FACING_A_RAISE(1),
-    FACING_A_3BET(2),
-    FACING_A_4BET(3);
+    VS_RAISE(1),
+    VS_3BET(2),
+    VS_4BET(3);
 
     companion object {
         fun fromString(str : String) :  EnumHASituation {

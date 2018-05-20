@@ -28,7 +28,7 @@ class TestEnumHAPosition {
         assertEquals(3, EnumHAPosition.BTN.rawValue)
         assertEquals(4, EnumHAPosition.SB.rawValue)
         assertEquals(5, EnumHAPosition.BB.rawValue)
-        assertEquals(-1, EnumHAPosition.NULL.rawValue)
+        assertEquals(6, EnumHAPosition.NULL.rawValue)
     }
 
     @Test
@@ -55,11 +55,11 @@ class TestEnumHAPosition {
         assertEquals(EnumHAPosition.BTN, EnumHAPosition.fromInt(3))
         assertEquals(EnumHAPosition.SB, EnumHAPosition.fromInt(4))
         assertEquals(EnumHAPosition.BB, EnumHAPosition.fromInt(5))
-        assertEquals(EnumHAPosition.NULL, EnumHAPosition.fromInt(-1))
+        assertEquals(EnumHAPosition.NULL, EnumHAPosition.fromInt(6))
     }
 
     @Test(expected = AssertionError::class)
     fun test_fromInt__except() {
-        assertEquals(EnumHAPosition.BTN, EnumHAPosition.fromInt(6))
+        assertEquals(EnumHAPosition.BTN, EnumHAPosition.fromInt(-1))
     }
 }

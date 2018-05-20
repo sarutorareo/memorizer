@@ -20,4 +20,9 @@ open class QuizHandAction(id : Int) : Quiz(id)  {
         return EnumQuizType.HAND_ACTION.toString()
     }
 
+    override val type: EnumQuizType
+        get() = EnumQuizType.HAND_ACTION
+
+    override val title: String
+        get() = (question as QuestionHandAction).title
 }
