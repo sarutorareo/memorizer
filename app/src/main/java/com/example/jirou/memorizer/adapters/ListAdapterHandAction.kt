@@ -78,20 +78,20 @@ class ListAdapterHandAction(private val mContext: Context, private val gridView:
         cellHeight = height
     }
 
-    fun xToCol(x: Float): Int
+    private fun mXToCol(x: Float): Int
     {
         return if (cellWidth > 0) Math.floor(x.div(cellWidth).toDouble()).toInt() else -1
     }
 
-    fun yToRow(y: Float): Int
+    private fun mYToRow(y: Float): Int
     {
         return if (cellHeight > 0) Math.floor(y.div(cellHeight).toDouble()).toInt() else -1
     }
 
-    fun axisToPosition(rowSize: Int, x: Float, y: Float) : Int
+    private fun mAxisToPosition(rowSize: Int, x: Float, y: Float) : Int
     {
-        val col : Int = xToCol(x)
-        val row : Int = yToRow(y)
+        val col : Int = mXToCol(x)
+        val row : Int = mYToRow(y)
         return row * rowSize + col
     }
 
@@ -109,28 +109,25 @@ class ListAdapterHandAction(private val mContext: Context, private val gridView:
             else -> "null"
         }
 
-        val position = (gridView.adapter as ListAdapterHandAction).axisToPosition(gridView.numColumns, event.x, event.y)
+        val position = (gridView.adapter as ListAdapterHandAction).mAxisToPosition(gridView.numColumns, event.x, event.y)
         Log.e("onTouch", String.format("action is %s (x=%f, y=%f)", currAction, event.x, event.y) )
         Log.e("onTouch", String.format("(col=%d, row=%d, position=%d) gridView.width = %d, gridView.height = %d, gridView.numColumns = %d",
-                (gridView.adapter as ListAdapterHandAction).xToCol(event.x),
-                (gridView.adapter as ListAdapterHandAction).yToRow(event.y),
+                (gridView.adapter as ListAdapterHandAction).mXToCol(event.x),
+                (gridView.adapter as ListAdapterHandAction).mYToRow(event.y),
                 position, gridView.width, gridView.height, gridView.numColumns)
         )
 
-        Log.e("onTouch", String.format("oGridList.size = %d", mHandActionList.size))
         if (((action == MotionEvent.ACTION_DOWN) || (action == MotionEvent.ACTION_MOVE))
                 && (position >= 0) && (position < mHandActionList.size)) {
             //配列から、アイテムを取得
             val handAction = mHandActionList.get(position)
-            Log.e("onTouch", "oGrid is not null")
             handAction.setActionVal(fnGetActionValue())
             // getViewで対象のViewを更新
             val targetView : View? = gridView.getChildAt(position)
             if (targetView != null) {
-                Log.e("onTouch", "targetView is not null")
                 gridView.adapter.getView(position, targetView, gridView)
             } else {
-                Log.e("onTouch", "targetView is null")
+                // 何もしない
             }
         }
 

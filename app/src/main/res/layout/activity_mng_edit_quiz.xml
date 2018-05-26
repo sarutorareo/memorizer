@@ -6,9 +6,9 @@
     android:layout_height="match_parent"
     tools:context=".MngEditQuizActivity">
 
-    <TableLayout
-        android:id="@+id/lyoQuiz"
-        android:layout_width="339dp"
+    <ScrollView
+        android:id="@+id/scrView"
+        android:layout_width="360dp"
         android:layout_height="155dp"
         android:layout_marginEnd="8dp"
         android:layout_marginLeft="8dp"
@@ -19,32 +19,19 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <TableRow
-            android:id="@+id/tableRow1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="5dp">
+        <TableLayout
+            android:id="@+id/lyoQuiz"
+            android:layout_width="339dp"
+            android:layout_height="155dp">
 
-            <TextView
-                android:id="@+id/textView0"
-                android:layout_width="wrap_content"
+            <TableRow
+                android:id="@+id/tableRow1"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:paddingBottom="2dp"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"
-                android:paddingTop="2dp"
-                android:text=""
-                android:textColor="@color/colorAccent"
-                android:textSize="12sp" />
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:layout_marginBottom="5dp">
 
                 <TextView
-                    android:id="@+id/textView1"
+                    android:id="@+id/textView0"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
@@ -52,54 +39,84 @@
                     android:paddingLeft="10dp"
                     android:paddingRight="10dp"
                     android:paddingTop="2dp"
-                    android:text="@string/id"
+                    android:text=""
                     android:textColor="@color/colorAccent"
                     android:textSize="12sp" />
-            </LinearLayout>
 
-            <TextView
-                android:id="@+id/textView2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:paddingBottom="2dp"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"
-                android:paddingTop="2dp"
-                android:text="@string/type"
-                android:textColor="@color/colorAccent"
-                android:textSize="12sp" />
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/textView4"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="3dp"
-                android:gravity="center"
-                android:paddingBottom="2dp"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"
-                android:paddingTop="2dp"
-                android:text="@string/title"
-                android:textColor="@color/colorAccent"
-                android:textSize="12sp" />
+                    <TextView
+                        android:id="@+id/textView1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:paddingBottom="2dp"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
+                        android:paddingTop="2dp"
+                        android:text="@string/id"
+                        android:textColor="@color/colorAccent"
+                        android:textSize="12sp" />
+                </LinearLayout>
 
-            <TextView
-                android:id="@+id/textView5"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="3dp"
-                android:gravity="center"
-                android:paddingBottom="2dp"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"
-                android:paddingTop="2dp"
-                android:text="@string/update_date"
-                android:textColor="@color/colorAccent"
-                android:textSize="12sp" />
-        </TableRow>
+                <TextView
+                    android:id="@+id/textView2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:paddingBottom="2dp"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:paddingTop="2dp"
+                    android:text="@string/type"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="12sp" />
 
-    </TableLayout>
+                <TextView
+                    android:id="@+id/textView4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="3dp"
+                    android:gravity="center"
+                    android:paddingBottom="2dp"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:paddingTop="2dp"
+                    android:text="@string/title"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/textView5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="3dp"
+                    android:gravity="center"
+                    android:paddingBottom="2dp"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:paddingTop="2dp"
+                    android:text="@string/update_date"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="12sp" />
+            </TableRow>
+
+        </TableLayout>
+    </ScrollView>
+
+    <Button
+        android:id="@+id/btnAddQzHandAction"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="24dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/btn_add_quiz_hand_action"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/scrView" />
 
     <Button
         android:id="@+id/btnEditQzHandAction"
@@ -110,40 +127,18 @@
         android:layout_marginTop="16dp"
         android:text="@string/btn_edit_qz_hand_action"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/lyoQuiz" />
+        app:layout_constraintTop_toBottomOf="@+id/btnAddQzHandAction" />
 
     <Button
-        android:id="@+id/btnDeleteAll"
+        android:id="@+id/btnDeleteQuiz"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="24dp"
         android:layout_marginStart="24dp"
         android:layout_marginTop="8dp"
-        android:text="@string/btn_delete_all_quiz"
+        android:text="@string/btn_delete_quiz"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnEditQzHandAction" />
-
-    <Button
-        android:id="@+id/btnInitDBSchema"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="24dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="8dp"
-        android:text="@string/btn_init_db_schema"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnDeleteAll" />
-
-    <Button
-        android:id="@+id/btnDropDBSchema"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="24dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="8dp"
-        android:text="@string/btn_drop_db_schema"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnInitDBSchema" />
 
     <TextView
         android:id="@+id/txtResultEdit"
@@ -151,9 +146,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="34dp"
         android:layout_marginStart="34dp"
-        android:layout_marginTop="47dp"
         android:text="TextView"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnDropDBSchema" />
-
+        tools:layout_editor_absoluteY="498dp" />
 </android.support.constraint.ConstraintLayout>

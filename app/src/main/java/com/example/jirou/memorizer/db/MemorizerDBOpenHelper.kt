@@ -15,7 +15,7 @@ class MemorizeDBOpenHelper(context:Context, dbName: String):ManagedSQLiteOpenHel
         const val TABLE_NAME_TEST = "test"
         const val TABLE_NAME_QUIZ = "quiz"
         const val TABLE_NAME_QST_HAND_ACTION = "qst_hand_action"
-        const val TABLE_NAME_QST_HAND_ACTION_ITEM = "qst_hand_action_item"
+        const val TABLE_NAME_CRCT_HAND_ACTION_ITEM = "crct_hand_action_item"
 
         private var instance: MemorizeDBOpenHelper? = null
 
@@ -32,8 +32,6 @@ class MemorizeDBOpenHelper(context:Context, dbName: String):ManagedSQLiteOpenHel
                         Log.e("getInstance", "instance is not null")
                         instance as MemorizeDBOpenHelper
                     }
-            Log.e("getInstance", "before get readable database")
-
             return instance!!
         }
 

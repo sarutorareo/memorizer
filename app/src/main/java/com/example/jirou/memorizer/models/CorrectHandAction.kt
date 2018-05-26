@@ -20,13 +20,14 @@ open class CorrectHandAction(quizId: Int) : Correct(quizId)  {
 
     override fun save(context : Context, dbName: String)
     {
+        Log.e("CorrectHandAction.save", "start save")
+
         val helper = MemorizeDBOpenHelper.getInstance(context, dbName)
         helper.use {
             transaction {
                 handActionList.list.forEach {
-                    Log.d("CorrectHandAction.save", String.format("save quiz_id[%d], hand[%s], action_val[%d]", quizId, it.hand, it.actionVal ))
                     replaceOrThrow (
-                            MemorizeDBOpenHelper.TABLE_NAME_QST_HAND_ACTION_ITEM,
+                            MemorizeDBOpenHelper.TABLE_NAME_CRCT_HAND_ACTION_ITEM,
                             *MemorizeDBOpenHelper.addUpdateDate(arrayOf("quiz_id" to quizId.toString(),
                                     "hand" to it.hand,
                                     "action_val" to it.actionVal.toString()))
@@ -41,7 +42,7 @@ open class CorrectHandAction(quizId: Int) : Correct(quizId)  {
     {
         val helper = MemorizeDBOpenHelper.getInstance(context, dbName)
         helper.use {
-            val resultList = select(MemorizeDBOpenHelper.TABLE_NAME_QST_HAND_ACTION_ITEM,
+            val resultList = select(MemorizeDBOpenHelper.TABLE_NAME_CRCT_HAND_ACTION_ITEM,
                     "hand", "action_val")
                     .whereArgs("quiz_id = {quizId}", "quizId" to quizId.toString())
                     .parseList(

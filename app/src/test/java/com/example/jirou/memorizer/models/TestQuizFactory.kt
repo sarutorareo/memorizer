@@ -44,7 +44,7 @@ class TestQuizFactory {
         // setup
         //
         val quizId = 99
-        val situation1 = EnumHASituation.FACING_A_3BET
+        val situation1 = EnumHASituation.VS_3BET
         val heroPos1 = EnumHAPosition.HJ
         val opponentPos1 = EnumHAPosition.UTG
 
@@ -67,7 +67,7 @@ class TestQuizFactory {
                                     "opponent_position" to opponentPos1.toString()
                             )))
 
-            insertOrThrow(MemorizeDBOpenHelper.TABLE_NAME_QST_HAND_ACTION_ITEM,
+            insertOrThrow(MemorizeDBOpenHelper.TABLE_NAME_CRCT_HAND_ACTION_ITEM,
                     *MemorizeDBOpenHelper.addUpdateDate(
                             arrayOf("quiz_id" to quizId.toString(), "hand" to hand1, "action_val" to val1.toString())))
         }
@@ -87,7 +87,7 @@ class TestQuizFactory {
         assertEquals(true, diffToUpdateLong / 1000 < 1)
 
         val qstHa = (q.question as QuestionHandAction)
-        assertEquals(EnumHASituation.FACING_A_3BET, qstHa.situation)
+        assertEquals(EnumHASituation.VS_3BET, qstHa.situation)
         val handActionList = (q.correct as CorrectHandAction).handActionList
         assertEquals(val1, handActionList.getFromHand(hand1).actionVal)
     }
@@ -218,4 +218,81 @@ class TestQuizFactory {
         assertEquals(true, diffToUpdateLong / 1000 < 1)
     }
 
+    @Test
+    fun test_getGetNewId__noRecord() {
+        assertEquals(1, QuizFactory().getNewQuizId(mContext, TEST_DB_NAME))
+    }
+
+    @Test
+    fun test_getGetNewId__2Record() {
+        var quizId1 = 1
+        var quizId2 = 10
+        val helper = MemorizeDBOpenHelper.getInstance(mContext, TEST_DB_NAME)
+        helper.use {
+            insertOrThrow(MemorizeDBOpenHelper.TABLE_NAME_QUIZ,
+                    *MemorizeDBOpenHelper.addUpdateDate(
+                            arrayOf("id" to quizId1.toString(), "type" to "HAND_ACTION")))
+            insertOrThrow(MemorizeDBOpenHelper.TABLE_NAME_QUIZ,
+                    *MemorizeDBOpenHelper.addUpdateDate(
+                            arrayOf("id" to quizId2.toString(), "type" to "HAND_ACTION")))
+        }
+
+        assertEquals(11, QuizFactory().getNewQuizId(mContext, TEST_DB_NAME))
+    }
+
+    @Test
+    fun test_deleteQuiz() {
+        //
+        // Setup
+        //
+        var quizId1 = 1
+        var quizId2 = 10
+        val helper = MemorizeDBOpenHelper.getInstance(mContext, TEST_DB_NAME)
+        helper.use {
+            insertOrThrow(MemorizeDBOpenHelper.TABLE_NAME_QUIZ,
+                    *MemorizeDBOpenHelper.addUpdateDate(
+                            arrayOf("id" to quizId1.toString(), "type" to "HAND_ACTION")))
+            insertOrThrow(MemorizeDBOpenHelper.TABLE_NAME_QUIZ,
+                    *MemorizeDBOpenHelper.addUpdateDate(
+                            arrayOf("id" to quizId2.toString(), "type" to "HAND_ACTION")))
+        }
+
+        //
+        // Execute
+        //
+        QuizFactory().deleteQuiz(mContext, TEST_DB_NAME, quizId1)
+
+        //
+        // Verify
+        //
+        val list = QuizFactory().loadAllList(mContext, TEST_DB_NAME)
+        assertEquals(1, list.size)
+        assertEquals(10, list[0].id)
+    }
+
+    @Test(expected = AssertionError::class)
+    fun test_deleteQuiz__noRecord() {
+        //
+        // Setup
+        //
+        val quizId1 = 1
+        val helper = MemorizeDBOpenHelper.getInstance(mContext, TEST_DB_NAME)
+        helper.use {
+            insertOrThrow(MemorizeDBOpenHelper.TABLE_NAME_QUIZ,
+                    *MemorizeDBOpenHelper.addUpdateDate(
+                            arrayOf("id" to quizId1.toString(), "type" to "HAND_ACTION")))
+        }
+
+        //
+        // Execute
+        //
+        QuizFactory().deleteQuiz(mContext, TEST_DB_NAME, quizId1 + 1)
+
+        //
+        // Verify
+        //
+        val list = QuizFactory().loadAllList(mContext, TEST_DB_NAME)
+        assertEquals(1, list.size)
+        assertEquals(10, list[0].id)
+    }
 }

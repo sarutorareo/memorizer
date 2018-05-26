@@ -9,6 +9,8 @@ import android.view.MenuItem
 import kotlinx.android.synthetic.main.activity_main.*
 import android.content.Intent
 import android.widget.Button
+import com.example.jirou.memorizer.db.DB_NAME_MEMORIZER
+import com.example.jirou.memorizer.db.MemorizeDBSQLDroidHelper
 
 class MainActivity : AppCompatActivity() {
 
@@ -35,6 +37,19 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
         )
+
+        val initDBSchemaButton : Button = findViewById(R.id.btnInitDBSchema)
+        initDBSchemaButton.setOnClickListener( {
+            MemorizeDBSQLDroidHelper.initDBSchema(applicationContext, DB_NAME_MEMORIZER)
+        }
+        )
+
+        val dropDBSchemaButton : Button = findViewById(R.id.btnDropDBSchema)
+        dropDBSchemaButton.setOnClickListener( {
+            MemorizeDBSQLDroidHelper.dropDBSchema(applicationContext, DB_NAME_MEMORIZER)
+        }
+        )
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

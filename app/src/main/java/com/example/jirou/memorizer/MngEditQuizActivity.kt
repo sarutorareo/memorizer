@@ -7,11 +7,13 @@ import android.os.Bundle
 import android.widget.*
 import com.example.jirou.memorizer.db.DB_NAME_MEMORIZER
 import com.example.jirou.memorizer.db.MemorizeDBSQLDroidHelper
+import com.example.jirou.memorizer.models.Quiz
 import com.example.jirou.memorizer.models.QuizFactory
 import org.jetbrains.anko.collections.forEachWithIndex
 import kotlinx.android.synthetic.main.table_row.view.*
 import org.jetbrains.anko.forEachChild
 
+const val NEW_QUIZ_ID : Int = -1
 
 class MngEditQuizActivity : AppCompatActivity() {
 
@@ -21,47 +23,59 @@ class MngEditQuizActivity : AppCompatActivity() {
 
         mInitGridQuiz()
 
-        val addQzHandActionButton : Button = findViewById<Button>(R.id.btnEditQzHandAction) as Button
+        val addQzHandActionButton : Button = findViewById<Button>(R.id.btnAddQzHandAction) as Button
         addQzHandActionButton.setOnClickListener( {
+            val selectedId = QuizFactory().getNewQuizId(applicationContext, DB_NAME_MEMORIZER)
+            startActivityEditQzHandAction(selectedId)
+        }
+        )
+
+        val editQzHandActionButton : Button = findViewById<Button>(R.id.btnEditQzHandAction) as Button
+        editQzHandActionButton.setOnClickListener( {
+            val selectedId = mGetSelectedQuizId()
+            startActivityEditQzHandAction(selectedId)
+        }
+        )
+
+        val deleteQuizButton : Button = findViewById<Button>(R.id.btnDeleteQuiz) as Button
+        deleteQuizButton.setOnClickListener( {
             val selectedId = mGetSelectedQuizId()
             if (selectedId != null) {
-                val intent = Intent(application, MngEditQzHandActionActivity::class.java)
-                intent.putExtra(INTENT_KEY_QUIZ_ID, selectedId)
-                startActivityForResult(intent, REQUEST_CODE_EDIT_HAND_ACTION)
+                QuizFactory().deleteQuiz(applicationContext, DB_NAME_MEMORIZER, selectedId)
+                // 表をリロードする
+                mInitGridQuiz()
             }
-        }
-        )
-
-        val initDBSchemaButton : Button = findViewById(R.id.btnInitDBSchema)
-        initDBSchemaButton.setOnClickListener( {
-            MemorizeDBSQLDroidHelper.initDBSchema(applicationContext, DB_NAME_MEMORIZER)
-        }
-        )
-
-        val dropDBSchemaButton : Button = findViewById(R.id.btnDropDBSchema)
-        dropDBSchemaButton.setOnClickListener( {
-            MemorizeDBSQLDroidHelper.dropDBSchema(applicationContext, DB_NAME_MEMORIZER)
         }
         )
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (requestCode == REQUEST_CODE_EDIT_HAND_ACTION && resultCode == Activity.RESULT_OK) {
-            // リクエストコードが一致してかつアクティビティが正常に終了していた場合、受け取った値を表示
-            val received = data!!
-            val receivedId = received.getIntExtra(INTENT_KEY_QUIZ_ID, -1)
-            val textView : TextView =  findViewById<TextView>(R.id.txtResultEdit) as TextView
-            textView.text = receivedId.toString()
-
+    private fun startActivityEditQzHandAction(selectedId: Int?) {
+        if (selectedId != null) {
             val intent = Intent(application, MngEditQzHandActionActivity::class.java)
-            intent.putExtra(INTENT_KEY_QUIZ_ID, receivedId)
+            intent.putExtra(INTENT_KEY_QUIZ_ID, selectedId)
             startActivityForResult(intent, REQUEST_CODE_EDIT_HAND_ACTION)
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (requestCode == REQUEST_CODE_EDIT_HAND_ACTION) {
+            // キャンセルされた
+            if (resultCode == Activity.RESULT_CANCELED) {
+                // 何もしない
+            }
+            // Saveされた
+            else if (resultCode == Activity.RESULT_OK) {
+                // 表をリロードする
+                mInitGridQuiz()
+            }
         }
     }
 
     private fun mInitGridQuiz()
     {
         val tableLayout = findViewById<TableLayout>(R.id.lyoQuiz) as TableLayout
+        val childCount = tableLayout.childCount
+        tableLayout.removeViewsInLayout(1, childCount-1)
         val quizList = QuizFactory().loadAllList(applicationContext, DB_NAME_MEMORIZER)
 
         quizList.forEachWithIndex { quizIndex, q ->

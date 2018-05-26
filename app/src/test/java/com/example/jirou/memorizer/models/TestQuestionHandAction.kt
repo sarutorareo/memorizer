@@ -1,3 +1,4 @@
+
 package com.example.jirou.memorizer.models
 
 import android.content.Context
@@ -61,7 +62,7 @@ class TestQuestionHandAction {
         // Setup
         //
         val qId = DEFAULT_QUIZ_ID
-        val qha = QuestionHandAction(qId, EnumHASituation.FACING_A_RAISE, EnumHAPosition.CO, EnumHAPosition.HJ)
+        val qha = QuestionHandAction(qId, EnumHASituation.VS_RAISE, EnumHAPosition.CO, EnumHAPosition.HJ)
 
         //
         // Execute
@@ -87,7 +88,7 @@ class TestQuestionHandAction {
                     )
             assertEquals(1, quizList.size)
             assertEquals(qId, quizList[0].quizId)
-            assertEquals(EnumHASituation.FACING_A_RAISE, quizList[0].situation)
+            assertEquals(EnumHASituation.VS_RAISE, quizList[0].situation)
             assertEquals(EnumHAPosition.CO, quizList[0].heroPosition)
             assertEquals(EnumHAPosition.HJ, quizList[0].opponentPosition)
         }
@@ -99,10 +100,10 @@ class TestQuestionHandAction {
         // Setup
         //
         val qId = DEFAULT_QUIZ_ID
-        val qha = QuestionHandAction(qId, EnumHASituation.FACING_A_RAISE, EnumHAPosition.CO, EnumHAPosition.HJ)
+        val qha = QuestionHandAction(qId, EnumHASituation.VS_RAISE, EnumHAPosition.CO, EnumHAPosition.HJ)
         qha.save(mContext, TEST_DB_NAME)
 
-        qha.situation = EnumHASituation.FACING_A_3BET
+        qha.situation = EnumHASituation.VS_3BET
         qha.heroPosition = EnumHAPosition.SB
         qha.opponentPosition = EnumHAPosition.BB
 
@@ -130,7 +131,7 @@ class TestQuestionHandAction {
                     )
             assertEquals(1, quizList.size)
             assertEquals(qId, quizList[0].quizId)
-            assertEquals(EnumHASituation.FACING_A_3BET, quizList[0].situation)
+            assertEquals(EnumHASituation.VS_3BET, quizList[0].situation)
             assertEquals(EnumHAPosition.SB, quizList[0].heroPosition)
             assertEquals(EnumHAPosition.BB, quizList[0].opponentPosition)
         }
@@ -142,10 +143,10 @@ class TestQuestionHandAction {
         // Setup
         //
         val qId = DEFAULT_QUIZ_ID
-        val qha = QuestionHandAction(qId, EnumHASituation.FACING_A_RAISE, EnumHAPosition.CO, EnumHAPosition.HJ)
+        val qha = QuestionHandAction(qId, EnumHASituation.VS_RAISE, EnumHAPosition.CO, EnumHAPosition.HJ)
         qha.save(mContext, TEST_DB_NAME)
 
-        qha.situation = EnumHASituation.FACING_A_3BET
+        qha.situation = EnumHASituation.VS_3BET
         qha.heroPosition = EnumHAPosition.SB
         qha.opponentPosition = EnumHAPosition.BB
 
@@ -155,18 +156,18 @@ class TestQuestionHandAction {
         qha.load(mContext, TEST_DB_NAME)
 
         assertEquals(qId, qha.quizId)
-        assertEquals(EnumHASituation.FACING_A_RAISE, qha.situation)
+        assertEquals(EnumHASituation.VS_RAISE, qha.situation)
         assertEquals(EnumHAPosition.CO, qha.heroPosition)
         assertEquals(EnumHAPosition.HJ, qha.opponentPosition)
     }
 
     @Test
     fun test_copyFrom() {
-        val dst = QuestionHandAction(0, EnumHASituation.FACING_A_3BET, EnumHAPosition.SB, EnumHAPosition.BTN)
-        val src = QuestionHandAction(0, EnumHASituation.FACING_A_4BET, EnumHAPosition.UTG, EnumHAPosition.CO )
+        val dst = QuestionHandAction(0, EnumHASituation.VS_3BET, EnumHAPosition.SB, EnumHAPosition.BTN)
+        val src = QuestionHandAction(0, EnumHASituation.VS_4BET, EnumHAPosition.UTG, EnumHAPosition.CO )
 
         dst.copyFrom(src)
-        assertEquals(EnumHASituation.FACING_A_4BET,  dst.situation)
+        assertEquals(EnumHASituation.VS_4BET,  dst.situation)
         assertEquals(EnumHAPosition.UTG,  dst.heroPosition)
         assertEquals(EnumHAPosition.CO,  dst.opponentPosition)
     }

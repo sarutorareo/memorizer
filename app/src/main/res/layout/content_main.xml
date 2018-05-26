@@ -23,8 +23,8 @@
         android:id="@+id/btnStart"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="74dp"
-        android:layout_marginLeft="74dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="149dp"
         android:text="@string/btn_start"
         app:layout_constraintStart_toStartOf="parent"
@@ -45,11 +45,33 @@
         android:id="@+id/btnEditQuiz"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="74dp"
-        android:layout_marginLeft="74dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="12dp"
         android:text="@string/btn_edit_quiz"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnStart" />
+
+    <Button
+        android:id="@+id/btnInitDBSchema"
+        android:layout_width="150dp"
+        android:layout_height="45dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/btn_init_db_schema"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnEditQuiz" />
+
+    <Button
+        android:id="@+id/btnDropDBSchema"
+        android:layout_width="152dp"
+        android:layout_height="0dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/btn_drop_db_schema"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnInitDBSchema" />
 
 </android.support.constraint.ConstraintLayout>

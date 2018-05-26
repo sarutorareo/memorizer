@@ -1,3 +1,4 @@
+
 package com.example.jirou.memorizer.models
 
 import android.content.Context
@@ -70,7 +71,7 @@ class TestQuizHandAction {
         val q = QuizHandAction(id)
         val hand1 = (q.correct as CorrectHandAction).handActionList.get(1).hand
         val val1 = 2
-        (q.question as QuestionHandAction).situation = EnumHASituation.FACING_A_4BET
+        (q.question as QuestionHandAction).situation = EnumHASituation.VS_4BET
         (q.question as QuestionHandAction).heroPosition = EnumHAPosition.BB
         (q.question as QuestionHandAction).opponentPosition = EnumHAPosition.SB
         (q.correct as CorrectHandAction).handActionList.getFromHand(hand1).setActionVal(val1)
@@ -111,11 +112,11 @@ class TestQuizHandAction {
                             }
                     )
 
-            assertEquals(EnumHASituation.FACING_A_4BET, qstHa.situation)
+            assertEquals(EnumHASituation.VS_4BET, qstHa.situation)
             assertEquals(EnumHAPosition.BB, qstHa.heroPosition)
             assertEquals(EnumHAPosition.SB, qstHa.opponentPosition)
 
-            val handActionList = select(MemorizeDBOpenHelper.TABLE_NAME_QST_HAND_ACTION_ITEM,
+            val handActionList = select(MemorizeDBOpenHelper.TABLE_NAME_CRCT_HAND_ACTION_ITEM,
                     "hand", "action_val")
                     .whereArgs("quiz_id = {quizId}", "quizId" to id.toString())
                     .parseList(
@@ -153,7 +154,7 @@ class TestQuizHandAction {
         // 値を書き換え
         val val2 = val1 + 1
         (q.correct as CorrectHandAction).handActionList.getFromHand(hand1).setActionVal(val2)
-        (q.question as QuestionHandAction).situation = EnumHASituation.FACING_A_4BET
+        (q.question as QuestionHandAction).situation = EnumHASituation.VS_4BET
         (q.question as QuestionHandAction).heroPosition = EnumHAPosition.BB
         (q.question as QuestionHandAction).opponentPosition = EnumHAPosition.SB
 
@@ -202,11 +203,11 @@ class TestQuizHandAction {
             val diffToQstHaUpdateLong: Long = currentDate.time - resultQstHaDate.time
             assertEquals(true, diffToQstHaUpdateLong / 1000 < 1)
 
-            assertEquals(EnumHASituation.FACING_A_4BET, qstHa.situation)
+            assertEquals(EnumHASituation.VS_4BET, qstHa.situation)
             assertEquals(EnumHAPosition.BB, qstHa.heroPosition)
             assertEquals(EnumHAPosition.SB, qstHa.opponentPosition)
 
-            val handActionList = select(MemorizeDBOpenHelper.TABLE_NAME_QST_HAND_ACTION_ITEM,
+            val handActionList = select(MemorizeDBOpenHelper.TABLE_NAME_CRCT_HAND_ACTION_ITEM,
                     "hand", "action_val", "update_date")
                     .parseList(
                             rowParser { hand: String, actionVal: Int, updateDate : String->
@@ -273,13 +274,13 @@ class TestQuizHandAction {
         val id = 999
         val q = QuizHandAction(id)
         val qst = q.question as QuestionHandAction
-        qst.situation = EnumHASituation.FACING_A_4BET
+        qst.situation = EnumHASituation.VS_4BET
         qst.heroPosition = EnumHAPosition.BB
         qst.opponentPosition = EnumHAPosition.SB
 
         //
         // Execute & Verify
         //
-        assertEquals("FACING_A_4BET-BB-SB", q.title)
+        assertEquals("VS_4BET-BB-SB", q.title)
     }
 }

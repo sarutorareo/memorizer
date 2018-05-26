@@ -17,7 +17,7 @@ const val INTENT_KEY_QUIZ_ID = "quiz_id"
 const val INTENT_KEY_QUESTION_HAND_ACTION = "question_hand_action"
 
 class MngEditQzHandActionActivity : AppCompatActivity() {
-    private var mQuiz : QuizHandAction = QuizHandAction(-1)
+    private var mQuiz : QuizHandAction = QuizHandAction(NEW_QUIZ_ID)
 
     init {
     }
@@ -27,8 +27,13 @@ class MngEditQzHandActionActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_mng_edit_qz_hand_action)
 
-        val id: Int = intent.getIntExtra(INTENT_KEY_QUIZ_ID, -1)
-        mQuiz = QuizFactory().loadOrCreate(applicationContext, DB_NAME_MEMORIZER, id, EnumQuizType.HAND_ACTION) as QuizHandAction
+        val id: Int = intent.getIntExtra(INTENT_KEY_QUIZ_ID, NEW_QUIZ_ID)
+        mQuiz = if ( id == NEW_QUIZ_ID ) {
+            QuizHandAction(com.example.jirou.memorizer.NEW_QUIZ_ID)
+        }
+        else {
+            QuizFactory().loadOrCreate(applicationContext, DB_NAME_MEMORIZER, id, EnumQuizType.HAND_ACTION) as QuizHandAction
+        }
 
         //
         // シチュエーションの設定
@@ -58,6 +63,16 @@ class MngEditQzHandActionActivity : AppCompatActivity() {
         saveButton.setOnClickListener( {
             // HandActionのマトリクスを保存する
             mSaveHandAction(mQuiz)
+
+            // 戻り値を設定
+            val intent = Intent()
+            intent.putExtra(INTENT_KEY_QUIZ_ID, mQuiz.id)
+
+            // 戻り値を渡して 呼び出し元 の onActivityResult を呼び出す
+            setResult(Activity.RESULT_OK, intent)
+
+            // アクティビティを閉じる
+            finish()
         }
         )
 
@@ -68,7 +83,7 @@ class MngEditQzHandActionActivity : AppCompatActivity() {
             intent.putExtra(INTENT_KEY_QUIZ_ID, mQuiz.id)
 
             // 戻り値を渡して 呼び出し元 の onActivityResult を呼び出す
-            setResult(Activity.RESULT_OK, intent)
+            setResult(Activity.RESULT_CANCELED, intent)
 
             // アクティビティを閉じる
             finish()
@@ -96,9 +111,6 @@ class MngEditQzHandActionActivity : AppCompatActivity() {
 
         try {
             // インサート or Update
-            // Quizの単位で新規 or 既存を管理して Inser or Updateを分ける
-            // 新規かどうかはid is nullで表す
-            // 採番はプログラム（画面から入力可）でやる
             quiz.save(applicationContext, DB_NAME_MEMORIZER)
         } catch (e: Exception) {
             Log.e("mSaveHandAction", String.format("exception = [%s]", e.toString()))

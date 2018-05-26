@@ -2,7 +2,9 @@ package com.example.jirou.memorizer.models
 
 import android.content.Context
 import android.util.Log
+import com.example.jirou.memorizer.NEW_QUIZ_ID
 import com.example.jirou.memorizer.db.MemorizeDBOpenHelper
+import junit.framework.Assert
 import org.jetbrains.anko.db.*
 
 abstract class Quiz(id : Int)   {
@@ -10,6 +12,19 @@ abstract class Quiz(id : Int)   {
     protected var mQuestion : Question = mCreateQuestion(mId)
     protected var mCorrect : Correct = mCreateCorrect(mId)
     private var mUpdateDate : String = ""
+
+    companion object {
+        fun delete(context: Context, dbName: String, id: Int) {
+            Log.e("Quiz.delete", "start delete")
+            val helper = MemorizeDBOpenHelper.getInstance(context, dbName)
+            helper.use {
+                transaction {
+                    val res = delete(MemorizeDBOpenHelper.TABLE_NAME_QUIZ, "id = ?", arrayOf(id.toString()))
+                    assert(res == 1)
+                }
+            }
+        }
+    }
 
     init {
         mId = id
@@ -39,6 +54,7 @@ abstract class Quiz(id : Int)   {
 
     fun save(context : Context, dbName: String)
     {
+        Log.e("Quiz.save", "start save")
         val helper = MemorizeDBOpenHelper.getInstance(context, dbName)
         helper.use {
             transaction {
@@ -50,7 +66,6 @@ abstract class Quiz(id : Int)   {
                                 "type" to mGetTypeStr())
                         )
                 )
-
                 question.save(context, dbName)
                 correct.save(context, dbName)
             }
@@ -65,5 +80,4 @@ abstract class Quiz(id : Int)   {
         set(v : String) {
             mUpdateDate = v
         }
-
 }

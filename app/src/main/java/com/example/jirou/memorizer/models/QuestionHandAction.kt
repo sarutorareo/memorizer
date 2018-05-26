@@ -1,6 +1,7 @@
 package com.example.jirou.memorizer.models
 
 import android.content.Context
+import android.database.sqlite.SQLiteException
 import android.os.Parcel
 import android.os.Parcelable
 import android.util.Log
@@ -58,10 +59,19 @@ open class QuestionHandAction(quizId: Int, situation: EnumHASituation,
         }
 
     override fun save(context: Context, dbName: String) {
+        Log.e("QuestionHandAction.save", "start save 1")
+
+        Log.e("QuestionHandAction.save", "start save 2")
+        val thisInstance = this
+        Log.e("QuestionHandAction.save", "start save 3")
+        Log.e("QuestionHandAction.save", String.format("save [%s]", thisInstance.toString()))
+        Log.e("QuestionHandAction.save", "start save 4")
         val helper = MemorizeDBOpenHelper.getInstance(context, dbName)
+        Log.e("QuestionHandAction.save", "before helper.use")
         helper.use {
+            Log.e("QuestionHandAction.save", "before transaction")
             transaction {
-                Log.d("QuestionHandAction.save", String.format("save [%s]", this.toString()))
+                Log.e("QuestionHandAction.save", "before replaceOrThrow")
                 replaceOrThrow(
                         MemorizeDBOpenHelper.TABLE_NAME_QST_HAND_ACTION,
                         *MemorizeDBOpenHelper.addUpdateDate(arrayOf(
@@ -72,6 +82,7 @@ open class QuestionHandAction(quizId: Int, situation: EnumHASituation,
                 )
             }
         }
+        Log.e("QuestionHandAction.save", "end save")
     }
 
     override fun toString() : String
@@ -82,20 +93,23 @@ open class QuestionHandAction(quizId: Int, situation: EnumHASituation,
     override fun load(context: Context, dbName: String) {
         val helper = MemorizeDBOpenHelper.getInstance(context, dbName)
         helper.use {
-            val resultQstHandAction : QuestionHandAction = select(MemorizeDBOpenHelper.TABLE_NAME_QST_HAND_ACTION,
-                    "situation", "hero_position", "opponent_position")
-                    .whereArgs("quiz_id = {quizId}", "quizId" to quizId.toString())
-                    .parseSingle(
-                            rowParser {
-                                situation: String, heroPos: String, opponentPos: String ->
-                                QuestionHandAction(quizId,
-                                        EnumHASituation.fromString(situation),
-                                        EnumHAPosition.fromString(heroPos),
-                                        EnumHAPosition.fromString(opponentPos)
-                                )
-                            }
-                    )
-            copyFrom(resultQstHandAction)
+            try {
+                val resultQstHandAction: QuestionHandAction = select(MemorizeDBOpenHelper.TABLE_NAME_QST_HAND_ACTION,
+                        "situation", "hero_position", "opponent_position")
+                        .whereArgs("quiz_id = {quizId}", "quizId" to quizId.toString())
+                        .parseSingle(
+                                rowParser { situation: String, heroPos: String, opponentPos: String ->
+                                    QuestionHandAction(quizId,
+                                            EnumHASituation.fromString(situation),
+                                            EnumHAPosition.fromString(heroPos),
+                                            EnumHAPosition.fromString(opponentPos)
+                                    )
+                                }
+                        )
+                copyFrom(resultQstHandAction)
+            } catch (e : SQLiteException) {
+                // 何もしない
+            }
         }
     }
 

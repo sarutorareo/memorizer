@@ -6,7 +6,7 @@ import android.util.Log
 import com.example.jirou.memorizer.db.MemorizeDBOpenHelper.Companion.TABLE_NAME_TEST
 import com.example.jirou.memorizer.db.MemorizeDBOpenHelper.Companion.TABLE_NAME_QUIZ
 import com.example.jirou.memorizer.db.MemorizeDBOpenHelper.Companion.TABLE_NAME_QST_HAND_ACTION
-import com.example.jirou.memorizer.db.MemorizeDBOpenHelper.Companion.TABLE_NAME_QST_HAND_ACTION_ITEM
+import com.example.jirou.memorizer.db.MemorizeDBOpenHelper.Companion.TABLE_NAME_CRCT_HAND_ACTION_ITEM
 import java.sql.Connection
 import java.sql.DriverManager
 import java.sql.Statement
@@ -50,7 +50,7 @@ class MemorizeDBSQLDroidHelper  {
                         " FOREIGN KEY(`quiz_id`) REFERENCES `quiz`(`id`) ON DELETE CASCADE" +
                         ")")
                 Log.e("DBHelper.initDBSchema", "table quiz created")
-                statement?.executeUpdate( "CREATE TABLE IF NOT EXISTS $TABLE_NAME_QST_HAND_ACTION_ITEM " +
+                statement?.executeUpdate( "CREATE TABLE IF NOT EXISTS $TABLE_NAME_CRCT_HAND_ACTION_ITEM " +
                         "(quiz_id INTEGER NOT NULL, " +
                         "hand TEXT NOT NULL, " +
                         "action_val INTEGER, " +
@@ -83,7 +83,7 @@ class MemorizeDBSQLDroidHelper  {
                 statement = conn?.createStatement()
 
                 statement?.execute ("PRAGMA foreign_keys=ON;")
-                statement?.executeUpdate("DROP TABLE IF EXISTS $TABLE_NAME_QST_HAND_ACTION_ITEM ")
+                statement?.executeUpdate("DROP TABLE IF EXISTS $TABLE_NAME_CRCT_HAND_ACTION_ITEM ")
                 statement?.executeUpdate("DROP TABLE IF EXISTS $TABLE_NAME_QST_HAND_ACTION ")
                 statement?.executeUpdate("DROP TABLE IF EXISTS $TABLE_NAME_QUIZ ")
                 statement?.executeUpdate("DROP TABLE IF EXISTS $TABLE_NAME_TEST ")

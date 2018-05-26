@@ -25,11 +25,6 @@ class HandActionCanvasView : TextView {
     }
 
     override fun onDraw(canvas: Canvas) {
-        Log.v("onDraw", String.format("canvas Rect (l %d, t %d, r %d, b %d) ",
-                this.left, this.top, this.right, this.bottom))
-        Log.v("onDraw", String.format("canvas width %d, height %d, measuredWidth %d, measuredHeight %d ",
-                this.width, this.height, this.measuredWidth, this.measuredHeight))
-
         val height = this.measuredHeight.toFloat()-10
         val width = this.measuredWidth.toFloat()-10
 
@@ -110,5 +105,4 @@ class HandActionCanvasView : TextView {
             }
         }
     }
-
 }

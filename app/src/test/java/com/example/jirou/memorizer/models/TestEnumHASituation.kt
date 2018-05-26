@@ -18,35 +18,35 @@ class TestEnumHASituation {
     @Test
     fun test_rawValue() {
         assertEquals(0, EnumHASituation.OPEN.rawValue)
-        assertEquals(1, EnumHASituation.FACING_A_RAISE.rawValue)
-        assertEquals(2, EnumHASituation.FACING_A_3BET.rawValue)
-        assertEquals(3, EnumHASituation.FACING_A_4BET.rawValue)
+        assertEquals(1, EnumHASituation.VS_RAISE.rawValue)
+        assertEquals(2, EnumHASituation.VS_3BET.rawValue)
+        assertEquals(3, EnumHASituation.VS_4BET.rawValue)
     }
 
     @Test
     fun test_fromString() {
         assertEquals(EnumHASituation.OPEN, EnumHASituation.fromString("OPEN"))
-        assertEquals(EnumHASituation.FACING_A_RAISE, EnumHASituation.fromString("FACING_A_RAISE"))
-        assertEquals(EnumHASituation.FACING_A_3BET, EnumHASituation.fromString("FACING_A_3BET"))
-        assertEquals(EnumHASituation.FACING_A_4BET, EnumHASituation.fromString("FACING_A_4BET"))
+        assertEquals(EnumHASituation.VS_RAISE, EnumHASituation.fromString("VS_RAISE"))
+        assertEquals(EnumHASituation.VS_3BET, EnumHASituation.fromString("VS_3BET"))
+        assertEquals(EnumHASituation.VS_4BET, EnumHASituation.fromString("VS_4BET"))
     }
 
     @Test(expected = AssertionError::class)
     fun test_fromString__except() {
-        assertEquals(EnumHASituation.FACING_A_4BET, EnumHASituation.fromString("FACING_A_4BETx"))
+        assertEquals(EnumHASituation.VS_4BET, EnumHASituation.fromString("VS_4BETx"))
     }
 
     @Test
     fun test_fromInt() {
         assertEquals(EnumHASituation.OPEN, EnumHASituation.fromInt(0))
-        assertEquals(EnumHASituation.FACING_A_RAISE, EnumHASituation.fromInt(1))
-        assertEquals(EnumHASituation.FACING_A_3BET, EnumHASituation.fromInt(2))
-        assertEquals(EnumHASituation.FACING_A_4BET, EnumHASituation.fromInt(3))
+        assertEquals(EnumHASituation.VS_RAISE, EnumHASituation.fromInt(1))
+        assertEquals(EnumHASituation.VS_3BET, EnumHASituation.fromInt(2))
+        assertEquals(EnumHASituation.VS_4BET, EnumHASituation.fromInt(3))
     }
 
     @Test(expected = AssertionError::class)
     fun test_fromInt__except() {
-        assertEquals(EnumHASituation.FACING_A_4BET, EnumHASituation.fromInt(4))
+        assertEquals(EnumHASituation.VS_4BET, EnumHASituation.fromInt(4))
     }
 
 }

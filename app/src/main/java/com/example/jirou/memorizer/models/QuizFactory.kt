@@ -3,6 +3,8 @@ package com.example.jirou.memorizer.models
 import android.annotation.SuppressLint
 import android.content.Context
 import android.database.sqlite.SQLiteException
+import android.util.Log
+import com.example.jirou.memorizer.NEW_QUIZ_ID
 import com.example.jirou.memorizer.db.MemorizeDBOpenHelper
 import org.jetbrains.anko.db.insertOrThrow
 import org.jetbrains.anko.db.rowParser
@@ -83,4 +85,29 @@ class QuizFactory  {
         }
         return resultList!!
     }
+
+    fun getNewQuizId(context : Context, dbName : String) : Int
+    {
+        Log.e("getNewQuizId", "select max")
+        var maxId = -1
+        val helper = MemorizeDBOpenHelper.getInstance(context, dbName)
+        helper.use {
+            val sql = "select max(id) from quiz"
+            val cursor = this.rawQuery(sql, null)
+            Log.e("getNewQuizId", String.format("cursol = %s", cursor.toString()))
+            cursor.use {
+                if (it.moveToFirst()) {
+                    maxId = it.getInt(0)
+                    Log.e("getNewQuizId", "maxId = $maxId")
+                }
+            }
+        }
+        return maxId + 1
+    }
+
+    fun deleteQuiz(context: Context, dbName: String, quizId : Int) {
+        Quiz.delete(context, dbName, quizId)
+        return
+    }
+
 }
