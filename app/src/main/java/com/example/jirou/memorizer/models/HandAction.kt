@@ -2,6 +2,8 @@ package com.example.jirou.memorizer.models
 
 import android.os.Parcel
 import android.os.Parcelable
+import com.example.jirou.memorizer.utils.getMaxChar
+import com.example.jirou.memorizer.utils.getMinChar
 
 const val AV_FOLD_100 = -1
 const val AV_RAISE_100 = 100
@@ -12,8 +14,13 @@ const val AV_CALL_100 = 0
 //   0 ～ 100 : callの比率 (100 - action = Raiseの比率)
 open class HandAction(private val mHand: String, private var mActionVal : Int) : Parcelable {
 
+    private var mHandDispStr : String = mGetDispStr()
     val hand : String
         get() = mHand
+    val handDispStr : String
+        get() {
+            return mHandDispStr
+        }
 
     fun setActionVal(value : Int) {
         mActionVal = value
@@ -35,6 +42,11 @@ open class HandAction(private val mHand: String, private var mActionVal : Int) :
     {
         assert(this.mHand == other.mHand)
         this.mActionVal = other.mActionVal
+    }
+
+    private fun mGetDispStr() : String
+    {
+        return String.format("%c%c", getMaxChar(mHand), getMinChar(mHand))
     }
 
     companion object {

@@ -6,8 +6,7 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.*
 import com.example.jirou.memorizer.db.DB_NAME_MEMORIZER
-import com.example.jirou.memorizer.db.MemorizeDBSQLDroidHelper
-import com.example.jirou.memorizer.models.Quiz
+import com.example.jirou.memorizer.models.EnumRequestCodes
 import com.example.jirou.memorizer.models.QuizFactory
 import org.jetbrains.anko.collections.forEachWithIndex
 import kotlinx.android.synthetic.main.table_row.view.*
@@ -53,12 +52,12 @@ class MngEditQuizActivity : AppCompatActivity() {
         if (selectedId != null) {
             val intent = Intent(application, MngEditQzHandActionActivity::class.java)
             intent.putExtra(INTENT_KEY_QUIZ_ID, selectedId)
-            startActivityForResult(intent, REQUEST_CODE_EDIT_HAND_ACTION)
+            startActivityForResult(intent, EnumRequestCodes.EDIT_HAND_ACTION.rawValue)
         }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (requestCode == REQUEST_CODE_EDIT_HAND_ACTION) {
+        if (requestCode == EnumRequestCodes.EDIT_HAND_ACTION.rawValue) {
             // キャンセルされた
             if (resultCode == Activity.RESULT_CANCELED) {
                 // 何もしない

@@ -1,5 +1,6 @@
 package com.example.jirou.memorizer
 
+import android.app.Activity
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
@@ -11,9 +12,10 @@ import android.content.Intent
 import android.widget.Button
 import com.example.jirou.memorizer.db.DB_NAME_MEMORIZER
 import com.example.jirou.memorizer.db.MemorizeDBSQLDroidHelper
+import com.example.jirou.memorizer.models.*
 
 class MainActivity : AppCompatActivity() {
-
+    private var mTrainingManager : TrainingManager = TrainingManager(arrayListOf())
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -26,9 +28,14 @@ class MainActivity : AppCompatActivity() {
 
         val startButton : Button = findViewById(R.id.btnStart)
         startButton.setOnClickListener( {
-                val intent = Intent(application, InputStartingHandActivity::class.java)
-                startActivity(intent)
-            }
+            val quizList = mGetQuizList()
+            mTrainingManager = TrainingManager(quizList)
+            val quiz = mTrainingManager.start()
+
+            val intent = Intent(application, quiz.activity)
+            intent.putExtra(INTENT_KEY_QUIZ_ID, quiz.id)
+            startActivityForResult(intent, EnumRequestCodes.TRAINING.rawValue)
+        }
         )
 
         val editButton : Button = findViewById(R.id.btnEditQuiz)
@@ -49,7 +56,6 @@ class MainActivity : AppCompatActivity() {
             MemorizeDBSQLDroidHelper.dropDBSchema(applicationContext, DB_NAME_MEMORIZER)
         }
         )
-
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -65,6 +71,36 @@ class MainActivity : AppCompatActivity() {
         return when (item.itemId) {
             R.id.action_settings -> true
             else -> super.onOptionsItemSelected(item)
+        }
+    }
+
+    private fun mGetQuizList(): List<Quiz>
+    {
+        return  QuizFactory().loadAllList(applicationContext, DB_NAME_MEMORIZER)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (requestCode == EnumRequestCodes.TRAINING.rawValue) {
+            if (resultCode == Activity.RESULT_CANCELED) {
+                // 何もしない
+            }
+            else if (resultCode == Activity.RESULT_OK) {
+                // 次のQuizIndexを受け取る
+                val received = data!!
+                val isNext = received.getBooleanExtra(INTENT_KEY_NEXT_OR_RETRY, true)
+                val nextQuiz =
+                    if (isNext) {
+                        mTrainingManager.next()
+                    }
+                    else {
+                        mTrainingManager.retry()
+                    }
+                nextQuiz ?: return
+
+                val intent = Intent(application, nextQuiz.activity)
+                intent.putExtra(INTENT_KEY_QUIZ_ID, nextQuiz.id)
+                startActivityForResult(intent, EnumRequestCodes.TRAINING.rawValue)
+            }
         }
     }
 }

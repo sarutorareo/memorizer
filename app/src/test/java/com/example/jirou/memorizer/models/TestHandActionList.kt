@@ -62,7 +62,7 @@ class TestHandActionList {
         assertEquals(AV_FOLD_100, ha.actionVal)
 
         val newHand = HandAction("72", 99)
-        haList.copyFrom(newHand)
+        haList.copyHandActionFrom(newHand)
 
         assertEquals("72", ha.hand)
         assertEquals(99, ha.actionVal)

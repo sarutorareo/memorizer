@@ -7,20 +7,18 @@
     android:layout_height="match_parent"
     tools:context="com.example.jirou.memorizer.ResultActivity">
 
-    <GridView
-        android:id="@+id/grdAnswered"
-        android:layout_width="369dp"
-        android:layout_height="325dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="12dp"
-        android:drawSelectorOnTop="false"
-        android:numColumns="13"
-        android:visibility="gone"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.47"
+    <TextView
+        android:id="@+id/txtQuestion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:text=""
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="0dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/grdCorrect" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <GridView
         android:id="@+id/grdCorrect"
@@ -34,7 +32,7 @@
         android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="@+id/txtQuestion" />
 
     <MultiAutoCompleteTextView
         android:id="@+id/multiAutoCompleteTextView"
@@ -80,4 +78,5 @@
         android:text="@string/btn_next"
         app:layout_constraintStart_toEndOf="@+id/btnRetry"
         app:layout_constraintTop_toBottomOf="@+id/txtResult" />
+
 </android.support.constraint.ConstraintLayout>

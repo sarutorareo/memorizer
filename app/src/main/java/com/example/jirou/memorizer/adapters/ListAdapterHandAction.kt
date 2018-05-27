@@ -26,8 +26,6 @@ class ListAdapterHandAction(private val mContext: Context, private val gridView:
             val v = gridView.getChildAt(0)
             if (v != null) {
                 this.setCellViewSize( v.measuredWidth, v.measuredHeight)
-                Log.e("getView", String.format("OnGlobalLayoutListener: v.measuredState = %d, measuredWidthAndState = %d, measuredHeightAndState = %d, measuredWidth = %d, measuredHeight = %d ",
-                        v.measuredState, v.measuredWidthAndState, v.measuredHeightAndState, v.measuredWidth, v.measuredHeight))
             }
         })
     }
@@ -59,17 +57,18 @@ class ListAdapterHandAction(private val mContext: Context, private val gridView:
         //配列から、アイテムを取得
         val handAction = getItem(position) as HandAction
         //取得したテキストビューにactionを設定
-        v.text = handAction.hand
+        v.text = handAction.handDispStr
         v.setActionVal(handAction.actionVal)
         if (handAction is HandActionCompared) {
             v.setCompared((handAction as HandActionCompared).getCompared())
         }
 
+        /*
         Log.e("getView", String.format("v: v.width = %d, v.height = %d, v.left = %d, v.right = %d, v.top = %d, v.bottom = %d ",
                 v.width, v.height, v.left, v.right, v.top, v.bottom))
         Log.e("getView", String.format("v: v.measuredState = %d, measuredWidthAndState = %d, measuredHeightAndState = %d, measuredWidth = %d, measuredHeight = %d ",
                 v.measuredState, v.measuredWidthAndState, v.measuredHeightAndState, v.measuredWidth, v.measuredHeight))
-
+        */
         return v
     }
 
@@ -110,12 +109,14 @@ class ListAdapterHandAction(private val mContext: Context, private val gridView:
         }
 
         val position = (gridView.adapter as ListAdapterHandAction).mAxisToPosition(gridView.numColumns, event.x, event.y)
+        /*
         Log.e("onTouch", String.format("action is %s (x=%f, y=%f)", currAction, event.x, event.y) )
         Log.e("onTouch", String.format("(col=%d, row=%d, position=%d) gridView.width = %d, gridView.height = %d, gridView.numColumns = %d",
                 (gridView.adapter as ListAdapterHandAction).mXToCol(event.x),
                 (gridView.adapter as ListAdapterHandAction).mYToRow(event.y),
                 position, gridView.width, gridView.height, gridView.numColumns)
         )
+        */
 
         if (((action == MotionEvent.ACTION_DOWN) || (action == MotionEvent.ACTION_MOVE))
                 && (position >= 0) && (position < mHandActionList.size)) {

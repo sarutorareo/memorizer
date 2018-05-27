@@ -2,6 +2,7 @@ package com.example.jirou.memorizer.models
 
 import android.content.Context
 import android.util.Log
+import com.example.jirou.memorizer.InputStartingHandActivity
 import com.example.jirou.memorizer.NEW_QUIZ_ID
 import com.example.jirou.memorizer.db.MemorizeDBOpenHelper
 import junit.framework.Assert
@@ -80,4 +81,6 @@ abstract class Quiz(id : Int)   {
         set(v : String) {
             mUpdateDate = v
         }
+
+    abstract val activity : Class<*>
 }

@@ -11,10 +11,9 @@ import com.example.jirou.memorizer.adapters.ListAdapterHandAction
 import com.example.jirou.memorizer.db.DB_NAME_MEMORIZER
 import com.example.jirou.memorizer.models.*
 
-const val REQUEST_CODE_EDIT_HAND_ACTION = 1000
-const val REQUEST_CODE_EDIT_HAND_ACTION_SITUATION = 1001
 const val INTENT_KEY_QUIZ_ID = "quiz_id"
 const val INTENT_KEY_QUESTION_HAND_ACTION = "question_hand_action"
+const val INTENT_KEY_NEXT_OR_RETRY = "next_quiz_id"
 
 class MngEditQzHandActionActivity : AppCompatActivity() {
     private var mQuiz : QuizHandAction = QuizHandAction(NEW_QUIZ_ID)
@@ -28,22 +27,13 @@ class MngEditQzHandActionActivity : AppCompatActivity() {
         setContentView(R.layout.activity_mng_edit_qz_hand_action)
 
         val id: Int = intent.getIntExtra(INTENT_KEY_QUIZ_ID, NEW_QUIZ_ID)
-        mQuiz = if ( id == NEW_QUIZ_ID ) {
-            QuizHandAction(com.example.jirou.memorizer.NEW_QUIZ_ID)
-        }
-        else {
-            QuizFactory().loadOrCreate(applicationContext, DB_NAME_MEMORIZER, id, EnumQuizType.HAND_ACTION) as QuizHandAction
-        }
+        assert(id != NEW_QUIZ_ID)
+        mQuiz = QuizFactory().loadOrCreate(applicationContext, DB_NAME_MEMORIZER, id, EnumQuizType.HAND_ACTION) as QuizHandAction
 
         //
         // シチュエーションの設定
         //
         mInitSituations(mQuiz.question as QuestionHandAction)
-
-        //
-        //グリットビューのセル？の作成
-        //
-        mCreateHandActionList((mQuiz.correct as CorrectHandAction).handActionList)
 
         //
         //グリットビューに各セルの情報を設定
@@ -95,7 +85,7 @@ class MngEditQzHandActionActivity : AppCompatActivity() {
             // 渡す値を設定
             val intent = Intent(application, MngEditQzHandActionSituationActivity::class.java)
             intent.putExtra(INTENT_KEY_QUESTION_HAND_ACTION, mQuiz.question as QuestionHandAction)
-            startActivityForResult(intent, REQUEST_CODE_EDIT_HAND_ACTION_SITUATION)
+            startActivityForResult(intent, EnumRequestCodes.EDIT_HAND_ACTION_SITUATION.rawValue)
         }
         )
 
@@ -119,26 +109,6 @@ class MngEditQzHandActionActivity : AppCompatActivity() {
 
         Log.e("mSaveHandAction", "end")
     }
-/*
-    private fun mLoadHandAction(quiz : Quiz)
-    {
-        Log.e("mLoadHandAction", "start")
-
-        try {
-            quiz = QuizFactory().load(applicationContext, DB_NAME_MEMORIZER, quiz.id)
-        } catch (e: Exception) {
-            Log.e("mLoadHandAction", String.format("exception = [%s]", e.toString()))
-            throw e
-        }
-
-        Log.e("mLoadHandAction", "end")
-    }
-    */
-
-    private fun mCreateHandActionList(handActionList :  HandActionList ) {
-        handActionList.get(0).setActionVal(100)
-        handActionList.get(1).setActionVal(50)
-    }
 
     private fun mGetActionValue() : Int
     {
@@ -157,7 +127,7 @@ class MngEditQzHandActionActivity : AppCompatActivity() {
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (requestCode == REQUEST_CODE_EDIT_HAND_ACTION_SITUATION && resultCode == Activity.RESULT_OK) {
+        if (requestCode == EnumRequestCodes.EDIT_HAND_ACTION_SITUATION.rawValue && resultCode == Activity.RESULT_OK) {
             // リクエストコードが一致してかつアクティビティが正常に終了していた場合、QuestionHandActionを受け取る
             val received = data!!
             val qstHa = received.getParcelableExtra<QuestionHandAction>(INTENT_KEY_QUESTION_HAND_ACTION)

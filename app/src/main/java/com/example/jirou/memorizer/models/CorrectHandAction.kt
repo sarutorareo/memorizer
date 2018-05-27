@@ -51,7 +51,7 @@ open class CorrectHandAction(quizId: Int) : Correct(quizId)  {
                         }
                     )
             resultList.forEach {
-                handActionList.copyFrom(it)
+                handActionList.copyHandActionFrom(it)
             }
         }
     }

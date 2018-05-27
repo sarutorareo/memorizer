@@ -1,16 +1,16 @@
 package com.example.jirou.memorizer
 
+import android.app.Activity
+import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import com.example.jirou.memorizer.models.HandAction
 import android.util.Log
 import android.widget.Button
 import android.widget.GridView
 import android.widget.TextView
 import com.example.jirou.memorizer.adapters.ListAdapterHandAction
-import com.example.jirou.memorizer.models.HandActionCompared
-import com.example.jirou.memorizer.models.HandActionList
-import com.example.jirou.memorizer.models.HandActionComparedList
+import com.example.jirou.memorizer.db.DB_NAME_MEMORIZER
+import com.example.jirou.memorizer.models.*
 
 class ResultActivity : AppCompatActivity() {
     private var mAnsweredHandActionList : HandActionList =  HandActionList()
@@ -20,9 +20,17 @@ class ResultActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_result)
 
+        //
+        // 問題をload
+        //
+        val quizId = intent.getIntExtra(INTENT_KEY_QUIZ_ID, -1)
+        val quiz = QuizFactory().load(applicationContext, DB_NAME_MEMORIZER, quizId)
+        val txtQuestion = findViewById<TextView>(R.id.txtQuestion)
+        txtQuestion.text = quiz.question.toString()
+
         //グリットビューのセル？の作成
         getAnsweredHandActionList(mAnsweredHandActionList)
-        createCorrectHandActionList(mAnsweredHandActionList, mCorrectHandActionList)
+        mCreateCorrectHandActionList(quiz, mAnsweredHandActionList, mCorrectHandActionList)
 
         //正解／不正解の判定
         val result : Boolean = getResult(mCorrectHandActionList)
@@ -33,20 +41,33 @@ class ResultActivity : AppCompatActivity() {
         var gridView : GridView = findViewById(R.id.grdCorrect)
         gridView.adapter = ListAdapterHandAction(applicationContext, gridView, mCorrectHandActionList)
 
-        //グリットビューに各セルの情報を設定
-        gridView = findViewById(R.id.grdAnswered)
-        gridView.adapter = ListAdapterHandAction(applicationContext, gridView, mAnsweredHandActionList)
+        val btnNext : Button = findViewById(R.id.btnNext)
+        btnNext.setOnClickListener( {
+            val isNext = true
+            mFinishActivity(isNext)
+        } )
 
         val btnRetry : Button = findViewById(R.id.btnRetry)
         btnRetry.setOnClickListener( {
-            finish()
+            val isNext = false
+            mFinishActivity(isNext)
         } )
-
     }
 
-    private fun createCorrectHandActionList(answeredHandActionList :  HandActionList, correctHandActionList : HandActionComparedList ) {
-        correctHandActionList.get(0).setActionVal(100)
-        correctHandActionList.get(1).setActionVal(50)
+    private fun mFinishActivity(isNext: Boolean) {
+        // 戻り値を設定
+        val intent = Intent()
+        intent.putExtra(INTENT_KEY_NEXT_OR_RETRY, isNext)
+
+        // 戻り値を渡して 呼び出し元 の onActivityResult を呼び出す
+        setResult(Activity.RESULT_OK, intent)
+
+        // アクティビティを閉じる
+        finish()
+    }
+
+    private fun mCreateCorrectHandActionList(quiz : Quiz, answeredHandActionList :  HandActionList, correctHandActionList : HandActionComparedList ) {
+        correctHandActionList.copyFrom((quiz.correct as CorrectHandAction).handActionList)
 
         assert(answeredHandActionList.size == correctHandActionList.size)
         for (i in 0 until correctHandActionList.size) {
@@ -66,10 +87,10 @@ class ResultActivity : AppCompatActivity() {
 
     private fun getAnsweredHandActionList(answeredHandActionList :  HandActionList) {
         // 配列は今のところダメ　個別にHandActionを渡すのはできた
-        val haArraySize: Int = intent.getIntExtra(HAND_ACTION_ARRAY_SIZE, 0)
+        val haArraySize: Int = intent.getIntExtra(INTENT_KEY_HAND_ACTION_ARRAY_SIZE, 0)
         val tv: TextView = findViewById(R.id.multiAutoCompleteTextView)
         for (i in 0 until haArraySize) {
-            val ha: HandAction = intent.getParcelableExtra(String.format(HAND_ACTION_ARRAY_FMT, i))
+            val ha: HandAction = intent.getParcelableExtra(String.format(INTENT_KEY_HAND_ACTION_ARRAY_FMT, i))
             answeredHandActionList.get(i).copyFrom(ha)
 
             var logStr: String = String.format("handAction  (%s, %d)", ha.hand, ha.actionVal)

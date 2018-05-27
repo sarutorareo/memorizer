@@ -1,10 +1,6 @@
 package com.example.jirou.memorizer.models
 
-import android.database.sqlite.SQLiteDatabase
-import com.example.jirou.memorizer.db.MemorizeDBOpenHelper
-import com.example.jirou.memorizer.utils.numToStr
-import org.jetbrains.anko.db.insertOrThrow
-import org.jetbrains.anko.db.transaction
+import com.example.jirou.memorizer.utils.numToChar
 
 open class HandActionList  {
     protected val mHandActionList : ArrayList<HandAction> =  ArrayList()
@@ -13,8 +9,7 @@ open class HandActionList  {
         for (i in 14 downTo 2) {
             for (j in 14 downTo 2) {
                 //配列にハンド名、アクションを格納
-//                mHandActionList.add(mCreateNewHandAction(i, j))
-                mHandActionList.add(HandAction(numToStr(i) + numToStr(j), AV_FOLD_100))
+                mHandActionList.add(HandAction(numToChar(i).toString() + numToChar(j).toString(), AV_FOLD_100))
             }
         }
     }
@@ -41,10 +36,16 @@ open class HandActionList  {
     val list : ArrayList<HandAction>
         get() = mHandActionList
 
-    fun copyFrom(srcHa : HandAction)
+    fun copyHandActionFrom(srcHa : HandAction)
     {
         val hand = getFromHand(srcHa.hand)
         hand.copyFrom(srcHa)
     }
 
+    fun copyFrom(list : HandActionList)
+    {
+        list.list.forEach {
+            copyHandActionFrom(it)
+        }
+    }
 }

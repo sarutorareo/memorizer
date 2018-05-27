@@ -36,4 +36,17 @@ class TestHandAction {
         other.copyFrom(ha)
     }
 
+    @Test
+    fun test_handDispStr() {
+        var ha = HandAction("AK", 99)
+
+        assertEquals("AK", ha.hand)
+        assertEquals("AK", ha.handDispStr)
+
+        ha = HandAction("KA", 99)
+
+        assertEquals("KA", ha.hand)
+        assertEquals("AK", ha.handDispStr)
+    }
+
 }
