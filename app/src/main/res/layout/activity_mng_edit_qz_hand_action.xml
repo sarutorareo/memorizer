@@ -9,14 +9,14 @@
     <RadioGroup
         android:id="@+id/rdgEditAction"
         android:layout_width="181dp"
-        android:layout_height="133dp"
+        android:layout_height="153dp"
         android:layout_marginBottom="8dp"
         android:layout_marginLeft="16dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/grdInputStartHand">
+        app:layout_constraintTop_toBottomOf="@+id/grdEditCorrect">
 
         <RadioButton
             android:id="@+id/rdbRaise"
@@ -26,8 +26,8 @@
             android:layout_marginStart="32dp"
             android:layout_marginTop="0dp"
             android:checked="true"
-            android:tag="100"
-            android:text="Raise"
+            android:tag="200"
+            android:text="@string/raise"
             app:layout_constraintStart_toStartOf="parent" />
 
         <RadioButton
@@ -36,8 +36,8 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="32dp"
             android:layout_marginStart="32dp"
-            android:tag="50"
-            android:text="Raise50/Call50"
+            android:tag="150"
+            android:text="@string/raiseOrCall"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/rdbRaise" />
 
@@ -47,10 +47,21 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="32dp"
             android:layout_marginStart="32dp"
-            android:tag="0"
-            android:text="Call"
+            android:tag="100"
+            android:text="@string/call"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/rdbRaiseOrCall" />
+
+        <RadioButton
+            android:id="@+id/rdbRaiseOrFold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="32dp"
+            android:layout_marginStart="32dp"
+            android:tag="50"
+            android:text="@string/raiseOrFold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/rdbCall" />
 
         <RadioButton
             android:id="@+id/rdbFold"
@@ -59,20 +70,18 @@
             android:layout_marginLeft="32dp"
             android:layout_marginStart="32dp"
             android:tag="null"
-            android:text="Fold"
+            android:text="@string/fold"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/rdbCall" />
-
-
+            app:layout_constraintTop_toBottomOf="@+id/rdbRaiseOrFold" />
     </RadioGroup>
 
     <GridView
         android:id="@+id/grdEditCorrect"
         android:layout_width="369dp"
-        android:layout_height="322dp"
+        android:layout_height="267dp"
         android:layout_marginEnd="16dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="72dp"
+        android:layout_marginTop="88dp"
         android:drawSelectorOnTop="false"
         android:numColumns="13"
         android:visibility="visible"
@@ -99,7 +108,7 @@
         android:layout_marginLeft="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:text="TextView"
+        android:text=""
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -107,7 +116,9 @@
         android:id="@+id/btnChangeSituations"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="40dp"
         android:text="@string/btn_change_situations"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -119,7 +130,7 @@
         android:layout_marginEnd="36dp"
         android:layout_marginRight="36dp"
         android:layout_marginTop="8dp"
-        android:text="@string/btn_load_qz_hand_action"
+        android:text="@string/btn_CANCEL"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnSaveQzHandAction" />
 

@@ -5,9 +5,10 @@ import android.os.Parcelable
 import com.example.jirou.memorizer.utils.getMaxChar
 import com.example.jirou.memorizer.utils.getMinChar
 
-const val AV_FOLD_100 = -1
-const val AV_RAISE_100 = 100
-const val AV_CALL_100 = 0
+const val AV_FOLD_100 = 0
+const val AV_RAISE_100 = 200
+const val AV_RAISE_OR_FOLD_50 = 50
+const val AV_CALL_100 = 100
 
 // actionVal
 //   null : fold

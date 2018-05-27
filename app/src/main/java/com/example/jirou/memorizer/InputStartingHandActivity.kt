@@ -38,7 +38,7 @@ class InputStartingHandActivity : AppCompatActivity() {
         //
         //OnTouchイベントに対する設定
         //
-        gridView.setOnTouchListener((gridView.adapter as ListAdapterHandAction).getOnTouchListener(this::getActionValue))
+        gridView.setOnTouchListener((gridView.adapter as ListAdapterHandAction).getOnTouchListener(this::mGetActionValue))
 
         //
         // Answerボタンクリックイベントに対する設定
@@ -61,18 +61,17 @@ class InputStartingHandActivity : AppCompatActivity() {
         } )
     }
 
-    private fun getActionValue() : Int
+    private fun mGetActionValue() : Int
     {
         val rdg : RadioGroup = findViewById(R.id.rdgAction)
         val checkedId : Int = rdg.checkedRadioButtonId
-        Log.e("getActionValue", String.format("checked is %d", checkedId))
-        val button : RadioButton = findViewById(checkedId) ?: return -1
-
+        val button : RadioButton = findViewById(checkedId) ?: return AV_FOLD_100
         val tag : String = button.tag.toString()
-        Log.e("getActionValue", String.format("tag is %s", tag))
 
+        // 0 - 99 : raise or fold (0 : fold, 99 : raise)
+        // 100 - 200 : raise or call ( 100 : call, 200 : raise)
         return if (tag == "null") {
-            -1
+            AV_FOLD_100
         }
         else
         {

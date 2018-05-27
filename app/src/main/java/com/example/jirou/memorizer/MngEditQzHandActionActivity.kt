@@ -114,11 +114,13 @@ class MngEditQzHandActionActivity : AppCompatActivity() {
     {
         val rdg : RadioGroup = findViewById(R.id.rdgEditAction)
         val checkedId : Int = rdg.checkedRadioButtonId
-        val button : RadioButton = findViewById(checkedId) ?: return -1
+        val button : RadioButton = findViewById(checkedId) ?: return AV_FOLD_100
         val tag : String = button.tag.toString()
 
+        // 0 - 99 : raise or fold (0 : fold, 99 : raise)
+        // 100 - 200 : raise or call ( 100 : call, 200 : raise)
         return if (tag == "null") {
-            -1
+            AV_FOLD_100
         }
         else
         {

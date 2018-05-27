@@ -86,6 +86,9 @@ class HandActionCanvasView : TextView {
             ((mActionVal == AV_FOLD_100) || (mActionVal == AV_CALL_100) || (mActionVal == AV_RAISE_100)) -> {
                 getActionColorUpper()
             }
+            (mActionVal == AV_RAISE_OR_FOLD_50) -> {
+                Color.argb(255, 255, 255, 255)
+            }
             else -> {
                 Color.argb(255, 255, 255, 0)
             }

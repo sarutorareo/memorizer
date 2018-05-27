@@ -9,8 +9,9 @@
     <RadioGroup
         android:id="@+id/rdgAction"
         android:layout_width="181dp"
-        android:layout_height="133dp"
+        android:layout_height="160dp"
         android:layout_marginBottom="8dp"
+        android:layout_marginLeft="16dp"
         android:layout_marginStart="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -20,20 +21,22 @@
             android:id="@+id/rdbRaise"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="32dp"
             android:layout_marginStart="32dp"
             android:layout_marginTop="0dp"
             android:checked="true"
-            android:tag="100"
-            android:text="Raise"
+            android:tag="200"
+            android:text="@string/raise"
             app:layout_constraintStart_toStartOf="parent" />
 
         <RadioButton
             android:id="@+id/rdbRaiseOrCall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="32dp"
             android:layout_marginStart="32dp"
-            android:tag="50"
-            android:text="Raise50/Call50"
+            android:tag="150"
+            android:text="@string/raiseOrCall"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/rdbRaise" />
 
@@ -41,23 +44,34 @@
             android:id="@+id/rdbCall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="32dp"
             android:layout_marginStart="32dp"
-            android:tag="0"
-            android:text="Call"
+            android:tag="100"
+            android:text="@string/call"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/rdbRaiseOrCall" />
+
+        <RadioButton
+            android:id="@+id/rdbRaiseOrFold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="32dp"
+            android:layout_marginStart="32dp"
+            android:tag="50"
+            android:text="@string/raiseOrFold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/rdbCall" />
 
         <RadioButton
             android:id="@+id/rdbFold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="32dp"
             android:layout_marginStart="32dp"
             android:tag="null"
-            android:text="Fold"
+            android:text="@string/fold"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/rdbCall" />
-
-
+            app:layout_constraintTop_toBottomOf="@+id/rdbRaiseOrFold" />
     </RadioGroup>
 
     <GridView

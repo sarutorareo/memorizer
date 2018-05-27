@@ -22,6 +22,11 @@
     <string name="type">type</string>
     <string name="title">title</string>
     <string name="update_date">update_date</string>
+    <string name="raise">Raise</string>
+    <string name="call">Call</string>
+    <string name="fold">Fold</string>
+    <string name="raiseOrFold">Raise50/Fold50</string>
+    <string name="raiseOrCall">Raise50/Call50</string>
 
     <string-array name="lst_situation">
         <item>Open</item>
