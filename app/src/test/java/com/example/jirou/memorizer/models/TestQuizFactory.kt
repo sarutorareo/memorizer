@@ -51,6 +51,9 @@ class TestQuizFactory {
         val hand1 = "AK"
         val val1 = 3
 
+        val answerNum = 3
+        val correctNum = 2
+
         // 現在時刻（ミリ秒を丸める）
         val currentDate = Date(dateToString(Date(System.currentTimeMillis())))
         val helper = MemorizeDBOpenHelper.getInstance(mContext, TEST_DB_NAME)
@@ -70,6 +73,10 @@ class TestQuizFactory {
             insertOrThrow(MemorizeDBOpenHelper.TABLE_NAME_CRCT_HAND_ACTION_ITEM,
                     *MemorizeDBOpenHelper.addUpdateDate(
                             arrayOf("quiz_id" to quizId.toString(), "hand" to hand1, "action_val" to val1.toString())))
+
+            insertOrThrow(MemorizeDBOpenHelper.TABLE_NAME_SCORE,
+                    *MemorizeDBOpenHelper.addUpdateDate(
+                            arrayOf("quiz_id" to quizId.toString(), "answer_num" to answerNum.toString(), "correct_num" to correctNum.toString())))
         }
 
         //
@@ -90,6 +97,11 @@ class TestQuizFactory {
         assertEquals(EnumHASituation.VS_3BET, qstHa.situation)
         val handActionList = (q.correct as CorrectHandAction).handActionList
         assertEquals(val1, handActionList.getFromHand(hand1).actionVal)
+
+        val score = q.score
+        assertEquals(quizId, score.quizId)
+        assertEquals(answerNum, score.answerNum)
+        assertEquals(correctNum, score.correctNum)
     }
 
     @Test(expected = AssertionError::class)

@@ -7,6 +7,7 @@ import com.example.jirou.memorizer.db.MemorizeDBOpenHelper.Companion.TABLE_NAME_
 import com.example.jirou.memorizer.db.MemorizeDBOpenHelper.Companion.TABLE_NAME_QUIZ
 import com.example.jirou.memorizer.db.MemorizeDBOpenHelper.Companion.TABLE_NAME_QST_HAND_ACTION
 import com.example.jirou.memorizer.db.MemorizeDBOpenHelper.Companion.TABLE_NAME_CRCT_HAND_ACTION_ITEM
+import com.example.jirou.memorizer.db.MemorizeDBOpenHelper.Companion.TABLE_NAME_SCORE
 import java.sql.Connection
 import java.sql.DriverManager
 import java.sql.Statement
@@ -58,7 +59,16 @@ class MemorizeDBSQLDroidHelper  {
                         "PRIMARY KEY(quiz_id, hand)," +
                         "FOREIGN KEY(`quiz_id`) REFERENCES `quiz`(`id`) ON DELETE CASCADE" +
                         ")")
-                Log.e("DBHelper.initDBSchema", "table quiz_hand_action created")
+                Log.e("DBHelper.initDBSchema", "table crct_hand_action created")
+                statement?.executeUpdate( "CREATE TABLE IF NOT EXISTS $TABLE_NAME_SCORE " +
+                        "(quiz_id INTEGER NOT NULL, " +
+                        "answer_num INTEGER NOT NULL DEFAULT 0, " +
+                        "correct_num INTEGER NOT NULL DEFAULT 0, " +
+                        "update_date TEXT NOT NULL, " +
+                        "PRIMARY KEY(quiz_id)," +
+                        "FOREIGN KEY(`quiz_id`) REFERENCES `quiz`(`id`) ON DELETE CASCADE" +
+                        ")")
+                Log.e("DBHelper.initDBSchema", "table score created")
             } catch (e : Exception) {
                 Log.e("initDBSchema", e.toString())
                 throw e

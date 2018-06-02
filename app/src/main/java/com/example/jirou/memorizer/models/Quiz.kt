@@ -2,10 +2,7 @@ package com.example.jirou.memorizer.models
 
 import android.content.Context
 import android.util.Log
-import com.example.jirou.memorizer.InputStartingHandActivity
-import com.example.jirou.memorizer.NEW_QUIZ_ID
 import com.example.jirou.memorizer.db.MemorizeDBOpenHelper
-import junit.framework.Assert
 import org.jetbrains.anko.db.*
 
 abstract class Quiz(id : Int)   {
@@ -13,6 +10,7 @@ abstract class Quiz(id : Int)   {
     protected var mQuestion : Question = mCreateQuestion(mId)
     protected var mCorrect : Correct = mCreateCorrect(mId)
     private var mUpdateDate : String = ""
+    private var mScore : Score = Score(mId)
 
     companion object {
         fun delete(context: Context, dbName: String, id: Int) {
@@ -31,6 +29,7 @@ abstract class Quiz(id : Int)   {
         mId = id
         mQuestion = mCreateQuestion(id)
         mCorrect = mCreateCorrect(id)
+        mScore = Score(id)
     }
 
     val id : Int
@@ -46,6 +45,11 @@ abstract class Quiz(id : Int)   {
     val correct : Correct
         get() {
             return mCorrect
+        }
+
+    val score : Score
+        get() {
+            return mScore
         }
 
     protected abstract fun mCreateQuestion(id : Int) : Question
@@ -69,6 +73,7 @@ abstract class Quiz(id : Int)   {
                 )
                 question.save(context, dbName)
                 correct.save(context, dbName)
+                score.save(context, dbName)
             }
         }
     }
@@ -83,4 +88,8 @@ abstract class Quiz(id : Int)   {
         }
 
     abstract val activity : Class<*>
+
+    override fun toString() : String {
+        return question.toString() + "\n" + mScore.toString()
+    }
 }

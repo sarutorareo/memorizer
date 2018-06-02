@@ -16,6 +16,7 @@ class MemorizeDBOpenHelper(context:Context, dbName: String):ManagedSQLiteOpenHel
         const val TABLE_NAME_QUIZ = "quiz"
         const val TABLE_NAME_QST_HAND_ACTION = "qst_hand_action"
         const val TABLE_NAME_CRCT_HAND_ACTION_ITEM = "crct_hand_action_item"
+        const val TABLE_NAME_SCORE = "score"
 
         private var instance: MemorizeDBOpenHelper? = null
 

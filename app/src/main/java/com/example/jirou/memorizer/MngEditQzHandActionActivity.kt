@@ -33,7 +33,7 @@ class MngEditQzHandActionActivity : AppCompatActivity() {
         //
         // シチュエーションの設定
         //
-        mInitSituations(mQuiz.question as QuestionHandAction)
+        mInitSituations(mQuiz)
 
         //
         //グリットビューに各セルの情報を設定
@@ -88,12 +88,11 @@ class MngEditQzHandActionActivity : AppCompatActivity() {
             startActivityForResult(intent, EnumRequestCodes.EDIT_HAND_ACTION_SITUATION.rawValue)
         }
         )
-
     }
 
-    private fun mInitSituations(qst : QuestionHandAction)
+    private fun mInitSituations(q : Quiz)
     {
-        findViewById<TextView>(R.id.txtSituations).text = qst.toString()
+        findViewById<TextView>(R.id.txtSituations).text = q.toString()
     }
     private fun mSaveHandAction(quiz : Quiz)
     {
@@ -136,7 +135,7 @@ class MngEditQzHandActionActivity : AppCompatActivity() {
 
             (mQuiz.question as QuestionHandAction).copyFrom(qstHa)
 
-            mInitSituations(mQuiz.question as QuestionHandAction)
+            mInitSituations(mQuiz)
         }
     }
 }

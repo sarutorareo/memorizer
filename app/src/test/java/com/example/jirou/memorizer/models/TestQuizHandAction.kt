@@ -71,10 +71,12 @@ class TestQuizHandAction {
         val q = QuizHandAction(id)
         val hand1 = (q.correct as CorrectHandAction).handActionList.get(1).hand
         val val1 = 2
+        val ansNum = 5
         (q.question as QuestionHandAction).situation = EnumHASituation.VS_4BET
         (q.question as QuestionHandAction).heroPosition = EnumHAPosition.BB
         (q.question as QuestionHandAction).opponentPosition = EnumHAPosition.SB
         (q.correct as CorrectHandAction).handActionList.getFromHand(hand1).setActionVal(val1)
+        q.score.answerNum = ansNum
 
         //
         // Execute
@@ -134,6 +136,17 @@ class TestQuizHandAction {
             }
             assertEquals(true, ha1 != null)
             assertEquals(val1, ha1!!.actionVal)
+
+            val answerNumList = select(MemorizeDBOpenHelper.TABLE_NAME_SCORE,
+                    "answer_num")
+                    .whereArgs("quiz_id = {quizId}", "quizId" to id.toString())
+                    .parseList(
+                            rowParser { answer_num: Int ->
+                                answer_num
+                            }
+                    )
+            assertEquals(1, answerNumList.size)
+            assertEquals(ansNum, answerNumList[0])
         }
     }
 
@@ -146,17 +159,22 @@ class TestQuizHandAction {
         val q = QuizHandAction(id)
         val hand1 = (q.correct as CorrectHandAction).handActionList.get(1).hand
         val val1 = 2
+        val ansNum = 5
+
         (q.correct as CorrectHandAction).handActionList.getFromHand(hand1).setActionVal(val1)
+        q.score.answerNum = ansNum
 
         // セーブ(insert)
         q.save(mContext, TEST_DB_NAME)
 
         // 値を書き換え
         val val2 = val1 + 1
+        val ansNum2 = ansNum + 1
         (q.correct as CorrectHandAction).handActionList.getFromHand(hand1).setActionVal(val2)
         (q.question as QuestionHandAction).situation = EnumHASituation.VS_4BET
         (q.question as QuestionHandAction).heroPosition = EnumHAPosition.BB
         (q.question as QuestionHandAction).opponentPosition = EnumHAPosition.SB
+        q.score.answerNum = ansNum2
 
         sleep(1000)
         //
@@ -227,6 +245,17 @@ class TestQuizHandAction {
             }
             assertEquals(true,  ha1 != null)
             assertEquals(val2, ha1!!.actionVal)
+
+            val answerNumList = select(MemorizeDBOpenHelper.TABLE_NAME_SCORE,
+                    "answer_num")
+                    .whereArgs("quiz_id = {quizId}", "quizId" to id.toString())
+                    .parseList(
+                            rowParser { answer_num: Int ->
+                                answer_num
+                            }
+                    )
+            assertEquals(1, answerNumList.size)
+            assertEquals(ansNum2, answerNumList[0])
         }
     }
 

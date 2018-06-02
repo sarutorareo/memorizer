@@ -12,17 +12,17 @@ import org.junit.Assert.*
 class TestHandActionCompared {
     @Test
     fun constructor() {
-        val ha = HandActionCompared("title_str", 99)
+        val ha = HandActionCompared("AK", 99)
 
-        assertEquals("title_str", ha.hand)
+        assertEquals("AK", ha.hand)
         assertEquals(99, ha.actionVal)
         assertEquals(null, ha.getCompared())
     }
 
     @Test
     fun compare_equal() {
-        val haC = HandActionCompared("title_str", 99)
-        val haA = HandAction("title_str", 99)
+        val haC = HandActionCompared("AK", 99)
+        val haA = HandAction("AK", 99)
 
         haC.compare(haA)
         assertEquals(0, haC.getCompared())
@@ -30,8 +30,8 @@ class TestHandActionCompared {
 
     @Test
     fun compare_grater() {
-        val haC = HandActionCompared("title_str", 101)
-        val haA = HandAction("title_str", 99)
+        val haC = HandActionCompared("AK", 101)
+        val haA = HandAction("AK", 99)
 
         haC.compare(haA)
         assertEquals(2, haC.getCompared())
@@ -39,8 +39,8 @@ class TestHandActionCompared {
 
     @Test
     fun compare_lesser() {
-        val haC = HandActionCompared("title_str", 95)
-        val haA = HandAction("title_str", 99)
+        val haC = HandActionCompared("AK", 95)
+        val haA = HandAction("QJ", 99)
 
         haC.compare(haA)
         assertEquals(-4, haC.getCompared())

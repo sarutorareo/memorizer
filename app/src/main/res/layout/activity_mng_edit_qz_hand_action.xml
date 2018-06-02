@@ -6,6 +6,32 @@
     android:layout_height="match_parent"
     tools:context=".MngEditQzHandActionActivity">
 
+    <TextView
+        android:id="@+id/txtSituations"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text=""
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <GridView
+        android:id="@+id/grdEditCorrect"
+        android:layout_width="330dp"
+        android:layout_height="267dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="88dp"
+        android:drawSelectorOnTop="false"
+        android:numColumns="13"
+        android:visibility="visible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.47"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtSituations"/>
+
     <RadioGroup
         android:id="@+id/rdgEditAction"
         android:layout_width="181dp"
@@ -75,21 +101,6 @@
             app:layout_constraintTop_toBottomOf="@+id/rdbRaiseOrFold" />
     </RadioGroup>
 
-    <GridView
-        android:id="@+id/grdEditCorrect"
-        android:layout_width="330dp"
-        android:layout_height="267dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="88dp"
-        android:drawSelectorOnTop="false"
-        android:numColumns="13"
-        android:visibility="visible"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.47"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <Button
         android:id="@+id/btnSaveQzHandAction"
         android:layout_width="wrap_content"
@@ -100,17 +111,6 @@
         android:text="@string/btn_save_qz_hand_action"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/grdEditCorrect" />
-
-    <TextView
-        android:id="@+id/txtSituations"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:text=""
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/btnChangeSituations"

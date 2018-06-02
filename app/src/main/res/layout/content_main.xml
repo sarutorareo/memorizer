@@ -63,15 +63,4 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnEditQuiz" />
 
-    <Button
-        android:id="@+id/btnDropDBSchema"
-        android:layout_width="152dp"
-        android:layout_height="0dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        android:text="@string/btn_drop_db_schema"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnInitDBSchema" />
-
 </android.support.constraint.ConstraintLayout>

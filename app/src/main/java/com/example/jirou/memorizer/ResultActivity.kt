@@ -25,20 +25,28 @@ class ResultActivity : AppCompatActivity() {
         //
         val quizId = intent.getIntExtra(INTENT_KEY_QUIZ_ID, -1)
         val quiz = QuizFactory().load(applicationContext, DB_NAME_MEMORIZER, quizId)
-        val txtQuestion = findViewById<TextView>(R.id.txtQuestion)
-        txtQuestion.text = quiz.question.toString()
 
         //グリットビューのセル？の作成
         getAnsweredHandActionList(mAnsweredHandActionList)
         mCreateCorrectHandActionList(quiz, mAnsweredHandActionList, mCorrectHandActionList)
 
         //正解／不正解の判定
-        val result : Boolean = getResult(mCorrectHandActionList)
+        val result : Boolean = mGetResult(mCorrectHandActionList)
         val tRes : TextView = findViewById(R.id.txtResult)
-        tRes.text = when (result) { true -> "〇" else -> "×" }
+        quiz.score.answerNum++
+        if (result) {
+            tRes.text = "〇"
+            quiz.score.correctNum++
+        }
+        else {
+            tRes.text = "×"
+        }
+        quiz.save(applicationContext, DB_NAME_MEMORIZER)
+        val txtQuestion = findViewById<TextView>(R.id.txtQuestion)
+        txtQuestion.text = quiz.toString()
 
         //グリットビューに各セルの情報を設定
-        var gridView : GridView = findViewById(R.id.grdCorrect)
+        val gridView : GridView = findViewById(R.id.grdCorrect)
         gridView.adapter = ListAdapterHandAction(applicationContext, gridView, mCorrectHandActionList)
 
         val btnNext : Button = findViewById(R.id.btnNext)
@@ -75,7 +83,7 @@ class ResultActivity : AppCompatActivity() {
         }
     }
 
-    private fun getResult(correctHandActionList : HandActionComparedList) : Boolean
+    private fun mGetResult(correctHandActionList : HandActionComparedList) : Boolean
     {
         for (i in 0 until correctHandActionList.size) {
             if ((correctHandActionList.get(i) as HandActionCompared).getCompared() != 0) {

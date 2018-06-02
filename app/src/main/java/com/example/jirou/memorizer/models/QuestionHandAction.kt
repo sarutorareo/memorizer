@@ -107,7 +107,9 @@ open class QuestionHandAction(quizId: Int, situation: EnumHASituation,
                                 }
                         )
                 copyFrom(resultQstHandAction)
-            } catch (e : SQLiteException) {
+            }
+            // 該当レコードが無い場合
+            catch (e : SQLiteException) {
                 // 何もしない
             }
         }

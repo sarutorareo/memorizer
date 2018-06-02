@@ -12,16 +12,16 @@ import org.junit.Assert.*
 class TestHandAction {
     @Test
     fun test_constructor() {
-        val ha = HandAction("title_str", 99)
+        val ha = HandAction("AK", 99)
 
-        assertEquals("title_str", ha.hand)
+        assertEquals("AK", ha.hand)
         assertEquals(99, ha.actionVal)
     }
 
     @Test
     fun test_copyFrom() {
-        val ha = HandAction("title_str", 99)
-        val other = HandAction("title_str", 33)
+        val ha = HandAction("AK", 99)
+        val other = HandAction("AK", 33)
 
         other.copyFrom(ha)
         assertEquals(99, ha.actionVal)
@@ -30,8 +30,8 @@ class TestHandAction {
 
     @Test(expected = AssertionError::class)
     fun copyTo_differentKey() {
-        val ha = HandAction("title_str", 99)
-        val other = HandAction("title_strx", 99)
+        val ha = HandAction("AK", 99)
+        val other = HandAction("72", 99)
 
         other.copyFrom(ha)
     }

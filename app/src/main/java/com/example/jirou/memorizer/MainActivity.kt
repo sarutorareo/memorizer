@@ -51,11 +51,13 @@ class MainActivity : AppCompatActivity() {
         }
         )
 
+        /*
         val dropDBSchemaButton : Button = findViewById(R.id.btnDropDBSchema)
         dropDBSchemaButton.setOnClickListener( {
             MemorizeDBSQLDroidHelper.dropDBSchema(applicationContext, DB_NAME_MEMORIZER)
         }
         )
+        */
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

@@ -6,6 +6,31 @@
     android:layout_height="match_parent"
     tools:context="com.example.jirou.memorizer.InputStartingHandActivity">
 
+    <TextView
+        android:id="@+id/txtQuestion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
+        android:text=""
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <GridView
+        android:id="@+id/grdInputStartHand"
+        android:layout_width="330dp"
+        android:layout_height="330dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:drawSelectorOnTop="false"
+        android:numColumns="13"
+        android:visibility="visible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtQuestion" />
+
     <RadioGroup
         android:id="@+id/rdgAction"
         android:layout_width="181dp"
@@ -74,21 +99,6 @@
             app:layout_constraintTop_toBottomOf="@+id/rdbRaiseOrFold" />
     </RadioGroup>
 
-    <GridView
-        android:id="@+id/grdInputStartHand"
-        android:layout_width="330dp"
-        android:layout_height="330dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:drawSelectorOnTop="false"
-        android:numColumns="13"
-        android:visibility="visible"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <Button
         android:id="@+id/btnAnswer"
         android:layout_width="wrap_content"
@@ -99,15 +109,5 @@
         android:text="@string/btn_answer"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/grdInputStartHand" />
-
-    <TextView
-        android:id="@+id/txtQuestion"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="8dp"
-        android:layout_marginStart="8dp"
-        android:text=""
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
 </android.support.constraint.ConstraintLayout>

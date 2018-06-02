@@ -25,13 +25,13 @@ class InputStartingHandActivity : AppCompatActivity() {
         val quizId = intent.getIntExtra(INTENT_KEY_QUIZ_ID, -1)
         val quiz = QuizFactory().load(applicationContext, DB_NAME_MEMORIZER, quizId)
         val txtQuestion = findViewById<TextView>(R.id.txtQuestion)
-        txtQuestion.text = quiz.question.toString()
+        txtQuestion.text = quiz.toString()
 
         //
         //グリットビューに各セルの情報を設定
         //
         mHandActionList.getExtra(intent)
-        val gridView : GridView = findViewById(R.id.grdInputStartHand)
+        val gridView = findViewById<GridView>(R.id.grdInputStartHand) as GridView
         gridView.adapter = ListAdapterHandAction(applicationContext, gridView, mHandActionList)
 
         //
