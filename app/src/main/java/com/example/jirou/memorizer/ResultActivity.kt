@@ -71,7 +71,7 @@ class ResultActivity : AppCompatActivity() {
 
         assert(answeredHandActionList.size == correctHandActionList.size)
         for (i in 0 until correctHandActionList.size) {
-            (correctHandActionList.get(i) as HandActionCompared).compare(answeredHandActionList.get(i) as HandAction)
+            (correctHandActionList.get(i) as HandActionCompared).compare(answeredHandActionList.get(i))
         }
     }
 
@@ -86,18 +86,7 @@ class ResultActivity : AppCompatActivity() {
     }
 
     private fun getAnsweredHandActionList(answeredHandActionList :  HandActionList) {
-        // 配列は今のところダメ　個別にHandActionを渡すのはできた
-        val haArraySize: Int = intent.getIntExtra(INTENT_KEY_HAND_ACTION_ARRAY_SIZE, 0)
-        val tv: TextView = findViewById(R.id.multiAutoCompleteTextView)
-        for (i in 0 until haArraySize) {
-            val ha: HandAction = intent.getParcelableExtra(String.format(INTENT_KEY_HAND_ACTION_ARRAY_FMT, i))
-            answeredHandActionList.get(i).copyFrom(ha)
-
-            var logStr: String = String.format("handAction  (%s, %d)", ha.hand, ha.actionVal)
-            Log.e("ResultActivity.onCreate", String.format("ResultActivity.onCreate %s", logStr))
-            tv.text = String.format("%s %s", tv.text.toString(), logStr)
-        }
-
+        answeredHandActionList.getExtra(intent)
         Log.e("ResultActivity.onCreate", String.format("mHandActionList.size = %d", mAnsweredHandActionList.size))
     }
 }

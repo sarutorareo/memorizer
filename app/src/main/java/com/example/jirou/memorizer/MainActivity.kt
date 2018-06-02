@@ -88,17 +88,20 @@ class MainActivity : AppCompatActivity() {
                 // 次のQuizIndexを受け取る
                 val received = data!!
                 val isNext = received.getBooleanExtra(INTENT_KEY_NEXT_OR_RETRY, true)
+                val handActionList = HandActionList()
                 val nextQuiz =
                     if (isNext) {
                         mTrainingManager.next()
                     }
                     else {
+                        handActionList.getExtra(received)
                         mTrainingManager.retry()
                     }
                 nextQuiz ?: return
 
                 val intent = Intent(application, nextQuiz.activity)
                 intent.putExtra(INTENT_KEY_QUIZ_ID, nextQuiz.id)
+                handActionList.putExtra(intent)
                 startActivityForResult(intent, EnumRequestCodes.TRAINING.rawValue)
             }
         }

@@ -11,8 +11,6 @@ import com.example.jirou.memorizer.models.*
 import com.example.jirou.memorizer.adapters.ListAdapterHandAction
 import com.example.jirou.memorizer.db.DB_NAME_MEMORIZER
 
-const val INTENT_KEY_HAND_ACTION_ARRAY_FMT : String = "HandActionArray_%d"
-const val INTENT_KEY_HAND_ACTION_ARRAY_SIZE : String = "HandActionArraySize"
 class InputStartingHandActivity : AppCompatActivity() {
     private val mHandActionList = HandActionList()
 
@@ -32,6 +30,7 @@ class InputStartingHandActivity : AppCompatActivity() {
         //
         //グリットビューに各セルの情報を設定
         //
+        mHandActionList.getExtra(intent)
         val gridView : GridView = findViewById(R.id.grdInputStartHand)
         gridView.adapter = ListAdapterHandAction(applicationContext, gridView, mHandActionList)
 
@@ -51,11 +50,7 @@ class InputStartingHandActivity : AppCompatActivity() {
             intent.putExtra(INTENT_KEY_QUIZ_ID, quizId)
 
             // 回答をput
-            intent.putExtra(INTENT_KEY_HAND_ACTION_ARRAY_SIZE, mHandActionList.size)
-            Log.e("setOnClickListener", String.format("put mHandActionList.size = %d",  mHandActionList.size))
-            for (i in 0 until mHandActionList.size) {
-                intent.putExtra(String.format(INTENT_KEY_HAND_ACTION_ARRAY_FMT, i), mHandActionList.get(i))
-            }
+            mHandActionList.putExtra(intent)
 
             startActivityForResult(intent, EnumRequestCodes.TRAINING.rawValue)
         } )
@@ -88,6 +83,9 @@ class InputStartingHandActivity : AppCompatActivity() {
             // 戻り値を設定
             val intent = Intent()
             intent.putExtra(INTENT_KEY_NEXT_OR_RETRY, isNext)
+            if (!isNext) {
+                mHandActionList.putExtra(intent)
+            }
 
             // 戻り値を渡して 呼び出し元 の onActivityResult を呼び出す
             setResult(Activity.RESULT_OK, intent)

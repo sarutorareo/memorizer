@@ -1,6 +1,12 @@
 package com.example.jirou.memorizer.models
 
+import android.content.Intent
+import android.util.Log
 import com.example.jirou.memorizer.utils.numToChar
+import org.jetbrains.anko.collections.forEachWithIndex
+
+const val INTENT_KEY_HAND_ACTION_ARRAY_FMT : String = "HandActionArray_%d"
+const val INTENT_KEY_HAND_ACTION_ARRAY_SIZE : String = "HandActionArraySize"
 
 open class HandActionList  {
     protected val mHandActionList : ArrayList<HandAction> =  ArrayList()
@@ -46,6 +52,23 @@ open class HandActionList  {
     {
         list.list.forEach {
             copyHandActionFrom(it)
+        }
+    }
+
+    fun putExtra(intent : Intent) {
+        // 回答をput
+        intent.putExtra(INTENT_KEY_HAND_ACTION_ARRAY_SIZE, mHandActionList.size)
+        mHandActionList.forEachWithIndex { i, handAction ->
+            intent.putExtra(String.format(INTENT_KEY_HAND_ACTION_ARRAY_FMT, i), handAction)
+        }
+    }
+
+    fun getExtra(intent : Intent) {
+        // 配列は今のところダメ　個別にHandActionを渡すのはできた
+        val haArraySize: Int = intent.getIntExtra(INTENT_KEY_HAND_ACTION_ARRAY_SIZE, 0)
+        for (i in 0 until haArraySize) {
+            val ha: HandAction = intent.getParcelableExtra(String.format(INTENT_KEY_HAND_ACTION_ARRAY_FMT, i))
+            mHandActionList[i].copyFrom(ha)
         }
     }
 }
