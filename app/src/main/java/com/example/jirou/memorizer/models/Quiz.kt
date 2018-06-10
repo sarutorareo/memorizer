@@ -55,20 +55,18 @@ abstract class Quiz(id : Int)   {
     protected abstract fun mCreateQuestion(id : Int) : Question
     protected abstract fun mCreateCorrect(id : Int) : Correct
 
-    protected abstract fun mGetTypeStr() : String
-
     fun save(context : Context, dbName: String)
     {
         Log.e("Quiz.save", "start save")
         val helper = MemorizeDBOpenHelper.getInstance(context, dbName)
         helper.use {
             transaction {
-                Log.d("Quiz.save", String.format("save id[%d], type[%s]", id, mGetTypeStr() ))
+                Log.d("Quiz.save", String.format("save id[%d], type[%s]", id, type.toString() ))
 
                 replaceOrThrow(
                         MemorizeDBOpenHelper.TABLE_NAME_QUIZ,
                         *MemorizeDBOpenHelper.addUpdateDate(arrayOf("id" to id.toString(),
-                                "type" to mGetTypeStr())
+                                "type" to type.toString())
                         )
                 )
                 question.save(context, dbName)

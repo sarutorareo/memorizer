@@ -2,27 +2,27 @@ package com.example.jirou.memorizer.models
 
 import com.example.jirou.memorizer.InputStartingHandActivity
 
-open class QuizHandAction(id : Int) : Quiz(id)  {
+open class QuizText(id : Int) : Quiz(id)  {
     init {
-        mQuestion = QuestionHandAction(id)
-        mCorrect = CorrectHandAction(id)
+        mQuestion = QuestionText(id)
+        mCorrect = CorrectText(id, ArrayList())
     }
 
     override fun mCreateQuestion(id : Int) : Question
     {
-        return QuestionHandAction(id)
+        return QuestionText(id)
     }
 
     override fun mCreateCorrect(id : Int) : Correct
     {
-        return CorrectHandAction(id)
+        return CorrectText(id, ArrayList())
     }
 
     override val type: EnumQuizType
-        get() = EnumQuizType.HAND_ACTION
+        get() = EnumQuizType.TEXT
 
     override val title: String
-        get() = (question as QuestionHandAction).title
+        get() = (question as QuestionText).title
 
     override val activity : Class<*>
         get() = InputStartingHandActivity::class.java

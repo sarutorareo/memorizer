@@ -4,6 +4,7 @@ import android.content.Context
 import org.robolectric.RuntimeEnvironment
 
 const val TEST_DB_NAME = "testdb.db"
+const val DEFAULT_QUIZ_ID = 0
 
 class TestHelper {
     companion object {

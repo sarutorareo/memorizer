@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.*
 import com.example.jirou.memorizer.db.DB_NAME_MEMORIZER
+import com.example.jirou.memorizer.models.EnumQuizType
 import com.example.jirou.memorizer.models.EnumRequestCodes
 import com.example.jirou.memorizer.models.QuizFactory
 import org.jetbrains.anko.collections.forEachWithIndex
@@ -22,17 +23,21 @@ class MngEditQuizActivity : AppCompatActivity() {
 
         mInitGridQuiz()
 
-        val addQzHandActionButton : Button = findViewById<Button>(R.id.btnAddQzHandAction) as Button
-        addQzHandActionButton.setOnClickListener( {
+        val spnQuizType : Spinner = findViewById(R.id.spnQuizType)
+        spnQuizType.setSelection(1)
+
+        val addQuizButton : Button = findViewById<Button>(R.id.btnAddQuiz) as Button
+        addQuizButton.setOnClickListener( {
+            val selectedType = mGetSelectedType_add()
             val selectedId = QuizFactory().getNewQuizId(applicationContext, DB_NAME_MEMORIZER)
-            startActivityEditQzHandAction(selectedId)
+            mStartActivityEditQuiz(selectedType, selectedId)
         }
         )
 
-        val editQzHandActionButton : Button = findViewById<Button>(R.id.btnEditQzHandAction) as Button
-        editQzHandActionButton.setOnClickListener( {
+        val editQuizButton : Button = findViewById<Button>(R.id.btnEditQuiz) as Button
+        editQuizButton.setOnClickListener( {
             val selectedId = mGetSelectedQuizId()
-            startActivityEditQzHandAction(selectedId)
+            mStartActivityEditQzHandAction(selectedId)
         }
         )
 
@@ -48,11 +53,19 @@ class MngEditQuizActivity : AppCompatActivity() {
         )
     }
 
-    private fun startActivityEditQzHandAction(selectedId: Int?) {
+    private fun mStartActivityEditQzHandAction(selectedId: Int?) {
         if (selectedId != null) {
             val intent = Intent(application, MngEditQzHandActionActivity::class.java)
             intent.putExtra(INTENT_KEY_QUIZ_ID, selectedId)
             startActivityForResult(intent, EnumRequestCodes.EDIT_HAND_ACTION.rawValue)
+        }
+    }
+
+    private fun mStartActivityEditQzText(selectedId: Int?) {
+        if (selectedId != null) {
+            val intent = Intent(application, MngEditQzTextActivity::class.java)
+            intent.putExtra(INTENT_KEY_QUIZ_ID, selectedId)
+            startActivityForResult(intent, EnumRequestCodes.EDIT_TEXT.rawValue)
         }
     }
 
@@ -137,5 +150,17 @@ class MngEditQuizActivity : AppCompatActivity() {
             }
         }
         return null
+    }
+
+    private fun mGetSelectedType_add() : EnumQuizType {
+        val sqnQuizType =  findViewById<Spinner>(R.id.spnQuizType)
+        return EnumQuizType.fromInt(sqnQuizType.selectedItemPosition)
+    }
+
+    private fun mStartActivityEditQuiz(selectedType: EnumQuizType, selectedId : Int) {
+        when (selectedType) {
+            EnumQuizType.HAND_ACTION -> mStartActivityEditQzHandAction(selectedId)
+            EnumQuizType.TEXT -> mStartActivityEditQzText(selectedId)
+        }
     }
 }

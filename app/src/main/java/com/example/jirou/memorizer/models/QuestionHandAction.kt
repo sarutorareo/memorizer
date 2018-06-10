@@ -59,19 +59,11 @@ open class QuestionHandAction(quizId: Int, situation: EnumHASituation,
         }
 
     override fun save(context: Context, dbName: String) {
-        Log.e("QuestionHandAction.save", "start save 1")
-
-        Log.e("QuestionHandAction.save", "start save 2")
         val thisInstance = this
-        Log.e("QuestionHandAction.save", "start save 3")
         Log.e("QuestionHandAction.save", String.format("save [%s]", thisInstance.toString()))
-        Log.e("QuestionHandAction.save", "start save 4")
         val helper = MemorizeDBOpenHelper.getInstance(context, dbName)
-        Log.e("QuestionHandAction.save", "before helper.use")
         helper.use {
-            Log.e("QuestionHandAction.save", "before transaction")
             transaction {
-                Log.e("QuestionHandAction.save", "before replaceOrThrow")
                 replaceOrThrow(
                         MemorizeDBOpenHelper.TABLE_NAME_QST_HAND_ACTION,
                         *MemorizeDBOpenHelper.addUpdateDate(arrayOf(

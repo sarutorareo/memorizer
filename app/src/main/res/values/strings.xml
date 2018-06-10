@@ -6,13 +6,13 @@
     <string name="btn_answer">Answer</string>
     <string name="btn_retry">Retry</string>
     <string name="btn_next">Next</string>
-    <string name="btn_edit_quiz">Edit Quiz</string>
-    <string name="btn_edit_qz_hand_action">Edit Quiz Hand Action</string>
-    <string name="btn_add_quiz_hand_action">Add Quiz Hand Action</string>
+    <string name="btn_manage_quiz">Manage Quiz</string>
+    <string name="btn_edit">Edit Quiz</string>
+    <string name="btn_add">Add Quiz</string>
     <string name="btn_delete_all_quiz">Delete All Quiz</string>
     <string name="btn_delete_quiz">Delete Quiz</string>
-    <string name="btn_save_qz_hand_action">Save</string>
-    <string name="btn_load_qz_hand_action">Load</string>
+    <string name="btn_save">Save</string>
+    <string name="btn_load">Load</string>
     <string name="btn_init_db_schema">Init DB schema</string>
     <string name="btn_drop_db_schema">Drop DB schema</string>
     <string name="btn_change_situations">Change situations</string>
@@ -42,5 +42,9 @@
         <item>SB</item>
         <item>BB</item>
         <item>NULL</item>
+    </string-array>
+    <string-array name="lst_quiz_type">
+        <item>HAND_ACTION</item>
+        <item>TEXT</item>
     </string-array>
 </resources>

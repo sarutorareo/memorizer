@@ -95,7 +95,7 @@ class TestQuestionHandAction {
     }
 
     @Test
-    fun test_save__upload() {
+    fun test_save__update() {
         //
         // Setup
         //

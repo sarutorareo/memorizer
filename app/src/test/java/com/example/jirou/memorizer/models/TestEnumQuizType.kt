@@ -20,4 +20,14 @@ class TestEnumQuizType {
         assertEquals(EnumQuizType.HAND_ACTION, EnumQuizType.fromString("HAND_ACTIONx"))
     }
 
+    @Test
+    fun test_fromInt() {
+        assertEquals(EnumQuizType.HAND_ACTION, EnumQuizType.fromInt(0))
+        assertEquals(EnumQuizType.TEXT, EnumQuizType.fromInt(1))
+    }
+
+    @Test(expected = AssertionError::class)
+    fun test_fromInt__except() {
+        assertEquals(EnumQuizType.TEXT, EnumQuizType.fromString("3"))
+    }
 }

@@ -24,7 +24,8 @@
         <activity android:name=".SessionResultActivity" />
         <activity android:name=".MngEditQuizActivity" />
         <activity android:name=".MngEditQzHandActionActivity" />
-        <activity android:name=".MngEditQzHandActionSituationActivity"></activity>
+        <activity android:name=".MngEditQzHandActionSituationActivity" />
+        <activity android:name=".MngEditQzTextActivity"></activity>
     </application>
 
 </manifest>

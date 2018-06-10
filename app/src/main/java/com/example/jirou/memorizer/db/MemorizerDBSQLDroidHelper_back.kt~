@@ -49,14 +49,8 @@ class MemorizeDBSQLDroidHelper  {
                         " PRIMARY KEY(quiz_id), " +
                         " FOREIGN KEY(`quiz_id`) REFERENCES `quiz`(`id`) ON DELETE CASCADE" +
                         ")")
-                statement?.executeUpdate( "CREATE TABLE IF NOT EXISTS $TABLE_NAME_CRCT_HAND_ACTION_ITEM " +
-                        "(quiz_id INTEGER NOT NULL, " +
-                        "hand TEXT NOT NULL, " +
-                        "action_val INTEGER, " +
-                        "update_date TEXT NOT NULL, " +
-                        "PRIMARY KEY(quiz_id, hand)," +
-                        "FOREIGN KEY(`quiz_id`) REFERENCES `quiz`(`id`) ON DELETE CASCADE" +
-                        ")")
+
+                
                 statement?.executeUpdate( "CREATE TABLE IF NOT EXISTS $TABLE_NAME_QST_TEXT " +
                         "(quiz_id INTEGER NOT NULL, " +
                         " question_main TEXT NOT NULL," +

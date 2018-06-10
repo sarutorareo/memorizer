@@ -49,13 +49,18 @@ class QuizFactory  {
             EnumQuizType.HAND_ACTION -> {
                 QuizHandAction(id)
             }
+            EnumQuizType.TEXT -> {
+                throw Exception()
+            }
         }
     }
 
     fun loadOrCreate(context : Context, dbName: String, quiz_id : Int, type : EnumQuizType) : Quiz
     {
         return try {
-            load(context, dbName, quiz_id)
+            val q = load(context, dbName, quiz_id)
+            assert(q.type == type)
+            q
         }
         catch (e: SQLiteException) {
             createDefaultInstance(quiz_id, type)
@@ -67,7 +72,10 @@ class QuizFactory  {
 
     fun createDefaultInstance(quiz_id : Int, type : EnumQuizType) : Quiz
     {
-        return QuizHandAction(quiz_id)
+        return when (type) {
+            EnumQuizType.HAND_ACTION -> QuizHandAction(quiz_id)
+            EnumQuizType.TEXT -> QuizText(quiz_id)
+        }
     }
 
     fun loadAllList(context : Context, dbName : String): List<Quiz>

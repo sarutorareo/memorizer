@@ -17,20 +17,31 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <Button
+        android:id="@+id/btnChangeSituations"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/btn_change_situations"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtSituations" />
+
     <GridView
         android:id="@+id/grdEditCorrect"
         android:layout_width="330dp"
         android:layout_height="267dp"
         android:layout_marginEnd="16dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="88dp"
+        android:layout_marginTop="8dp"
         android:drawSelectorOnTop="false"
         android:numColumns="13"
         android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.47"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtSituations"/>
+        app:layout_constraintTop_toBottomOf="@+id/btnChangeSituations"/>
 
     <RadioGroup
         android:id="@+id/rdgEditAction"
@@ -108,20 +119,9 @@
         android:layout_marginLeft="264dp"
         android:layout_marginStart="264dp"
         android:layout_marginTop="16dp"
-        android:text="@string/btn_save_qz_hand_action"
+        android:text="@string/btn_save"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/grdEditCorrect" />
-
-    <Button
-        android:id="@+id/btnChangeSituations"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginTop="40dp"
-        android:text="@string/btn_change_situations"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/btnLoadQzHandAction"

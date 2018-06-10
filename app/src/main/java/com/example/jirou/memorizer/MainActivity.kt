@@ -38,7 +38,7 @@ class MainActivity : AppCompatActivity() {
         }
         )
 
-        val editButton : Button = findViewById(R.id.btnEditQuiz)
+        val editButton : Button = findViewById(R.id.btnManageQuiz)
         editButton.setOnClickListener( {
             val intent = Intent(application, MngEditQuizActivity::class.java)
             startActivity(intent)
