@@ -4,7 +4,7 @@ import android.content.Context
 import android.database.sqlite.SQLiteException
 import android.util.Log
 import com.example.jirou.memorizer.db.MemorizeDBOpenHelper
-import com.example.jirou.memorizer.utils.stringArrayListWithoutBlankOf
+import com.example.jirou.memorizer.utils.stringListWithoutBlankOf
 import com.example.jirou.memorizer.utils.copyStringListToFixedSizeList
 
 import org.jetbrains.anko.db.replaceOrThrow
@@ -18,8 +18,11 @@ open class CorrectText(quizId: Int, correctList : List<String>) : Correct(quizId
     init {
     }
 
-    val correctList : List<String>
+    var correctList : List<String>
         get() = mCorrectList
+        set(v) {
+            mCorrectList = v
+        }
 
     override fun save(context: Context, dbName: String) {
         val thisInstance = this
@@ -54,7 +57,7 @@ open class CorrectText(quizId: Int, correctList : List<String>) : Correct(quizId
                                 rowParser {
                                             correct_1: String, correct_2: String, correct_3: String,
                                             correct_4: String, correct_5: String ->
-                                    val arr = stringArrayListWithoutBlankOf(correct_1, correct_2, correct_3, correct_4, correct_5)
+                                    val arr = stringListWithoutBlankOf(correct_1, correct_2, correct_3, correct_4, correct_5)
                                     CorrectText(quizId, arr)
                                 }
                         )

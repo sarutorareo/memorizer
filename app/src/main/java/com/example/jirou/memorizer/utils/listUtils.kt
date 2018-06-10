@@ -4,11 +4,11 @@ import org.jetbrains.anko.collections.forEachWithIndex
 import java.text.SimpleDateFormat
 import java.util.*
 
-fun stringArrayListWithoutBlankOf(vararg ar: String?) : List<String> {
+fun stringListWithoutBlankOf(vararg ar: String?) : List<String> {
     val srcList = ar.toMutableList()
     val tmpList = mutableListOf<String>()
     srcList.forEach {
-        if ((it != null) && (it != "")) {
+        if ((it != null) && (it.isNotBlank())) {
             tmpList.add(it)
         }
     }

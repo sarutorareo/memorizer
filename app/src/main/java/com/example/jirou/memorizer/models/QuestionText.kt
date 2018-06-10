@@ -7,7 +7,7 @@ import android.os.Parcelable
 import android.util.Log
 import com.example.jirou.memorizer.db.MemorizeDBOpenHelper
 import com.example.jirou.memorizer.utils.copyStringListToFixedSizeList
-import com.example.jirou.memorizer.utils.stringArrayListWithoutBlankOf
+import com.example.jirou.memorizer.utils.stringListWithoutBlankOf
 import org.jetbrains.anko.db.replaceOrThrow
 import org.jetbrains.anko.db.rowParser
 import org.jetbrains.anko.db.select
@@ -42,11 +42,17 @@ open class QuestionText(quizId: Int, txtMain: String,
     init {
     }
 
-    val questionMain : String
+    var questionMain : String
         get() = mQuestionMain
+        set(v) {
+            mQuestionMain = v
+        }
 
-    val questionList : List<String>
+    var questionList : List<String>
         get() = mQuestionList
+        set(v) {
+            mQuestionList = v
+        }
 
     constructor(quizId: Int) : this(quizId, "main", ArrayList<String>())
 
@@ -86,7 +92,7 @@ open class QuestionText(quizId: Int, txtMain: String,
                                 rowParser { question_main: String,
                                             question_1: String, question_2: String, question_3: String,
                                             question_4: String, question_5: String ->
-                                    val arr = stringArrayListWithoutBlankOf(question_1, question_2, question_3, question_4, question_5)
+                                    val arr = stringListWithoutBlankOf(question_1, question_2, question_3, question_4, question_5)
                                     QuestionText(quizId, question_main, arr)
                                 }
                         )

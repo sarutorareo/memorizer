@@ -13,17 +13,17 @@ import org.junit.Assert.*
 class TestArrayUtils {
     @Test
     fun test_stringArrayWithoutBlankOf() {
-        var ar = stringArrayListWithoutBlankOf("abc", "def", "")
+        var ar = stringListWithoutBlankOf("abc", "def", "")
         assertEquals(2, ar.size)
         assertEquals("abc", ar[0])
         assertEquals("def", ar[1])
 
-        ar = stringArrayListWithoutBlankOf("abc", "", "ghi")
+        ar = stringListWithoutBlankOf("abc", "", "ghi")
         assertEquals(2, ar.size)
         assertEquals("abc", ar[0])
         assertEquals("ghi", ar[1])
 
-        ar = stringArrayListWithoutBlankOf("abc", null, "ghi")
+        ar = stringListWithoutBlankOf("abc", null, "ghi")
         assertEquals(2, ar.size)
         assertEquals("abc", ar[0])
         assertEquals("ghi", ar[1])

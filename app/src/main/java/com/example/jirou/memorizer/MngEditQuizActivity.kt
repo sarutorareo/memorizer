@@ -28,16 +28,19 @@ class MngEditQuizActivity : AppCompatActivity() {
 
         val addQuizButton : Button = findViewById<Button>(R.id.btnAddQuiz) as Button
         addQuizButton.setOnClickListener( {
-            val selectedType = mGetSelectedType_add()
             val selectedId = QuizFactory().getNewQuizId(applicationContext, DB_NAME_MEMORIZER)
+            val selectedType = mGetSelectedTypeForAdd()
             mStartActivityEditQuiz(selectedType, selectedId)
         }
         )
 
         val editQuizButton : Button = findViewById<Button>(R.id.btnEditQuiz) as Button
         editQuizButton.setOnClickListener( {
+            val selectedType = mGetSelectedTypeForEdit()
             val selectedId = mGetSelectedQuizId()
-            mStartActivityEditQzHandAction(selectedId)
+            if ((selectedType != null) && (selectedId != null)){
+                mStartActivityEditQuiz(selectedType, selectedId)
+            }
         }
         )
 
@@ -53,24 +56,9 @@ class MngEditQuizActivity : AppCompatActivity() {
         )
     }
 
-    private fun mStartActivityEditQzHandAction(selectedId: Int?) {
-        if (selectedId != null) {
-            val intent = Intent(application, MngEditQzHandActionActivity::class.java)
-            intent.putExtra(INTENT_KEY_QUIZ_ID, selectedId)
-            startActivityForResult(intent, EnumRequestCodes.EDIT_HAND_ACTION.rawValue)
-        }
-    }
-
-    private fun mStartActivityEditQzText(selectedId: Int?) {
-        if (selectedId != null) {
-            val intent = Intent(application, MngEditQzTextActivity::class.java)
-            intent.putExtra(INTENT_KEY_QUIZ_ID, selectedId)
-            startActivityForResult(intent, EnumRequestCodes.EDIT_TEXT.rawValue)
-        }
-    }
-
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (requestCode == EnumRequestCodes.EDIT_HAND_ACTION.rawValue) {
+        if ((requestCode == EnumRequestCodes.EDIT_HAND_ACTION.rawValue)
+            || (requestCode == EnumRequestCodes.EDIT_TEXT.rawValue)){
             // キャンセルされた
             if (resultCode == Activity.RESULT_CANCELED) {
                 // 何もしない
@@ -152,15 +140,38 @@ class MngEditQuizActivity : AppCompatActivity() {
         return null
     }
 
-    private fun mGetSelectedType_add() : EnumQuizType {
+    private fun mGetSelectedTypeForEdit() : EnumQuizType?
+    {
+        val tableLayout = findViewById<TableLayout>(R.id.lyoQuiz) as TableLayout
+        tableLayout.forEachChild {
+            val tableRow = it as TableRow
+            if (( tableRow.radio1 != null ) && tableRow.radio1.isChecked) {
+                return EnumQuizType.fromString(tableRow.row_text_type.text.toString())
+            }
+        }
+        return null
+    }
+
+    private fun mGetSelectedTypeForAdd() : EnumQuizType {
         val sqnQuizType =  findViewById<Spinner>(R.id.spnQuizType)
         return EnumQuizType.fromInt(sqnQuizType.selectedItemPosition)
     }
 
     private fun mStartActivityEditQuiz(selectedType: EnumQuizType, selectedId : Int) {
+        var reqCode : Int
+        var intent : Intent
+
         when (selectedType) {
-            EnumQuizType.HAND_ACTION -> mStartActivityEditQzHandAction(selectedId)
-            EnumQuizType.TEXT -> mStartActivityEditQzText(selectedId)
+            EnumQuizType.HAND_ACTION -> {
+                reqCode = EnumRequestCodes.EDIT_HAND_ACTION.rawValue
+                intent =  Intent(application, MngEditQzHandActionActivity::class.java)
+            }
+            EnumQuizType.TEXT -> {
+                reqCode = EnumRequestCodes.EDIT_TEXT.rawValue
+                intent = Intent(application, MngEditQzTextActivity::class.java)
+            }
         }
+        intent.putExtra(INTENT_KEY_QUIZ_ID, selectedId)
+        startActivityForResult(intent, reqCode)
     }
 }

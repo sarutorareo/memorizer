@@ -1,15 +1,11 @@
 package com.example.jirou.memorizer.models
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.database.sqlite.SQLiteException
 import android.util.Log
-import com.example.jirou.memorizer.NEW_QUIZ_ID
 import com.example.jirou.memorizer.db.MemorizeDBOpenHelper
-import org.jetbrains.anko.db.insertOrThrow
 import org.jetbrains.anko.db.rowParser
 import org.jetbrains.anko.db.select
-import org.jetbrains.anko.db.transaction
 
 class QuizFactory  {
     init {
@@ -50,7 +46,7 @@ class QuizFactory  {
                 QuizHandAction(id)
             }
             EnumQuizType.TEXT -> {
-                throw Exception()
+                QuizText(id)
             }
         }
     }

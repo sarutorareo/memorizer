@@ -124,7 +124,7 @@
         app:layout_constraintTop_toBottomOf="@+id/grdEditCorrect" />
 
     <Button
-        android:id="@+id/btnLoadQzHandAction"
+        android:id="@+id/btnCancel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="36dp"

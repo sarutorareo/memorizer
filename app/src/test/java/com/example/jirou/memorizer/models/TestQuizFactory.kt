@@ -135,7 +135,7 @@ class TestQuizFactory {
     }
 
     @Test
-    fun test_loadOrCreate__load() {
+    fun test_loadOrCreate__load__handAction() {
         //
         // setup
         //
@@ -156,7 +156,28 @@ class TestQuizFactory {
     }
 
     @Test
-    fun test_loadOrCreate__create() {
+    fun test_loadOrCreate__load__text() {
+        //
+        // setup
+        //
+        val quizId = 99
+        val quizT = QuizText(quizId)
+        quizT.save(mContext, TEST_DB_NAME)
+
+        //
+        // execute
+        //
+        val q: Quiz = QuizFactory().loadOrCreate(mContext, TEST_DB_NAME, quizId, EnumQuizType.TEXT)
+
+        //
+        // verify
+        //
+        assertEquals(true, q is QuizText)
+        assertEquals(quizId, q.id)
+    }
+
+    @Test
+    fun test_loadOrCreate__create__handAction() {
         //
         // setup
         //
@@ -177,19 +198,49 @@ class TestQuizFactory {
     }
 
     @Test
+    fun test_loadOrCreate__create__text() {
+        //
+        // setup
+        //
+        val quizId = 99
+        val quizT = QuizText(quizId)
+        quizT.save(mContext, TEST_DB_NAME)
+
+        //
+        // execute
+        //
+        val q: Quiz = QuizFactory().loadOrCreate(mContext, TEST_DB_NAME, quizId + 1, EnumQuizType.TEXT)
+
+        //
+        // verify
+        //
+        assertEquals(true, q is QuizText)
+        assertEquals(quizId + 1, q.id)
+    }
+
+    @Test
     fun test_createDefaultInstance() {
         val id = 4
-        val q = QuizFactory().createDefaultInstance(id, EnumQuizType.HAND_ACTION)
+        var q = QuizFactory().createDefaultInstance(id, EnumQuizType.HAND_ACTION)
 
         assertEquals(true, q is QuizHandAction)
+        assertEquals(id, q.id)
+
+        q = QuizFactory().createDefaultInstance(id, EnumQuizType.TEXT)
+
+        assertEquals(true, q is QuizText)
         assertEquals(id, q.id)
     }
 
     @Test
     fun test_createQuizFromType() {
-        val q = QuizFactory().createQuizFromType(EnumQuizType.HAND_ACTION, 5)
+        var q = QuizFactory().createQuizFromType(EnumQuizType.HAND_ACTION, 5)
         assertEquals(true, q is QuizHandAction)
         assertEquals(5, q.id)
+
+        q = QuizFactory().createQuizFromType(EnumQuizType.TEXT, 6)
+        assertEquals(true, q is QuizText)
+        assertEquals(6, q.id)
     }
 
     @Test
@@ -205,6 +256,9 @@ class TestQuizFactory {
         quizId = 100
         quizHa = QuizHandAction(quizId)
         quizHa.save(mContext, TEST_DB_NAME)
+        quizId = 101
+        var quizTxt = QuizText(quizId)
+        quizTxt.save(mContext, TEST_DB_NAME)
 
         //
         // execute
@@ -214,7 +268,7 @@ class TestQuizFactory {
         //
         // verify
         //
-        assertEquals(2, qList.size)
+        assertEquals(3, qList.size)
         assertEquals(true, qList[0] is QuizHandAction)
         assertEquals(99, qList[0].id)
         var resultUpdateDate = Date(qList[0].updateDate)
@@ -225,6 +279,13 @@ class TestQuizFactory {
         assertEquals(true, qList[1] is QuizHandAction)
         assertEquals(100, qList[1].id)
         resultUpdateDate = Date(qList[1].updateDate)
+        diffToUpdateLong = currentDate.time - resultUpdateDate.time
+        assertEquals(true, diffToUpdateLong >= 0)
+        assertEquals(true, diffToUpdateLong / 1000 < 1)
+
+        assertEquals(true, qList[2] is QuizText)
+        assertEquals(101, qList[2].id)
+        resultUpdateDate = Date(qList[2].updateDate)
         diffToUpdateLong = currentDate.time - resultUpdateDate.time
         assertEquals(true, diffToUpdateLong >= 0)
         assertEquals(true, diffToUpdateLong / 1000 < 1)

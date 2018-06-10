@@ -66,8 +66,8 @@ class MngEditQzHandActionActivity : AppCompatActivity() {
         }
         )
 
-        val loadButton : Button = findViewById(R.id.btnLoadQzHandAction)
-        loadButton.setOnClickListener( {
+        val cancelButton : Button = findViewById(R.id.btnCancel)
+        cancelButton.setOnClickListener( {
             // 戻り値を設定
             val intent = Intent()
             intent.putExtra(INTENT_KEY_QUIZ_ID, mQuiz.id)
