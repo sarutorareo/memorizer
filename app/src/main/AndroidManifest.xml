@@ -25,7 +25,8 @@
         <activity android:name=".MngEditQuizActivity" />
         <activity android:name=".MngEditQzHandActionActivity" />
         <activity android:name=".MngEditQzHandActionSituationActivity" />
-        <activity android:name=".MngEditQzTextActivity"></activity>
+        <activity android:name=".MngEditQzTextActivity" />
+        <activity android:name=".InputTextActivity"></activity>
     </application>
 
 </manifest>

@@ -10,6 +10,7 @@ import android.view.MenuItem
 import kotlinx.android.synthetic.main.activity_main.*
 import android.content.Intent
 import android.widget.Button
+import android.widget.TextView
 import com.example.jirou.memorizer.db.DB_NAME_MEMORIZER
 import com.example.jirou.memorizer.db.MemorizeDBSQLDroidHelper
 import com.example.jirou.memorizer.models.*
@@ -28,7 +29,12 @@ class MainActivity : AppCompatActivity() {
 
         val startButton : Button = findViewById(R.id.btnStart)
         startButton.setOnClickListener( {
-            val quizList = mGetQuizList()
+            val quizIdStr = (findViewById<TextView>(R.id.txtQuizId)).text.toString()
+            var quizList : List<Quiz> =
+            when {
+                (quizIdStr.isBlank()) -> mGetAllQuizList()
+                else -> mGetQuizList(quizIdStr.toInt())
+            }
             mTrainingManager = TrainingManager(quizList)
             val quiz = mTrainingManager.start()
 
@@ -76,9 +82,13 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun mGetQuizList(): List<Quiz>
+    private fun mGetAllQuizList(): List<Quiz>
     {
         return  QuizFactory().loadAllList(applicationContext, DB_NAME_MEMORIZER)
+    }
+
+    private fun mGetQuizList(id : Int): List<Quiz>{
+        return arrayListOf(QuizFactory().load(applicationContext, DB_NAME_MEMORIZER, id))
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

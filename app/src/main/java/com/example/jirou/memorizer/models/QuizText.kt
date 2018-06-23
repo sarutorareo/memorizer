@@ -1,6 +1,6 @@
 package com.example.jirou.memorizer.models
 
-import com.example.jirou.memorizer.InputStartingHandActivity
+import com.example.jirou.memorizer.InputTextActivity
 
 open class QuizText(id : Int) : Quiz(id)  {
     init {
@@ -25,5 +25,5 @@ open class QuizText(id : Int) : Quiz(id)  {
         get() = (question as QuestionText).title
 
     override val activity : Class<*>
-        get() = InputStartingHandActivity::class.java
+        get() = InputTextActivity::class.java
 }
