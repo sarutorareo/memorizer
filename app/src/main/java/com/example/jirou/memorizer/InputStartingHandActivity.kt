@@ -5,7 +5,6 @@ import android.app.Activity
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.widget.*
 import com.example.jirou.memorizer.models.*
 import com.example.jirou.memorizer.adapters.ListAdapterHandAction
@@ -24,8 +23,8 @@ class InputStartingHandActivity : AppCompatActivity() {
         //
         val quizId = intent.getIntExtra(INTENT_KEY_QUIZ_ID, -1)
         val quiz = QuizFactory().load(applicationContext, DB_NAME_MEMORIZER, quizId)
-        val txtQuestion = findViewById<TextView>(R.id.txtQuestion)
-        txtQuestion.text = quiz.toString()
+        val txtQuiz = findViewById<TextView>(R.id.txtQuiz)
+        txtQuiz.text = quiz.toString()
 
         //
         //グリットビューに各セルの情報を設定
@@ -44,7 +43,7 @@ class InputStartingHandActivity : AppCompatActivity() {
         //
         val btnAnswer : Button = findViewById(R.id.btnAnswer)
         btnAnswer.setOnClickListener( {
-            val intent = Intent(application, ResultActivity::class.java)
+            val intent = Intent(application, ResultHandActionActivity::class.java)
 
             // quizIdをput
             intent.putExtra(INTENT_KEY_QUIZ_ID, quizId)
@@ -52,7 +51,7 @@ class InputStartingHandActivity : AppCompatActivity() {
             // 回答をput
             mHandActionList.putExtra(intent)
 
-            startActivityForResult(intent, EnumRequestCodes.TRAINING.rawValue)
+            startActivityForResult(intent, EnumRequestCodes.TRAINING_HAND_ACTION.rawValue)
         } )
     }
 
@@ -75,7 +74,7 @@ class InputStartingHandActivity : AppCompatActivity() {
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (requestCode == EnumRequestCodes.TRAINING.rawValue) {
+        if (requestCode == EnumRequestCodes.TRAINING_HAND_ACTION.rawValue) {
             // Nextで終わったか、Retryで終わったか を取得する
             val received = data!!
             val isNext = received.getBooleanExtra(INTENT_KEY_NEXT_OR_RETRY, true)

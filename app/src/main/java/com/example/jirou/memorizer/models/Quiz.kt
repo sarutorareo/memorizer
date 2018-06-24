@@ -86,6 +86,7 @@ abstract class Quiz(id : Int)   {
         }
 
     abstract val activity : Class<*>
+    abstract val requestCode : EnumRequestCodes
 
     override fun toString() : String {
         return question.toString() + "\n" + mScore.toString()

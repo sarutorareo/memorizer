@@ -12,13 +12,13 @@ import com.example.jirou.memorizer.adapters.ListAdapterHandAction
 import com.example.jirou.memorizer.db.DB_NAME_MEMORIZER
 import com.example.jirou.memorizer.models.*
 
-class ResultActivity : AppCompatActivity() {
+class ResultHandActionActivity : AppCompatActivity() {
     private var mAnsweredHandActionList : HandActionList =  HandActionList()
     private var mCorrectHandActionList : HandActionComparedList =  HandActionComparedList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_result)
+        setContentView(R.layout.activity_result_hand_action)
 
         //
         // 問題をload
@@ -42,7 +42,7 @@ class ResultActivity : AppCompatActivity() {
             tRes.text = "×"
         }
         quiz.save(applicationContext, DB_NAME_MEMORIZER)
-        val txtQuestion = findViewById<TextView>(R.id.txtQuestion)
+        val txtQuestion = findViewById<TextView>(R.id.txtQuiz)
         txtQuestion.text = quiz.toString()
 
         //グリットビューに各セルの情報を設定
@@ -95,6 +95,6 @@ class ResultActivity : AppCompatActivity() {
 
     private fun getAnsweredHandActionList(answeredHandActionList :  HandActionList) {
         answeredHandActionList.getExtra(intent)
-        Log.e("ResultActivity.onCreate", String.format("mHandActionList.size = %d", mAnsweredHandActionList.size))
+        Log.e("getAnsweredHandActionL", String.format("mHandActionList.size = %d", mAnsweredHandActionList.size))
     }
 }

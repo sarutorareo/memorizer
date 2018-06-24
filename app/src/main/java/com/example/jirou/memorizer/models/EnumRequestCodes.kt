@@ -2,8 +2,10 @@ package com.example.jirou.memorizer.models
 
 enum class EnumRequestCodes(val rawValue: Int) {
     TRAINING(1000),
-    EDIT_HAND_ACTION(1001),
-    EDIT_HAND_ACTION_SITUATION(1002),
-    EDIT_TEXT(1003),
+    TRAINING_HAND_ACTION(1001),
+    TRAINING_TEXT(1002),
+    EDIT_HAND_ACTION(1011),
+    EDIT_HAND_ACTION_SITUATION(1012),
+    EDIT_TEXT(1013),
     ;
 }

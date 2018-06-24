@@ -312,4 +312,11 @@ class TestQuizHandAction {
         //
         assertEquals("VS_4BET-BB-SB", q.title)
     }
+
+    @Test
+    fun test_reqCode() {
+        val qha = QuizHandAction(0)
+        assertEquals(EnumRequestCodes.TRAINING_HAND_ACTION,  qha.requestCode)
+    }
+
 }

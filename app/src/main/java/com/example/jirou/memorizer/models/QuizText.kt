@@ -26,4 +26,7 @@ open class QuizText(id : Int) : Quiz(id)  {
 
     override val activity : Class<*>
         get() = InputTextActivity::class.java
+
+    override val requestCode : EnumRequestCodes
+        get() = EnumRequestCodes.TRAINING_TEXT
 }

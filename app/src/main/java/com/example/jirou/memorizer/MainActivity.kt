@@ -9,6 +9,7 @@ import android.view.MenuItem
 
 import kotlinx.android.synthetic.main.activity_main.*
 import android.content.Intent
+import android.util.Log
 import android.widget.Button
 import android.widget.TextView
 import com.example.jirou.memorizer.db.DB_NAME_MEMORIZER
@@ -40,7 +41,7 @@ class MainActivity : AppCompatActivity() {
 
             val intent = Intent(application, quiz.activity)
             intent.putExtra(INTENT_KEY_QUIZ_ID, quiz.id)
-            startActivityForResult(intent, EnumRequestCodes.TRAINING.rawValue)
+            startActivityForResult(intent, quiz.requestCode.rawValue)
         }
         )
 
@@ -92,30 +93,56 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (requestCode == EnumRequestCodes.TRAINING.rawValue) {
-            if (resultCode == Activity.RESULT_CANCELED) {
-                // 何もしない
-            }
-            else if (resultCode == Activity.RESULT_OK) {
-                // 次のQuizIndexを受け取る
-                val received = data!!
-                val isNext = received.getBooleanExtra(INTENT_KEY_NEXT_OR_RETRY, true)
-                val handActionList = HandActionList()
-                val nextQuiz =
+        if (resultCode == Activity.RESULT_CANCELED) {
+            // 何もしない
+        }
+        else if (resultCode == Activity.RESULT_OK) {
+            // 次のQuizIndexを受け取る
+            val receivedIntent = data!!
+            val isNext = receivedIntent.getBooleanExtra(INTENT_KEY_NEXT_OR_RETRY, true)
+            val nextQuiz =
                     if (isNext) {
                         mTrainingManager.next()
-                    }
-                    else {
-                        handActionList.getExtra(received)
+                    } else {
                         mTrainingManager.retry()
                     }
-                nextQuiz ?: return
+            nextQuiz ?: return
+            val sendIntent = Intent(application, nextQuiz.activity)
+            sendIntent.putExtra(INTENT_KEY_QUIZ_ID, nextQuiz.id)
 
-                val intent = Intent(application, nextQuiz.activity)
-                intent.putExtra(INTENT_KEY_QUIZ_ID, nextQuiz.id)
-                handActionList.putExtra(intent)
-                startActivityForResult(intent, EnumRequestCodes.TRAINING.rawValue)
+            when (requestCode) {
+                EnumRequestCodes.TRAINING_HAND_ACTION.rawValue ->
+                {
+                    mPutExtraHandAction(isNext, receivedIntent, sendIntent)
+                }
+                EnumRequestCodes.TRAINING_TEXT.rawValue -> {
+                    mPutExtraText(isNext, receivedIntent, sendIntent)
+                }
+            }
+
+            startActivityForResult(sendIntent, requestCode)
+        }
+    }
+
+    private fun mPutExtraText(isNext: Boolean, receivedIntent: Intent, sendIntent: Intent) {
+        Log.e("mPutExtraText", "start")
+        if (!isNext) {
+            (0..4).forEach {
+                Log.e("mPutExtraText", "it = " + it.toString())
+                val key = String.format(INTENT_KEY_ANS_FMT, it)
+                val ans = receivedIntent.getStringExtra(key)
+                Log.e("mPutExtraText", String.format("key = %s, ans = %s", key, ans))
+                sendIntent.putExtra(key, ans)
             }
         }
+        Log.e("mPutExtraText", "end")
+    }
+
+    private fun mPutExtraHandAction(isNext: Boolean, received: Intent, intent: Intent) {
+        val handActionList = HandActionList()
+        if (!isNext) {
+            handActionList.getExtra(received)
+        }
+        handActionList.putExtra(intent)
     }
 }

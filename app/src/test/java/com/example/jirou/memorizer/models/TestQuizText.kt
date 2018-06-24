@@ -52,4 +52,11 @@ class TestQuizText {
         assertEquals(true, q.question is QuestionText)
         assertEquals(true, q.correct is CorrectText)
     }
+
+    @Test
+    fun test_reqCode() {
+        val qha = QuizText(0)
+        assertEquals(EnumRequestCodes.TRAINING_TEXT,  qha.requestCode)
+    }
+
 }

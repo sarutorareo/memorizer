@@ -26,4 +26,7 @@ open class QuizHandAction(id : Int) : Quiz(id)  {
 
     override val activity : Class<*>
         get() = InputStartingHandActivity::class.java
+
+    override val requestCode : EnumRequestCodes
+        get() = EnumRequestCodes.TRAINING_HAND_ACTION
 }

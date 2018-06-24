@@ -123,13 +123,9 @@ open class QuestionText(quizId: Int, txtMain: String,
         mQuestionMain = src.questionMain
         mQuestionList = src.questionList.toList()
     }
-    /*
 
     override fun toString() : String
     {
-        return String.format("quizId[%d], situation[%s], heroPos[%s], opponentPos[%s]", quizId, situation.toString(), heroPosition.toString(), opponentPosition.toString())
+        return String.format("quizId[%d], mainText[%s]", quizId, questionMain)
     }
-
-
-*/
 }

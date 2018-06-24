@@ -5,10 +5,10 @@
     android:id="@+id/txtResultLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.jirou.memorizer.ResultActivity">
+    tools:context="com.example.jirou.memorizer.ResultHandActionActivity">
 
     <TextView
-        android:id="@+id/txtQuestion"
+        android:id="@+id/txtQuiz"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -32,7 +32,7 @@
         android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtQuestion" />
+        app:layout_constraintTop_toBottomOf="@+id/txtQuiz" />
 
     <MultiAutoCompleteTextView
         android:id="@+id/multiAutoCompleteTextView"
@@ -61,9 +61,8 @@
         android:id="@+id/btnRetry"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="32dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginLeft="48dp"
+        android:layout_marginStart="48dp"
         android:text="@string/btn_retry"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtResult" />
@@ -72,9 +71,8 @@
         android:id="@+id/btnNext"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="24dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
         android:text="@string/btn_next"
         app:layout_constraintStart_toEndOf="@+id/btnRetry"
         app:layout_constraintTop_toBottomOf="@+id/txtResult" />

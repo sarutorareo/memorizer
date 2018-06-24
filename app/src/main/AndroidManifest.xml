@@ -20,13 +20,14 @@
             </intent-filter>
         </activity>
         <activity android:name=".InputStartingHandActivity" />
-        <activity android:name=".ResultActivity" />
+        <activity android:name=".ResultHandActionActivity" />
         <activity android:name=".SessionResultActivity" />
         <activity android:name=".MngEditQuizActivity" />
         <activity android:name=".MngEditQzHandActionActivity" />
         <activity android:name=".MngEditQzHandActionSituationActivity" />
         <activity android:name=".MngEditQzTextActivity" />
-        <activity android:name=".InputTextActivity"></activity>
+        <activity android:name=".InputTextActivity" />
+        <activity android:name=".ResultTextActivity"></activity>
     </application>
 
 </manifest>
